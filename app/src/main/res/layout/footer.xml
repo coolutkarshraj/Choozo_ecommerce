@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="55dp"
+    android:layout_weight="5"
+    android:background="#333333"
+    android:layout_gravity="bottom"
+    android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="0dp"
+        android:id="@+id/ll_lome"
+        android:layout_height="match_parent"
+        android:background="#00acec"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="26dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/home"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="2dp"
+            android:textSize="10sp"
+            android:textColor="@android:color/white"
+            android:text="Home"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_hotoffer"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/offer"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="2dp"
+            android:textSize="10sp"
+            android:textColor="@android:color/white"
+            android:text="Hot Offer"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_my_cart"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ImageView
+
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/cart"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="2dp"
+            android:textSize="10sp"
+            android:textColor="@android:color/white"
+            android:text="My Cart"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_search"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/search"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center"
+            android:textSize="10sp"
+            android:layout_marginTop="2dp"
+            android:textColor="@android:color/white"
+            android:text="Searrch"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_profile"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/profile"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="2dp"
+            android:textSize="10sp"
+            android:textColor="@android:color/white"
+            android:text="Profile"/>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
