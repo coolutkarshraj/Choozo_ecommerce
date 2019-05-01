@@ -3,6 +3,8 @@ package com.io.choozo.activity.homeActivity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,6 +17,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.io.choozo.Fragment.Home.HomeFragment;
+import com.io.choozo.Fragment.MyCart.MyCartFragment;
+import com.io.choozo.Fragment.hotOffer.HotOfferFragment;
+import com.io.choozo.Fragment.profile.ProfileFragment;
 import com.io.choozo.R;
 
 public class MainActivity extends AppCompatActivity
@@ -24,6 +30,13 @@ public class MainActivity extends AppCompatActivity
     ActionBarDrawerToggle toggle;
     NavigationView navigationView;
     LinearLayout ll_lome,ll_hotoffer,ll_my_cart,ll_search,ll_profile;
+    Fragment currFrag;
+    HomeFragment homeFragment;
+    HotOfferFragment hotOfferFragment;
+    MyCartFragment myCartFragment;
+    ProfileFragment profileFragment;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +62,7 @@ public class MainActivity extends AppCompatActivity
              ll_my_cart.setBackgroundColor(Color.parseColor("#333333"));
              ll_search.setBackgroundColor(Color.parseColor("#333333"));
              ll_profile.setBackgroundColor(Color.parseColor("#333333"));
+             changeFrag(homeFragment,true);
             }
         });
 
@@ -60,6 +74,7 @@ public class MainActivity extends AppCompatActivity
                 ll_my_cart.setBackgroundColor(Color.parseColor("#333333"));
                 ll_search.setBackgroundColor(Color.parseColor("#333333"));
                 ll_profile.setBackgroundColor(Color.parseColor("#333333"));
+                changeFrag(hotOfferFragment,true);
             }
         });
 
@@ -71,6 +86,7 @@ public class MainActivity extends AppCompatActivity
                 ll_my_cart.setBackgroundColor(Color.parseColor("#00acec"));
                 ll_search.setBackgroundColor(Color.parseColor("#333333"));
                 ll_profile.setBackgroundColor(Color.parseColor("#333333"));
+                changeFrag(myCartFragment,true);
             }
         });
 
@@ -82,6 +98,7 @@ public class MainActivity extends AppCompatActivity
                 ll_my_cart.setBackgroundColor(Color.parseColor("#333333"));
                 ll_search.setBackgroundColor(Color.parseColor("#00acec"));
                 ll_profile.setBackgroundColor(Color.parseColor("#333333"));
+
             }
         });
 
@@ -93,6 +110,7 @@ public class MainActivity extends AppCompatActivity
                 ll_my_cart.setBackgroundColor(Color.parseColor("#333333"));
                 ll_search.setBackgroundColor(Color.parseColor("#333333"));
                 ll_profile.setBackgroundColor(Color.parseColor("#00acec"));
+                changeFrag(profileFragment,true);
             }
         });
     }
@@ -112,6 +130,10 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        homeFragment = new HomeFragment();
+        hotOfferFragment = new HotOfferFragment();
+        myCartFragment = new MyCartFragment();
+        profileFragment = new ProfileFragment();
     }
 
     @Override
@@ -148,4 +170,18 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private void changeFrag(Fragment fragment, boolean addToBack) {
+
+        currFrag = fragment;
+        FragmentTransaction m = getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_view, fragment);
+        if (addToBack) {
+            m.addToBackStack(null);
+            m.setCustomAnimations(R.anim.fade_in,
+                    R.anim.fade_out);
+        }
+        m.commit();
+    }
+
 }
