@@ -15,7 +15,7 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_main,container,false);
+        View view = inflater.inflate(R.layout.homefragment,container,false);
         return  view;
     }
 }
