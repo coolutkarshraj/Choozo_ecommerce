@@ -10,10 +10,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.CalendarView;
 import android.widget.RelativeLayout;
 
-import com.fifo.R;
-import com.fifo.helpers.K;
-import com.fifo.helpers.calendar.OnCalendarAnimListener;
-import com.fifo.helpers.calendar.OnDateSelectedListener;
+import com.io.choozo.R;
+import com.io.choozo.helpers.calender.OnCalendarAnimListener;
+import com.io.choozo.helpers.calender.OnDateSelectedListener;
+
 
 /**
  * Created by ayushsingla on 07/01/17.
@@ -163,7 +163,6 @@ public class DefaultCalendarView extends RelativeLayout {
 
     public void setMaxDate(long millis) {
         cvCalendar.setMaxDate(millis);
-        K.Log.i("TAG", "max: " + cvCalendar.getMaxDate());
     }
 
     public void setDate(long millis) {

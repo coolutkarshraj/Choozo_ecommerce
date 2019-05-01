@@ -5,7 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.Window;
 
-import com.fifo.R;
+import com.io.choozo.R;
 
 /**
  * Created by ayushsingla on 04/02/16.

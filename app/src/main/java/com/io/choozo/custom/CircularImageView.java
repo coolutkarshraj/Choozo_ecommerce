@@ -21,7 +21,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 
-import com.fifo.R;
+import com.io.choozo.R;
+
 
 /**
  * Custom ImageView for circular images in Android while maintaining the
