@@ -92,9 +92,10 @@ public class HomeFragment extends Fragment {
     private void recyclerViewData() {
        StaggeredGridLayoutManager gaggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         rv_Shop.setLayoutManager(gaggeredGridLayoutManager);
+        rv_Shop.setNestedScrollingEnabled(false);
         list.clear();
         list.add(new ShopCategoryModel(R.drawable.boy,"Kids Wear"));
-        list.add(new ShopCategoryModel(R.drawable.boy,"Kids Wear"));
+        list.add(new ShopCategoryModel(R.drawable.boy,"Womens Wear"));
         list.add(new ShopCategoryModel(R.drawable.boy,"Kids Wear"));
         list.add(new ShopCategoryModel(R.drawable.boy,"Kids Wear"));
         list.add(new ShopCategoryModel(R.drawable.boy,"Kids Wear"));
