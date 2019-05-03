@@ -52,8 +52,6 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-
-
     private void bindListner() {
         iv_menu_icon.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -24,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Skip"
+            android:id="@+id/tv_skip"
             android:layout_alignParentRight="true"
             android:textSize="@dimen/text_small"
             android:layout_centerVertical="true"
@@ -240,7 +241,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:id="@+id/usernamelayout"
 
                     android:layout_marginStart="@dimen/startmargin"
@@ -274,7 +275,7 @@
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:id="@+id/register_email_layout"
                     android:layout_below="@+id/emaillayout"
@@ -310,7 +311,7 @@
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:id="@+id/register_phone_layout"
                     android:layout_below="@+id/emaillayout"
@@ -348,7 +349,7 @@
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:id="@+id/password_layout_register"
                     android:layout_below="@+id/emaillayout"

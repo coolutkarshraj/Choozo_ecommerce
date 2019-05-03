@@ -23,6 +23,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     RelativeLayout loginTab,registerTab;
     Activity activity;
     Button btnLogin,btnRegister;
+    TextView tvSkip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
       registerTab = (RelativeLayout)findViewById(R.id.tab1);
       btnRegister = (Button) findViewById(R.id.btn_register);
       btnLogin = (Button) findViewById(R.id.btnlogin);
-
+      tvSkip = (TextView) findViewById(R.id.tv_skip);
     }
 
 
@@ -52,6 +53,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         imageRegister.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
+        tvSkip.setOnClickListener(this);
     }
 
 
@@ -81,20 +83,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.btnlogin :
                 loginStartWorking();
 
+            case R.id.tv_skip :
+                Intent i = new Intent(activity,MainActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(i);
 
 
         }
 
     }
 
-    /* -----------------------------------------------------------Registrion layout work----------------------------------------*/
+    /* -------------------------------------------------Registrion layout work----------------------------------------*/
 
     private void registrationStartWorking() {
         Intent i =new Intent(activity, MainActivity.class);
         startActivity(i);
     }
 
-    /* -----------------------------------------------------------Login layout work----------------------------------------*/
+    /* ----------------------------------------------------Login layout work----------------------------------------*/
 
     private void loginStartWorking() {
         Intent i =new Intent(activity, MainActivity.class);

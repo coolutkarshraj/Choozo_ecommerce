@@ -3,6 +3,7 @@ package com.io.choozo.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.io.choozo.R;
+import com.io.choozo.model.dataModel.CategoryDataModel;
 import com.io.choozo.model.dummydataModel.ShopCategoryModel;
 
 import java.util.List;
@@ -18,9 +20,9 @@ import java.util.List;
 public class ShopingCategoryAdapter extends RecyclerView.Adapter<ShopingCategoryAdapter.ViewHolder> {
 
     Context context;
-    List<ShopCategoryModel> item;
+    List<CategoryDataModel> item;
 
-    public ShopingCategoryAdapter(Context context, List<ShopCategoryModel> item) {
+    public ShopingCategoryAdapter(Context context, List<CategoryDataModel> item) {
         this.context = context;
         this.item = item;
     }
@@ -36,9 +38,9 @@ public class ShopingCategoryAdapter extends RecyclerView.Adapter<ShopingCategory
     @Override
     public void onBindViewHolder(@NonNull ShopingCategoryAdapter.ViewHolder viewHolder, int i) {
 
-        ShopCategoryModel model = item.get(i);
-        viewHolder.name.setText(model.getCategoryName());
-        Glide.with(context).load(model.getCategoryImageUrl()).into(viewHolder.imageView);
+        CategoryDataModel model = item.get(i);
+        viewHolder.name.setText(model.getName());
+        Glide.with(context).load(model.getImagePath()).into(viewHolder.imageView);
 
     }
 
