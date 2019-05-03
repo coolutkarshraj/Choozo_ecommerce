@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="55dp"
+    android:layout_height="56dp"
     android:layout_weight="5"
     android:background="#333333"
     android:layout_gravity="bottom"
@@ -10,7 +10,7 @@
         android:layout_width="0dp"
         android:id="@+id/ll_lome"
         android:layout_height="match_parent"
-        android:background="#00acec"
+        android:background="#ff0000"
         android:layout_weight="1"
         android:orientation="vertical">
         <ImageView
@@ -44,6 +44,7 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginTop="5dp"
+            android:tint="@color/white"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
