@@ -1,24 +1,20 @@
 package com.io.choozo.model.dummydataModel;
 
-public class ShopCategory {
+public class ShopCategoryModel {
 
-    String categoryImageUrl;
+    Integer categoryImageUrl;
     String  categoryName;
 
-    public ShopCategory(String categoryImageUrl, String categoryName) {
+    public ShopCategoryModel(Integer categoryImageUrl, String categoryName) {
         this.categoryImageUrl = categoryImageUrl;
         this.categoryName = categoryName;
     }
 
-    public ShopCategory(){
-
-    }
-
-    public String getCategoryImageUrl() {
+    public Integer getCategoryImageUrl() {
         return categoryImageUrl;
     }
 
-    public void setCategoryImageUrl(String categoryImageUrl) {
+    public void setCategoryImageUrl(Integer categoryImageUrl) {
         this.categoryImageUrl = categoryImageUrl;
     }
 

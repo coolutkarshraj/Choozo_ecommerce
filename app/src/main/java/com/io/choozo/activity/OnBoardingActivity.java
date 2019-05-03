@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.io.choozo.R;
 import com.io.choozo.activity.homeActivity.MainActivity;
+import com.io.choozo.activity.loginRegistrationflow.LoginActivity;
 import com.smarteist.autoimageslider.DefaultSliderView;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderLayout;
@@ -57,7 +58,7 @@ public class OnBoardingActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
        switch (v.getId()){
            case R.id.btn_start :
-               Intent i =new Intent(activity, MainActivity.class);
+               Intent i =new Intent(activity, LoginActivity.class);
                startActivity(i);
        }
 

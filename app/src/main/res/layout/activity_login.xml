@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.loginRegistrationflow.loginActivity">
+    android:windowSoftInputMode="adjustResize"
+    android:background="@drawable/shopbackground11"
+
+    tools:context=".activity.loginRegistrationflow.LoginActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -28,60 +31,78 @@
             android:layout_marginRight="@dimen/endmargin"/>
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:id="@+id/secondlayout"
+        android:gravity="center"
+        android:orientation="vertical"
         android:layout_below="@+id/firstlayout">
 
         <TextView
+            android:id="@+id/tv_signin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sign In"
-            android:layout_centerHorizontal="true"
-            android:textSize="30dp"
+            android:layout_alignTop="@+id/secondlayout"
             android:lineSpacingExtra="6dp"
-            android:textStyle="bold"
-            android:layout_centerVertical="true"
+            android:text="Sign In"
             android:textColor="@color/black"
-            android:id="@+id/tv_signin"
-            android:layout_marginRight="@dimen/endmargin"/>
+            android:textSize="25dp"
+            android:textStyle="bold" />
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_signin">
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-               >
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="3dp"
-                android:layout_marginTop="25dp"
-                android:id="@+id/image_login"
-                android:background="@color/red"/>
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="3dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginLeft="10dp"
-                android:id="@+id/image_signup"
-                android:layout_toRightOf="@+id/image_login"
-               />
-            </RelativeLayout>
-        </RelativeLayout>
-    </RelativeLayout>
+            android:layout_below="@+id/tv_signin"
+            android:gravity="center"
+            android:layout_marginTop="2dp">
+
+                <RelativeLayout
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:paddingTop="20dp"
+
+                    android:paddingBottom="20dp"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/image_login">
+
+
+                            <RelativeLayout
+                                android:layout_width="50dp"
+                                android:layout_height="5dp"
+                                android:background="@color/red"
+                                android:id="@+id/tab">
+
+                            </RelativeLayout>
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/image_signup"
+                    android:layout_toRightOf="@+id/image_login"
+                 >
+                            <RelativeLayout
+                                android:layout_width="50dp"
+                                android:layout_height="5dp"
+                                android:id="@+id/tab1">
+                            </RelativeLayout>
+                </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginStart="10dp"
+        android:id="@+id/loginlayout"
         android:layout_marginEnd="10dp"
-
         android:layout_centerInParent="true"
         android:layout_below="@+id/secondlayout">
 
@@ -96,7 +117,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:id="@+id/emaillayout"
 
             android:layout_marginStart="@dimen/startmargin"
@@ -130,7 +151,7 @@
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:id="@+id/passwordlayout"
             android:layout_below="@+id/emaillayout"
@@ -174,7 +195,7 @@
            android:layout_gravity="right"
             android:textSize="@dimen/text_small"
             android:layout_centerVertical="true"
-            android:textColor="@color/black"
+            android:textColor="#9C9B9B"
             android:id="@+id/tv_forgotpassword"
             android:layout_marginRight="@dimen/endmargin"/>
         <Button
@@ -183,6 +204,7 @@
             android:layout_below="@+id/tv_forgotpassword"
             android:layout_marginTop="50dp"
             android:text="Login"
+            android:id="@+id/btnlogin"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:textSize="16dp"
@@ -200,10 +222,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:visibility="gone"
+       android:visibility="gone"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-
+        android:id="@+id/register_layout"
         android:layout_centerInParent="true"
         android:layout_below="@+id/secondlayout">
 
@@ -253,7 +275,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="5dp"
                     android:id="@+id/register_email_layout"
                     android:layout_below="@+id/emaillayout"
                     android:layout_marginStart="@dimen/startmargin"
@@ -289,7 +311,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="5dp"
                     android:id="@+id/register_phone_layout"
                     android:layout_below="@+id/emaillayout"
                     android:layout_marginStart="@dimen/startmargin"
@@ -327,7 +349,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="5dp"
                     android:id="@+id/password_layout_register"
                     android:layout_below="@+id/emaillayout"
                     android:layout_marginStart="@dimen/startmargin"
@@ -366,8 +388,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_forgotpassword"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="20dp"
                     android:text="Register"
+                    android:id="@+id/btn_register"
                     android:textColor="@color/white"
                     android:textStyle="bold"
                     android:textSize="16dp"
@@ -392,17 +415,18 @@
                     android:orientation="horizontal"
                     android:layout_gravity="center">
                     <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:background="@drawable/facebook"/>
                     <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:visibility="gone"
                         android:layout_marginLeft="20dp"
                         android:background="@drawable/twitter"/>
                     <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_marginLeft="20dp"
                         android:background="@drawable/googleplus"/>
                 </LinearLayout>
