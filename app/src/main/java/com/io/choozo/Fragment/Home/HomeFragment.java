@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -13,14 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.io.choozo.ApiCaller;
 import com.io.choozo.Config;
 import com.io.choozo.R;
-import com.io.choozo.activity.homeActivity.MainActivity;
 import com.io.choozo.adapter.ShopingCategoryAdapter;
-import com.io.choozo.model.dummydataModel.ShopCategoryModel;
+import com.io.choozo.model.dataModel.CategoryDataModel;
+import com.io.choozo.model.dataModel.ChildDataModel;
+import com.io.choozo.model.dataModel.SubChildDataModel;
 import com.io.choozo.model.responseModel.CategoryResponseModel;
 import com.koushikdutta.async.future.FutureCallback;
 import com.smarteist.autoimageslider.DefaultSliderView;
@@ -37,7 +36,9 @@ public class HomeFragment extends Fragment {
     RecyclerView rv_Shop;
     String endPoint;
     ShopingCategoryAdapter adapter;
-    List<ShopCategoryModel> list = new ArrayList<>();
+    List<CategoryDataModel> list = new ArrayList<>();
+    List<ChildDataModel> list1 = new ArrayList<>();
+    List<SubChildDataModel> list2 = new ArrayList<>();
 
 
     @Nullable
@@ -112,19 +113,43 @@ public class HomeFragment extends Fragment {
                         if(e!=null){
                             return;
                         }
-                        Log.e("data","abc"+result);
-                        if(result.getStatus().equals("1")) {
-                            adapter = new ShopingCategoryAdapter(activity, result.getData());
-                            rv_Shop.setAdapter(adapter);
-                            adapter.notifyDataSetChanged();
-                        }else{
-                            Toast.makeText(activity, "Something went wrong", Toast.LENGTH_SHORT).show();
-                        }
+                        setData(result);
 
                     }
                 });
 
+    }
 
+    private void setData(CategoryResponseModel result) {
+        for (int i = 0 ;i < result.getData().size();i++){
+            CategoryDataModel categoryDataModel = new CategoryDataModel();
+            categoryDataModel.setName(result.getData().get(i).getName());
+            categoryDataModel.setImage(result.getData().get(i).getImage());
+            list.add(categoryDataModel);
+
+                    for(int j = 0 ; j<result.getData().get(i).getChildren().size(); j++){
+                        ChildDataModel childDataModel = new ChildDataModel();
+                        childDataModel.setName(result.getData().get(i).getChildren().get(j).getName());
+                        list1.add(childDataModel);
+
+                        for( int k =0; k< result.getData().get(i).getChildren().get(j).getChildren().size(); k++){
+                            SubChildDataModel subChildDataModel = new SubChildDataModel();
+                            subChildDataModel.setName(result.getData().get(i).getChildren().get(j).getChildren().get(k).getName());
+                            list2.add(subChildDataModel);
+                        }
+                        }
+            }
+
+        setAdapterTabs();
+
+
+    }
+
+    private void setAdapterTabs() {
+        adapter = new ShopingCategoryAdapter(activity, list);
+        rv_Shop.setAdapter(adapter);
+        Config.childDataModel = list1;
+        Config.subChildDataModels = list2;
 
     }
 

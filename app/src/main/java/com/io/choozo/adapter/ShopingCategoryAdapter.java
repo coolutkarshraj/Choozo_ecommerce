@@ -1,6 +1,7 @@
 package com.io.choozo.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -8,10 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.io.choozo.R;
+import com.io.choozo.activity.homeActivity.CategorySubCategory;
 import com.io.choozo.model.dataModel.CategoryDataModel;
 import com.io.choozo.model.dummydataModel.ShopCategoryModel;
 
@@ -53,10 +56,20 @@ public class ShopingCategoryAdapter extends RecyclerView.Adapter<ShopingCategory
 
         TextView name;
         ImageView imageView;
+        RelativeLayout relativeLayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = (TextView)itemView.findViewById(R.id.tv_name);
             imageView = (ImageView)itemView.findViewById(R.id.imageview);
+            relativeLayout = (RelativeLayout)itemView.findViewById(R.id.rl_click);
+            relativeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int postion = getAdapterPosition();
+                    Intent i =new Intent(context, CategorySubCategory.class);
+                    context.startActivity(i);
+                }
+            });
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.io.choozo.model.dataModel;
 
+import android.app.Activity;
+
 import java.util.List;
 
 public class CategoryDataModel {
@@ -25,7 +27,7 @@ public class CategoryDataModel {
 
     private List<ChildDataModel> children = null;
 
-    CategoryDataModel(){}
+    public CategoryDataModel(){}
 
     public Integer getCategoryId() {
         return categoryId;

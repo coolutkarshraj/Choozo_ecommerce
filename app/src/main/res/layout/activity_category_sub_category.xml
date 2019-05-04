@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.homeActivity.CategorySubCategory">
+
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="55dp">
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@drawable/back_arrow"
+        android:backgroundTint="@color/black"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"/>
+
+    <com.io.choozo.custom.BoldTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mens Fashion"
+        android:textSize="@dimen/text_head"
+        android:textColor="@color/black"
+        android:layout_centerInParent="true"
+
+        />
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@drawable/filtericon"
+        android:backgroundTint="@color/black"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        />
+</RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rv_category"
+        android:elevation="12dp"></android.support.v7.widget.RecyclerView>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rv_subcategory"
+        android:elevation="12dp"></android.support.v7.widget.RecyclerView>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rv_items_catsub"></android.support.v7.widget.RecyclerView>
+
+
+</LinearLayout>
