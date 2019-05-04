@@ -1,6 +1,7 @@
 package com.io.choozo.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,6 +20,8 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
 
     Context context;
     List<SubChildDataModel> item;
+    int i;
+    public static int recyclerViewClickPostion;
 
     public SubCategoryAdapter(Context context, List<SubChildDataModel> item) {
         this.context = context;
@@ -34,10 +37,24 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SubCategoryAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull SubCategoryAdapter.ViewHolder viewHolder, final int i) {
 
         SubChildDataModel model = item.get(i);
         viewHolder.name.setText(model.getName());
+        viewHolder. linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerViewClickPostion = i;
+                notifyDataSetChanged();
+            }
+        });
+        if (recyclerViewClickPostion == i) {
+            viewHolder.name.setTextColor(Color.parseColor("#ff0000"));
+
+        } else {
+            viewHolder. name.setTextColor(Color.parseColor("#000000"));
+
+        }
 
 
     }
@@ -55,6 +72,8 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = (TextView)itemView.findViewById(R.id.tv_subcate);
+            linearLayout = (LinearLayout)itemView.findViewById(R.id.subcategorylayout);
+            i= getAdapterPosition();
 
 
         }

@@ -131,17 +131,20 @@ public class HomeFragment extends Fragment {
                         ChildDataModel childDataModel = new ChildDataModel();
                         childDataModel.setName(result.getData().get(i).getChildren().get(j).getName());
                         list1.add(childDataModel);
+                        try {
 
-                        for( int k =0; k< result.getData().get(i).getChildren().get(j).getChildren().size(); k++){
-                            SubChildDataModel subChildDataModel = new SubChildDataModel();
-                            subChildDataModel.setName(result.getData().get(i).getChildren().get(j).getChildren().get(k).getName());
-                            list2.add(subChildDataModel);
-                        }
+                            for( int k =0; k< result.getData().get(i).getChildren().get(j).getChildren().size(); k++){
+                                    SubChildDataModel subChildDataModel = new SubChildDataModel();
+                                    subChildDataModel.setName(result.getData().get(i).getChildren().get(j).getChildren().get(k).getName());
+                                    list2.add(subChildDataModel);
+                                }
+                                }catch (Exception e){
+                                    System.out.println(e);
+                                }
                         }
             }
 
         setAdapterTabs();
-
 
     }
 
