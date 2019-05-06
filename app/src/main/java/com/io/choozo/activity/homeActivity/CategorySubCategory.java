@@ -94,7 +94,7 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
 
         itemsRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         item.clear();
-        item.add(new ItemCatModel(R.drawable.roundneckdree,"Round Neck Dress","1200","2000"));
+        item.add(new ItemCatModel(R.drawable.boy,"Round Neck Dress","1200","2000"));
         item.add(new ItemCatModel(R.drawable.redbluetop,"Red Blue Strip Top","3000","3500"));
         item.add(new ItemCatModel(R.drawable.bluestriptop,"Blue Strip Top","1800","2200"));
         item.add(new ItemCatModel(R.drawable.green,"Green Crop T- Shirt","1200","1800"));

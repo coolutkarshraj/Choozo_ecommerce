@@ -15,8 +15,8 @@
     android:background="@color/white"
     android:elevation="5dp">
     <ImageView
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:id="@+id/back"
         android:background="@drawable/back_arrow"
         android:backgroundTint="@color/black"

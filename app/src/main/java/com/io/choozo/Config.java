@@ -10,6 +10,7 @@ public class Config {
     public static String Base_url = "13.233.195.231";
     public static List<ChildDataModel> childDataModel;
     public static List<SubChildDataModel> subChildDataModels;
+    public static String CartCount;
 
     public static class Url{
         public final static String  categoryList = "list/category-list?limit=&offset=0&keyword=&sortOrder=";

@@ -46,7 +46,8 @@ public class OnBoardingActivity extends AppCompatActivity implements View.OnClic
         btn_start =  findViewById(R.id.btn_start);
         sliderLayout = findViewById(R.id.image);
         sliderLayout.setIndicatorAnimation(IndicatorAnimations.FILL); //set indicator animation by using SliderLayout.Animations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
-        sliderLayout.setScrollTimeInSec(2); //set scroll delay in seconds :
+       sliderLayout.setScrollTimeInSec(2); //set scroll delay in seconds :
+
 
     }
 

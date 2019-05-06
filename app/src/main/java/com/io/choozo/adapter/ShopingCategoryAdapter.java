@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.io.choozo.R;
 import com.io.choozo.activity.homeActivity.CategorySubCategory;
 import com.io.choozo.model.dataModel.CategoryDataModel;
+import com.io.choozo.model.dummydataModel.ShoppingBagModel;
 
 import java.util.List;
 
