@@ -1,6 +1,7 @@
 package com.io.choozo.Fragment.checkout;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.io.choozo.R;
+import com.io.choozo.activity.ordersucessfull.OrderSucessfullyPlacedActivity;
 import com.io.choozo.adapter.ConfirmationAdapter;
 import com.io.choozo.adapter.ShopingBagAdapter;
 import com.io.choozo.model.dummydataModel.ConfirmationModel;
@@ -21,7 +23,8 @@ import com.io.choozo.model.dummydataModel.ShoppingBagModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Confirmation extends Fragment {
+public class Confirmation extends Fragment implements View.OnClickListener {
+    RelativeLayout orderNow;
     RecyclerView rv_Confirmation;
     ConfirmationAdapter adapter;
     List<ConfirmationModel> list = new ArrayList<>();
@@ -35,15 +38,38 @@ public class Confirmation extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_confirmation,container,false);
         intializeView(view);
+        bindListner();
+        startWorking();
         return  view;
     }
+
 
     private void intializeView(View view) {
         activity = getActivity();
         rv_Confirmation = (RecyclerView)view.findViewById(R.id.rv_items);
+        orderNow = (RelativeLayout)view.findViewById(R.id.rl_ordernow) ;
 
+    }
+
+
+    private void bindListner() {
+        orderNow.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.rl_ordernow :
+                Intent i =new Intent(activity, OrderSucessfullyPlacedActivity.class);
+                startActivity(i);
+        }
+
+    }
+
+    private void startWorking() {
         allConfirmationDatasetToRV();
     }
+
 
     private void allConfirmationDatasetToRV() {
         rv_Confirmation.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false));
@@ -57,5 +83,6 @@ public class Confirmation extends Fragment {
         adapter = new ConfirmationAdapter(activity,list);
         rv_Confirmation.setAdapter(adapter);
     }
+
 
 }

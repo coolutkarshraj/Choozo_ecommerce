@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.io.choozo.Fragment.Home.HomeFragment;
 import com.io.choozo.Fragment.MyCart.MyCartFragment;
+import com.io.choozo.Fragment.Search.Search;
 import com.io.choozo.Fragment.hotOffer.HotOfferFragment;
 import com.io.choozo.Fragment.profile.ProfileFragment;
 import com.io.choozo.R;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity
     HotOfferFragment hotOfferFragment;
     MyCartFragment myCartFragment;
     ProfileFragment profileFragment;
+    Search searchFragment;
 
 
 
@@ -104,6 +106,7 @@ public class MainActivity extends AppCompatActivity
                 ll_my_cart.setBackgroundColor(Color.parseColor("#333333"));
                 ll_search.setBackgroundColor(Color.parseColor("#ff0000"));
                 ll_profile.setBackgroundColor(Color.parseColor("#333333"));
+                changeFrag(searchFragment,false);
 
             }
         });
@@ -142,6 +145,7 @@ public class MainActivity extends AppCompatActivity
         hotOfferFragment = new HotOfferFragment();
         myCartFragment = new MyCartFragment();
         profileFragment = new ProfileFragment();
+        searchFragment = new Search();
    //set scroll delay in seconds :
     }
 
