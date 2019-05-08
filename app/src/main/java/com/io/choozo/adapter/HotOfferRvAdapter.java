@@ -10,13 +10,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.flexbox.FlexboxLayoutManager;
 import com.io.choozo.R;
+import com.io.choozo.holder.HotOfferRVHolder;
 import com.io.choozo.model.dummydataModel.OfferDataModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-public class HotOfferRvAdapter extends RecyclerView.Adapter<HotOfferRvAdapter.ViewHolder> {
+public class HotOfferRvAdapter extends RecyclerView.Adapter<HotOfferRVHolder> {
 
     Context context;
     List<OfferDataModel> list;
@@ -28,16 +31,21 @@ public class HotOfferRvAdapter extends RecyclerView.Adapter<HotOfferRvAdapter.Vi
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public HotOfferRVHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
         View view = LayoutInflater .from(viewGroup.getContext()).inflate(R.layout.hot_offer_card_design,viewGroup,false);
-        return new ViewHolder(view);
+        return new HotOfferRVHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull HotOfferRVHolder viewHolder, int i) {
       OfferDataModel offerDataModel = list.get(i);
-        Glide.with(context).load(offerDataModel.getImage()).into(viewHolder.Image);
+      Glide.with(context).load(offerDataModel.getImage()).into(viewHolder.imageView);
+        ViewGroup.LayoutParams lp = viewHolder.imageView.getLayoutParams();
+        if (lp instanceof FlexboxLayoutManager.LayoutParams) {
+            FlexboxLayoutManager.LayoutParams flexboxLp = (FlexboxLayoutManager.LayoutParams)lp;
+            flexboxLp.setFlexGrow(1.0f);
+        }
     }
 
     @Override
@@ -45,11 +53,6 @@ public class HotOfferRvAdapter extends RecyclerView.Adapter<HotOfferRvAdapter.Vi
         return list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView Image;
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            Image = (ImageView)itemView.findViewById(R.id.imageview);
-        }
+
     }
-}
+

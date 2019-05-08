@@ -48,7 +48,7 @@ public class HotOfferFragment extends Fragment {
         flexboxLayoutManager.setFlexWrap(FlexWrap.WRAP);
         flexboxLayoutManager.setFlexDirection(FlexDirection.ROW);
         flexboxLayoutManager.setJustifyContent(JustifyContent.SPACE_AROUND);
-      //  flexboxLayoutManager.setAlignItems(AlignItems.STRETCH);
+        flexboxLayoutManager.setAlignItems(AlignItems.STRETCH);
         rvHotOffer.setLayoutManager(flexboxLayoutManager);
         item.clear();
         item.add(new OfferDataModel(R.drawable.shop2));
