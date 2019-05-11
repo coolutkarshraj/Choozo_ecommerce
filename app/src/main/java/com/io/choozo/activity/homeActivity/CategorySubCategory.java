@@ -9,9 +9,16 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
+import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListener;
+import com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar;
+import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.io.choozo.Config;
 import com.io.choozo.R;
 import com.io.choozo.adapter.CategoryAdapter;
@@ -27,10 +34,14 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
     RecyclerView catRecyclerView,subcategoryrecyclerview,itemsRecyclerView;
     Activity activity;
     ImageView back;
+    RelativeLayout rlFilter;
+    ImageView Cancel ,filterbtn;
     CategoryAdapter categoryAdapter;
     SubCategoryAdapter subCategoryAdapter;
     ItemCategoryAdapter itemCategoryAdapter;
     List<ItemCatModel> item = new ArrayList<>();
+    CrystalRangeSeekbar  rangeSeekbar;
+    TextView tvMin,tvMax;
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -51,10 +62,19 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
         catRecyclerView = (RecyclerView)findViewById(R.id.rv_category);
         subcategoryrecyclerview = (RecyclerView)findViewById(R.id.rv_subcategory);
         itemsRecyclerView = (RecyclerView)findViewById(R.id.rv_items_catsub);
+        filterbtn = (ImageView)findViewById(R.id.filterbtn);
+        rlFilter = (RelativeLayout) findViewById(R.id.rl_filter);
+        Cancel = (ImageView)findViewById(R.id.im_cancel);
+        rangeSeekbar = (CrystalRangeSeekbar )findViewById(R.id.rangeSeekbar1);
+        tvMin = (TextView)findViewById(R.id.textMin1);
+        tvMax = (TextView)findViewById(R.id.textMax1);
 
     }
     private void bindListner() {
+
         back.setOnClickListener(this);
+        filterbtn.setOnClickListener(this);
+        Cancel.setOnClickListener(this);
     }
 
 
@@ -64,6 +84,12 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
             case R.id.back :
                 onBackPressed();
                 return;
+            case  R.id.filterbtn :
+                rlFilter.setVisibility(View.VISIBLE);
+                return;
+            case R.id.im_cancel :
+                 rlFilter.setVisibility(View.GONE);
+                 return;
         }
 
     }
@@ -72,7 +98,9 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
         categoryRecyclerViewData();
         subCategoryRecyclerViewData();
         CategorySubCategoryDataSetToRv();
+        seekBarSet();
     }
+
 
     /* -----------------------------------------------child data set into recyclerView-------------------------------------------*/
 
@@ -102,5 +130,23 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
         itemsRecyclerView.setAdapter(itemCategoryAdapter);
     }
 
+    private void seekBarSet() {
+        // set listener
+        rangeSeekbar.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
+            @Override
+            public void valueChanged(Number minValue, Number maxValue) {
+                tvMin.setText(String.valueOf(minValue));
+                tvMax.setText(String.valueOf(maxValue));
+            }
+        });
+
+// set final value listener
+        rangeSeekbar.setOnRangeSeekbarFinalValueListener(new OnRangeSeekbarFinalValueListener() {
+            @Override
+            public void finalValue(Number minValue, Number maxValue) {
+                Log.d("CRS=>", String.valueOf(minValue) + " : " + String.valueOf(maxValue));
+            }
+        });
+    }
 
 }

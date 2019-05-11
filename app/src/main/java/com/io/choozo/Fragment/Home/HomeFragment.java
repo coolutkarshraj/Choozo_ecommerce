@@ -143,7 +143,6 @@ public class HomeFragment extends Fragment {
                                 }
                         }
             }
-
         setAdapterTabs();
 
     }
@@ -153,7 +152,6 @@ public class HomeFragment extends Fragment {
         rv_Shop.setAdapter(adapter);
         Config.childDataModel = list1;
         Config.subChildDataModels = list2;
-
     }
 
 

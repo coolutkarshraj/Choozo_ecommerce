@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:android="http://schemas.android.com/apk/res/android">
+    <font
+
+            android:font="@font/segoeui" />
+    <font
+
+            android:font="@font/segoeuib" />
+    <font
+
+            android:font="@font/segoeuii" />
+    <font
+
+            android:font="@font/segoeuil" />
+    <font
+
+            android:font="@font/segoeuisl" />
+    <font
+
+        android:font="@font/segoeuiz" />
+    <font
+
+        android:font="@font/seguibl" />
+    <font
+
+        android:font="@font/seguibli" />
+    <font
+
+        android:font="@font/seguili" />
+    <font
+
+        android:font="@font/seguisb" />
+    <font
+
+        android:font="@font/seguisbi" />
+    <font
+
+        android:font="@font/seguisli" />
+
+
+</font-family>

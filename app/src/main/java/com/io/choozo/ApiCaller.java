@@ -15,18 +15,18 @@ public class ApiCaller {
     public static void getCategoryList(Activity activity, String url,
                                        final FutureCallback<CategoryResponseModel> apiCallBack){
          final Gson gson = new Gson();
-        Ion.with(activity)
-                .load(UrlLocator.getFinalUrl(url))
-                .noCache()
+         Ion.with(activity)
+            .load(UrlLocator.getFinalUrl(url))
+            .noCache()
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonObject result) {
-                    CategoryResponseModel categoryResponseModel =gson.fromJson(result,CategoryResponseModel.class);
-                    apiCallBack.onCompleted(e,categoryResponseModel);
-                    }
-                });
-    }
+        @Override
+        public void onCompleted(Exception e, JsonObject result) {
+            CategoryResponseModel categoryResponseModel =gson.fromJson(result,CategoryResponseModel.class);
+            apiCallBack.onCompleted(e,categoryResponseModel);
+        }
+    });
+}
 
     /*-------------------------------------------- Banner Image Get-----------------------------------------------------------*/
 }
