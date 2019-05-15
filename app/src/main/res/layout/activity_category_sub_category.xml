@@ -11,6 +11,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
+                    android:id="@+id/first"
                     android:background="@color/white"
                     android:elevation="5dp">
                     <ImageView
@@ -42,9 +43,11 @@
                         android:layout_marginRight="10dp"
                         />
                 </RelativeLayout>
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/first"
+                    android:orientation="vertical">
                                         <android.support.v7.widget.CardView
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
@@ -73,14 +76,21 @@
                                             android:layout_height="wrap_content"
                                             android:id="@+id/rv_items_catsub">
                                         </android.support.v7.widget.RecyclerView>
-                </RelativeLayout>
+                </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:elevation="5dp"
+                    android:visibility="gone"
+                    android:layout_alignParentBottom="true"
                     android:id="@+id/rl_filter"
-                    android:layout_alignParentBottom="true">
+                   >
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -146,6 +156,10 @@
                                             android:gravity="center"
                                             android:textColor="@color/grey"
                                             android:fontFamily="@font/seguisb"/>
+                                        <View
+                                            android:layout_width="match_parent"
+                                            android:layout_height="1dp"
+                                            android:background="@color/grey"></View>
                                         <TextView
                                             android:layout_width="match_parent"
                                             android:layout_height="50dp"
@@ -155,6 +169,10 @@
                                             android:gravity="center"
                                             android:textColor="@color/grey"
                                             android:fontFamily="@font/seguisb"/>
+                                        <View
+                                            android:layout_width="match_parent"
+                                            android:layout_height="1dp"
+                                            android:background="@color/grey"></View>
                                         <TextView
                                             android:layout_width="match_parent"
                                             android:layout_height="50dp"
@@ -164,6 +182,10 @@
                                             android:gravity="center"
                                             android:textColor="@color/grey"
                                             android:fontFamily="@font/seguisb"/>
+                                        <View
+                                            android:layout_width="match_parent"
+                                            android:layout_height="1dp"
+                                            android:background="@color/grey"></View>
                                         <TextView
                                             android:layout_width="match_parent"
                                             android:layout_height="50dp"
@@ -173,6 +195,10 @@
                                             android:gravity="center"
                                             android:textColor="@color/grey"
                                             android:fontFamily="@font/seguisb"/>
+                                        <View
+                                            android:layout_width="match_parent"
+                                            android:layout_height="1dp"
+                                            android:background="@color/grey"></View>
                                         <TextView
                                             android:layout_width="match_parent"
                                             android:layout_height="50dp"
@@ -182,6 +208,10 @@
                                             android:gravity="center"
                                             android:textColor="@color/grey"
                                             android:fontFamily="@font/seguisb"/>
+                                        <View
+                                            android:layout_width="match_parent"
+                                            android:layout_height="1dp"
+                                            android:background="@color/grey"></View>
                                         <TextView
                                             android:layout_width="match_parent"
                                             android:layout_height="50dp"
@@ -202,12 +232,25 @@
                                 android:layout_height="match_parent"
                                 android:orientation="vertical"
                                 android:layout_weight=".7">
+                                <ScrollView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:orientation="vertical">
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:orientation="vertical">
 
                                 <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
+                                    android:layout_marginTop="2dp"
                                     android:layout_centerVertical="true"
                                     android:elevation="50dp"
                                     app:corner_radius="10"
@@ -247,6 +290,127 @@
                                     android:id="@+id/textMax1"
                                     android:fontFamily="@font/seguisb"/>
                                 </RelativeLayout>
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="@color/grey"></View>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:gravity="center"
+
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="35dp"
+                                        android:gravity="center"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_marginEnd="10dp"
+                                        android:background="@drawable/grey_outline_round_narrow">
+                                    <Spinner
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:id="@+id/spinner"
+                                        ></Spinner>
+                                    </LinearLayout>
+
+                                </LinearLayout>
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="@color/grey"></View>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <android.support.v7.widget.RecyclerView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/rv_productsize">
+                                    </android.support.v7.widget.RecyclerView>
+
+                                </LinearLayout>
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="@color/grey"></View>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <android.support.v7.widget.RecyclerView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/rv_choosecolor">
+                                    </android.support.v7.widget.RecyclerView>
+
+                                </LinearLayout>
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="@color/grey"></View>
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="50dp"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="35dp"
+                                                android:gravity="center"
+                                                android:layout_marginStart="10dp"
+                                                android:layout_marginEnd="10dp"
+                                                android:background="@drawable/grey_outline_round_narrow">
+
+                                            <Spinner
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:id="@+id/spinner2"></Spinner>
+                                            </LinearLayout>
+
+                                        </LinearLayout>
+                                        <View
+                                            android:layout_width="match_parent"
+                                            android:layout_height="1dp"
+                                            android:background="@color/grey"></View>
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="50dp"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="35dp"
+                                                android:gravity="center"
+                                                android:layout_marginStart="10dp"
+                                                android:layout_marginEnd="10dp"
+                                                android:background="@drawable/grey_outline_round_narrow">
+                                                <Spinner
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:id="@+id/spinner1"></Spinner>
+                                            </LinearLayout>
+
+                                        </LinearLayout>
+                                        <View
+                                            android:layout_width="match_parent"
+                                            android:layout_height="1dp"
+                                            android:background="@color/grey"></View>
+                                    </LinearLayout>
+
+
+
+
+                                </ScrollView>
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -290,6 +454,7 @@
                             android:fontFamily="@font/seguisb"/>
                         </RelativeLayout>
                     </LinearLayout>
+                    </RelativeLayout>
                 </RelativeLayout>
 
 </RelativeLayout>

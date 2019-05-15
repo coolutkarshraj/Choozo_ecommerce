@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.io.choozo.Config;
 import com.io.choozo.R;
 import com.io.choozo.adapter.ChooseColorAdapter;
+import com.io.choozo.adapter.SelectFilterSizeAdapter;
 import com.io.choozo.adapter.SelectSizeAdapter;
 import com.io.choozo.adapter.SubCategoryAdapter;
 import com.io.choozo.model.dummydataModel.ChooseColorModel;
