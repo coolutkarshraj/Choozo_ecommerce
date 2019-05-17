@@ -3,6 +3,8 @@ package com.io.choozo.activity.homeActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,11 +21,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.io.choozo.Config;
+import com.io.choozo.Fragment.ProductView.OverView;
+import com.io.choozo.Fragment.ProductView.Review;
+import com.io.choozo.Fragment.checkout.Confirmation;
+import com.io.choozo.Fragment.checkout.Payment;
+import com.io.choozo.Fragment.checkout.Shipping;
 import com.io.choozo.R;
 import com.io.choozo.adapter.ChooseColorAdapter;
 import com.io.choozo.adapter.SelectFilterSizeAdapter;
 import com.io.choozo.adapter.SelectSizeAdapter;
 import com.io.choozo.adapter.SubCategoryAdapter;
+import com.io.choozo.adapter.fragmentadapter.CheckoutAdapter;
 import com.io.choozo.model.dummydataModel.ChooseColorModel;
 import com.io.choozo.model.dummydataModel.SelectSizeDataMode;
 import com.smarteist.autoimageslider.DefaultSliderView;
@@ -52,6 +60,9 @@ public class ProductAddCartActivity extends AppCompatActivity implements View.On
     Spinner spin;
     Button addToCart;
     TextView cartCount;
+    ViewPager viewPager;
+    CheckoutAdapter checkoutAdapter;
+    TabLayout tabLayout;
 
 
     @Override
@@ -79,6 +90,11 @@ public class ProductAddCartActivity extends AppCompatActivity implements View.On
         spin = (Spinner) findViewById(R.id.spinner);
         addToCart = (Button)findViewById(R.id.addtocart);
         cartCount = (TextView)findViewById(R.id.tv_cartcount);
+        checkoutAdapter = new CheckoutAdapter(getSupportFragmentManager());
+        viewPager =(ViewPager)findViewById(R.id.viewPager);
+        tabLayout = (TabLayout)findViewById(R.id.tab);
+        setUpFragment(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
 
     }
 
@@ -203,6 +219,7 @@ public class ProductAddCartActivity extends AppCompatActivity implements View.On
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         spinnerData = items[position];
         Config.CartCount = items[position];
+        ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
     }
 
     @Override
@@ -219,6 +236,15 @@ public class ProductAddCartActivity extends AppCompatActivity implements View.On
             cartCount.setText(spinnerData);
         }
 
+    }
+
+    /* -------------------------------------------------Set up of Fragments-------------------------------------*/
+
+    private void setUpFragment(ViewPager viewPager) {
+        CheckoutAdapter checkoutAdapter= new CheckoutAdapter(getSupportFragmentManager());
+        checkoutAdapter.addFragment(new OverView(),"Product Review");
+        checkoutAdapter.addFragment(new Review(),"Product Review");
+        viewPager.setAdapter(checkoutAdapter);
     }
 
 
