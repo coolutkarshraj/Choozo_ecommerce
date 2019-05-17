@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp">
+
+        
+     <RelativeLayout
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:id="@+id/rl_first">
+
+         <LinearLayout
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:background="@drawable/grey_outline_rectangle"
+             android:layout_margin="15dp">
+
+         <ImageView
+             android:layout_width="80dp"
+             android:layout_height="90dp"
+             android:scaleType="centerCrop"
+             android:id="@+id/imageView"
+             tools:layout_editor_absoluteX="0dp"
+             tools:layout_editor_absoluteY="0dp"
+           />
+         </LinearLayout>
+     </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rl_second"
+            android:layout_toLeftOf="@+id/rl_right"
+            android:layout_toRightOf="@+id/rl_first">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:id="@+id/tv_itemname">
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="5dp"
+              android:layout_marginEnd="5dp"
+              android:textSize="16dp"
+              android:text="Blue Strip Top"
+              android:maxLines="2"
+              android:id="@+id/tv_dressname"
+              android:layout_toLeftOf="@+id/tv_stock"
+              android:textColor="@color/black"
+              />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Out of stock"
+                    android:textSize="12dp"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/tv_stock"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentRight="true"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:id="@+id/rl_amt"
+            android:layout_marginEnd="5dp"
+            android:layout_below="@+id/tv_itemname"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:id="@+id/rupee"
+                android:background="@drawable/rupeeindian"
+                android:backgroundTint="@color/red"
+                android:layout_centerVertical="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/rupee"
+                android:text="1200"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/red"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:id="@+id/tv_mrp"
+                android:maxLength="25"
+                android:textSize="14dp"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/tv_mrp"
+                android:gravity="bottom">
+
+                <View
+                    android:layout_width="40dp"
+                    android:layout_height="1dp"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/black"></View>
+
+                <ImageView
+                    android:id="@+id/iv_cutprice"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/rupeeindian"
+                    android:backgroundTint="@color/black" />
+
+                <TextView
+                    android:id="@+id/tv_cutprice"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/iv_cutprice"
+                    android:baselineAligned="false"
+                    android:includeFontPadding="false"
+                    android:maxLength="25"
+                    android:maxLines="1"
+                    android:text="1400"
+                    android:textColor="@color/black"
+                    android:textSize="12dp" />
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+            <Button
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:layout_below="@+id/rl_amt"
+                android:background="@drawable/outlinebutton_shape_red"
+                android:text="Add to bag"
+                android:textSize="14dp"
+                android:textAllCaps="true"
+                android:textColor="@color/red"/>
+
+
+        </RelativeLayout>
+
+<View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/greybackground"
+    android:layout_alignParentBottom="true"></View>
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

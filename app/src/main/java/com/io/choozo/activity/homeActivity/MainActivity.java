@@ -1,5 +1,6 @@
 package com.io.choozo.activity.homeActivity;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -19,9 +20,14 @@ import android.widget.Toast;
 
 import com.io.choozo.Fragment.Home.HomeFragment;
 import com.io.choozo.Fragment.MyCart.MyCartFragment;
+import com.io.choozo.Fragment.Search.Search;
 import com.io.choozo.Fragment.hotOffer.HotOfferFragment;
 import com.io.choozo.Fragment.profile.ProfileFragment;
 import com.io.choozo.R;
+import com.smarteist.autoimageslider.DefaultSliderView;
+import com.smarteist.autoimageslider.IndicatorAnimations;
+import com.smarteist.autoimageslider.SliderLayout;
+import com.smarteist.autoimageslider.SliderView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -35,6 +41,7 @@ public class MainActivity extends AppCompatActivity
     HotOfferFragment hotOfferFragment;
     MyCartFragment myCartFragment;
     ProfileFragment profileFragment;
+    Search searchFragment;
 
 
 
@@ -44,6 +51,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         initView();
         bindListner();
+
     }
 
     private void bindListner() {
@@ -57,12 +65,12 @@ public class MainActivity extends AppCompatActivity
         ll_lome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             ll_lome.setBackgroundColor(Color.parseColor("#00acec"));
+             ll_lome.setBackgroundColor(Color.parseColor("#ff0000"));
              ll_hotoffer.setBackgroundColor(Color.parseColor("#333333"));
              ll_my_cart.setBackgroundColor(Color.parseColor("#333333"));
              ll_search.setBackgroundColor(Color.parseColor("#333333"));
              ll_profile.setBackgroundColor(Color.parseColor("#333333"));
-             changeFrag(homeFragment,true);
+             changeFrag(homeFragment,false);
             }
         });
 
@@ -70,11 +78,11 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 ll_lome.setBackgroundColor(Color.parseColor("#333333"));
-                ll_hotoffer.setBackgroundColor(Color.parseColor("#00acec"));
+                ll_hotoffer.setBackgroundColor(Color.parseColor("#ff0000"));
                 ll_my_cart.setBackgroundColor(Color.parseColor("#333333"));
                 ll_search.setBackgroundColor(Color.parseColor("#333333"));
                 ll_profile.setBackgroundColor(Color.parseColor("#333333"));
-                changeFrag(hotOfferFragment,true);
+                changeFrag(hotOfferFragment,false);
             }
         });
 
@@ -83,10 +91,10 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 ll_lome.setBackgroundColor(Color.parseColor("#333333"));
                 ll_hotoffer.setBackgroundColor(Color.parseColor("#333333"));
-                ll_my_cart.setBackgroundColor(Color.parseColor("#00acec"));
+                ll_my_cart.setBackgroundColor(Color.parseColor("#ff0000"));
                 ll_search.setBackgroundColor(Color.parseColor("#333333"));
                 ll_profile.setBackgroundColor(Color.parseColor("#333333"));
-                changeFrag(myCartFragment,true);
+                changeFrag(myCartFragment,false);
             }
         });
 
@@ -96,8 +104,9 @@ public class MainActivity extends AppCompatActivity
                 ll_lome.setBackgroundColor(Color.parseColor("#333333"));
                 ll_hotoffer.setBackgroundColor(Color.parseColor("#333333"));
                 ll_my_cart.setBackgroundColor(Color.parseColor("#333333"));
-                ll_search.setBackgroundColor(Color.parseColor("#00acec"));
+                ll_search.setBackgroundColor(Color.parseColor("#ff0000"));
                 ll_profile.setBackgroundColor(Color.parseColor("#333333"));
+                changeFrag(searchFragment,false);
 
             }
         });
@@ -109,13 +118,14 @@ public class MainActivity extends AppCompatActivity
                 ll_hotoffer.setBackgroundColor(Color.parseColor("#333333"));
                 ll_my_cart.setBackgroundColor(Color.parseColor("#333333"));
                 ll_search.setBackgroundColor(Color.parseColor("#333333"));
-                ll_profile.setBackgroundColor(Color.parseColor("#00acec"));
-                changeFrag(profileFragment,true);
+                ll_profile.setBackgroundColor(Color.parseColor("#ff0000"));
+                changeFrag(profileFragment,false);
             }
         });
     }
 
     private void initView() {
+
         iv_menu_icon =  findViewById(R.id.iv_menu_icon);
         ll_lome =  findViewById(R.id.ll_lome);
         ll_hotoffer =  findViewById(R.id.ll_hotoffer);
@@ -131,10 +141,14 @@ public class MainActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         homeFragment = new HomeFragment();
+        changeFrag(homeFragment,false);
         hotOfferFragment = new HotOfferFragment();
         myCartFragment = new MyCartFragment();
         profileFragment = new ProfileFragment();
+        searchFragment = new Search();
+   //set scroll delay in seconds :
     }
+
 
     @Override
     public void onBackPressed() {
@@ -183,5 +197,7 @@ public class MainActivity extends AppCompatActivity
         }
         m.commit();
     }
+
+
 
 }

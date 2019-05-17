@@ -1,15 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text = "Cart Fragment"
-        android:textSize="20sp"
-        android:layout_marginLeft="120dp"
-        android:layout_marginRight="120dp"
-        android:layout_gravity="center"/>
+   <android.support.v7.widget.RecyclerView
+       android:layout_width="match_parent"
+       android:id="@+id/rv_mycart"
+       android:layout_height="wrap_content"
+       android:layout_marginBottom="116dp"
+      ></android.support.v7.widget.RecyclerView>
 
-</LinearLayout>
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginBottom="66dp"
+       android:id="@+id/rl_button"
+       android:layout_alignParentBottom="true"
+       android:layout_marginStart="@dimen/startmargin"
+       android:layout_marginEnd="@dimen/endmargin"
+       android:background="@drawable/button_shape_red">
+
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="30dp"
+          android:layout_marginEnd="30dp"
+          android:layout_centerInParent="true">
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="place this order"
+          android:textAllCaps="true"
+          android:textColor="@color/white"
+          android:textSize="14dp"
+          android:textStyle="bold"
+          android:id="@+id/tv_order"
+          android:layout_centerVertical="true"
+         />
+      <RelativeLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:id="@+id/round"
+         android:layout_toRightOf="@+id/tv_order"
+         android:layout_marginLeft="20dp">
+
+         <ImageView
+             android:layout_width="2dp"
+             android:layout_height="2dp"
+             android:id="@+id/one"
+             android:background="@drawable/button_shape_red"
+             android:backgroundTint="@color/white"/>
+         <ImageView
+             android:layout_width="2dp"
+             android:layout_height="2dp"
+             android:layout_below="@+id/one"
+             android:id="@+id/two"
+             android:layout_marginTop="3dp"
+             android:background="@drawable/button_shape_red"
+             android:backgroundTint="@color/white"/>
+         <ImageView
+             android:layout_width="2dp"
+             android:layout_height="2dp"
+             android:layout_below="@+id/two"
+             android:id="@+id/three"
+             android:layout_marginTop="3dp"
+             android:background="@drawable/button_shape_red"
+             android:backgroundTint="@color/white"/>
+         <ImageView
+             android:layout_width="2dp"
+             android:layout_height="2dp"
+             android:layout_below="@+id/three"
+             android:layout_marginTop="3dp"
+             android:background="@drawable/button_shape_red"
+             android:backgroundTint="@color/white"/>
+      </RelativeLayout>
+
+      <ImageView
+          android:layout_width="14dp"
+          android:layout_height="14dp"
+          android:layout_toRightOf="@+id/round"
+          android:layout_centerVertical="true"
+          android:layout_marginLeft="20dp"
+          android:id="@+id/rupeeicon"
+          android:background="@drawable/rupeeindian"
+          android:backgroundTint="@color/white"/>
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="12,548"
+          android:layout_marginLeft="5dp"
+          android:maxLines="1"
+          android:maxLength="10"
+          android:layout_marginRight="10dp"
+          android:textAllCaps="true"
+          android:textColor="@color/white"
+          android:textSize="14dp"
+          android:textStyle="bold"
+          android:layout_toRightOf="@+id/rupeeicon"
+          android:layout_centerVertical="true"
+          />
+   </RelativeLayout>
+   </RelativeLayout>
+</RelativeLayout>

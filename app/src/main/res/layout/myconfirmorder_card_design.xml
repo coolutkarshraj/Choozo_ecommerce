@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp">
+
+        
+     <RelativeLayout
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:id="@+id/rl_first">
+
+         <LinearLayout
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:background="@drawable/grey_outline_rectangle"
+             android:layout_margin="15dp">
+
+         <ImageView
+             android:layout_width="80dp"
+             android:layout_height="90dp"
+             android:scaleType="centerCrop"
+             android:id="@+id/imageView"
+             tools:layout_editor_absoluteX="0dp"
+             tools:layout_editor_absoluteY="0dp"
+           />
+         </LinearLayout>
+     </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rl_second"
+            android:layout_toLeftOf="@+id/rl_right"
+            android:layout_toRightOf="@+id/rl_first">
+
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="5dp"
+              android:layout_marginEnd="5dp"
+              android:textSize="16dp"
+              android:text="Blue Strip Topd"
+              android:maxLines="1"
+              android:id="@+id/tv_itemname"
+              android:textColor="@color/black"
+              android:layout_marginTop="@dimen/startmargin"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:id="@+id/rl_size"
+                android:layout_below="@+id/tv_itemname">
+                
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Size: S"
+                   android:maxLength="12"
+                   android:maxLines="1"
+                   android:id="@+id/tv_size"
+                   android:textColor="@color/black"
+                   android:textSize="14dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Color: Red"
+                    android:layout_marginLeft="15dp"
+                    android:maxLength="12"
+                    android:maxLines="1"
+                    android:id="@+id/tv_color"
+                    android:layout_toRightOf="@+id/tv_size"
+                    android:textColor="@color/black"
+                    android:textSize="14dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Qty:3"
+                    android:layout_marginLeft="15dp"
+                    android:maxLength="12"
+                    android:maxLines="1"
+
+                    android:layout_toRightOf="@+id/tv_color"
+                    android:textColor="@color/black"
+                    android:textSize="14dp"/>
+            </RelativeLayout>
+            <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_below="@+id/rl_size"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:id="@+id/rupee"
+                android:background="@drawable/rupeeindian"
+                android:backgroundTint="@color/red"
+                android:layout_centerVertical="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/rupee"
+                android:text="1200"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/red"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:id="@+id/tv_mrp"
+                android:maxLength="25"
+                android:textSize="14dp"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/tv_mrp"
+                android:gravity="bottom">
+
+                <View
+                    android:layout_width="40dp"
+                    android:layout_height="1dp"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/black"></View>
+
+                <ImageView
+                    android:id="@+id/iv_cutprice"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/rupeeindian"
+                    android:backgroundTint="@color/black" />
+
+                <TextView
+                    android:id="@+id/tv_cutprice"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/iv_cutprice"
+                    android:baselineAligned="false"
+                    android:includeFontPadding="false"
+                    android:maxLength="25"
+                    android:maxLines="1"
+                    android:text="1400"
+                    android:textColor="@color/black"
+                    android:textSize="12dp" />
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

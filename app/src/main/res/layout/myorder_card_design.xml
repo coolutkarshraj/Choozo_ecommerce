@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_toLeftOf="@+id/dispatch">
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="08-jun-2018"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10dp"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/rl_orderid"
+            android:layout_below="@+id/tv_date">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Order Id:"
+                android:textColor="@color/grey"
+                android:id="@+id/order_nu"
+                android:textSize="16dp"></TextView>
+            <TextView
+                android:id="@+id/order_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="#SC123456"
+                android:textColor="@color/black"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/order_nu"
+                android:textSize="16dp"></TextView>
+        </RelativeLayout>
+</RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/dispatch"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="10dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dispatched"
+                android:textColor="@color/grey"
+                android:id="@+id/tv_orderstatus"
+                android:textSize="16dp"></TextView>
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="16dp"
+               android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/black"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/arrowright"
+                android:backgroundTint="@color/grey"
+                android:layout_toRightOf="@+id/tv_orderstatus"
+                android:textSize="16dp"></ImageView>
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/rl_orderid"
+            android:background="@color/greybackground"></View>
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>

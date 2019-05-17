@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:id="@+id/rl_forview"
+        >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rl_layout"
+            android:layout_toLeftOf="@+id/tv_edit">
+                        <TextView
+                            android:id="@+id/tv_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Jhon Smith"
+                            android:textSize="16dp"
+                            android:textColor="@color/black"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="701, Block - B, Siddhi Vinayak Tower,
+                Ahmedabad-380051, Gujarat, INDIA +91 98765 43210"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginBottom="20dp"
+                                android:layout_marginTop="5dp"
+                                android:maxLines="4"
+                                android:textColor="@color/grey"
+                                android:id="@+id/tv_address"
+                                android:textSize="14dp"
+                                android:layout_below="@+id/tv_name"></TextView>
+
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/red"
+                android:id="@+id/tv_edit"
+                android:textSize="12dp"></TextView>
+
+
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/greybackground"></View>
+
+    </LinearLayout>
+
+
+
+</android.support.v7.widget.CardView>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activity.ordersucessfull.OrderSucessfullyPlacedActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/rl_continue_shopping">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="thankyou"
+                android:layout_marginTop="50dp"
+                 android:layout_gravity="center"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:textColor="@color/red"
+                android:layout_marginBottom="5dp"
+                android:textSize="30dp"></TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="for your order"
+               android:layout_gravity="center"
+                android:textAllCaps="true"
+                android:id="@+id/tv_thanks"
+                android:textColor="@color/black"
+                android:layout_marginBottom="15dp"
+
+                android:textSize="17dp"></TextView>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+               android:layout_gravity="center"
+                android:layout_marginBottom="15dp"
+                android:id="@+id/rl_order"
+                android:layout_above="@+id/imageview">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Order number:"
+                    android:textColor="@color/grey"
+                    android:id="@+id/order_nu"
+                    android:textSize="16dp"></TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#SC123456"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/order_nu"
+                    android:textSize="16dp"></TextView>
+            </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:id="@+id/imageview"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/sucessfully_placed_order" />
+
+
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="estimated delivery"
+          android:layout_gravity="center"
+            android:textAllCaps="true"
+            android:id="@+id/tv_estimatedtime"
+            android:textColor="@color/red"
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/imageview"
+            android:textSize="17dp"></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Monday June 30,2019"
+            android:layout_gravity="center"
+            android:textAllCaps="true"
+            android:textColor="@color/grey"
+            android:layout_marginTop="5dp"
+            android:id="@+id/tv_estmatedtime"
+            android:layout_below="@+id/tv_estimatedtime"
+            android:textSize="14dp"></TextView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_estmatedtime"
+            android:layout_marginTop="10dp"
+            android:id="@+id/btn_track_order"
+            android:layout_marginStart="@dimen/startmargin"
+            android:layout_marginEnd="@dimen/endmargin"
+            android:background="@drawable/button_shape_grey">
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:layout_centerInParent="true"
+                android:text="track your order here"/>
+        </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="or"
+            android:layout_gravity="center"
+            android:textColor="@color/grey"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/btn_track_order"
+            android:layout_marginBottom="20dp"
+            android:textSize="14dp"></TextView>
+        </LinearLayout>
+    </ScrollView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/rl_continue_shopping"
+        android:background="@color/red"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="continue shopping"
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"
+            android:textSize="16dp"
+            android:textAllCaps="true"/>
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/ic_arrow_forward_black_24dp"/>
+
+    </RelativeLayout>
+</RelativeLayout>
