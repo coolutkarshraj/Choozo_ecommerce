@@ -54,8 +54,7 @@
                     app:contentInsetStart="0dp"
                     app:contentInsetStartWithNavigation="0dp"
                     app:layout_collapseMode="pin"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                    app:theme="@style/ToolBarStyle">
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
 
 

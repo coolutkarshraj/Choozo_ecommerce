@@ -2,25 +2,15 @@ package com.io.choozo.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.io.choozo.R;
-import com.io.choozo.activity.homeActivity.ProductAddCartActivity;
-import com.io.choozo.custom.CircularImageView;
 import com.io.choozo.model.dummydataModel.ChooseColorModel;
-import com.io.choozo.model.dummydataModel.ItemCatModel;
 
 import java.util.List;
 

@@ -3,34 +3,33 @@ package com.io.choozo.activity.homeActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.ToolbarWidgetWrapper;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.io.choozo.Config;
 import com.io.choozo.Fragment.ProductView.OverView;
 import com.io.choozo.Fragment.ProductView.Review;
-import com.io.choozo.Fragment.checkout.Confirmation;
-import com.io.choozo.Fragment.checkout.Payment;
-import com.io.choozo.Fragment.checkout.Shipping;
 import com.io.choozo.R;
 import com.io.choozo.adapter.ChooseColorAdapter;
-import com.io.choozo.adapter.SelectFilterSizeAdapter;
 import com.io.choozo.adapter.SelectSizeAdapter;
-import com.io.choozo.adapter.SubCategoryAdapter;
 import com.io.choozo.adapter.fragmentadapter.CheckoutAdapter;
 import com.io.choozo.model.dummydataModel.ChooseColorModel;
 import com.io.choozo.model.dummydataModel.SelectSizeDataMode;
@@ -42,7 +41,7 @@ import com.smarteist.autoimageslider.SliderView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductAddCartActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class CartActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     SliderLayout sliderLayout;
     String productName;
     String productMRP;
@@ -68,17 +67,18 @@ public class ProductAddCartActivity extends AppCompatActivity implements View.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product_add_cart);
+        setContentView(R.layout.activity_cart);
         initializeViews();
+        toolbar();
         bindListner();
         startWorking();
     }
 
+
+
     private void initializeViews() {
-        activity = ProductAddCartActivity.this;
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-        toolbar.setTitle("Mens Fashion");
-        setSupportActionBar(toolbar);
+        activity = CartActivity.this;
+
         sliderLayout = findViewById(R.id.slider);
         sliderLayout.setIndicatorAnimation(IndicatorAnimations.FILL); //set indicator animation by using SliderLayout.Animations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
         sliderLayout.setAutoScrolling(false);
@@ -98,10 +98,21 @@ public class ProductAddCartActivity extends AppCompatActivity implements View.On
 
     }
 
+    private void toolbar() {
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar.setTitle("Mens Fashion");
+     //   getSupportActionBar().setDisplayShowTitleEnabled(false);
+        setSupportActionBar(toolbar);
+        final CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+
+        collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.transparent)); // transperent color = #00000000
+        collapsingToolbarLayout.setCollapsedTitleTextColor(Color.rgb(0, 0, 0)); //Color of your title
+    }
+
     private void bindListner() {
-        back.setOnClickListener(this);
-        Unlike.setOnClickListener(this);
-        Like.setOnClickListener(this);
+      back.setOnClickListener(this);
+      //  Unlike.setOnClickListener(this);
+       // Like.setOnClickListener(this);
         spin.setOnItemSelectedListener(this);
         spinnerAdapterSet();
         addToCart.setOnClickListener(this);
@@ -124,7 +135,7 @@ public class ProductAddCartActivity extends AppCompatActivity implements View.On
                 Like.setVisibility(View.GONE);
                 return;
             case R.id.addtocart :
-                addToCartData();
+                //addToCartData();
         }
 
     }
@@ -247,5 +258,16 @@ public class ProductAddCartActivity extends AppCompatActivity implements View.On
         viewPager.setAdapter(checkoutAdapter);
     }
 
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.cart, menu);
+        MenuItem item = menu.findItem(R.id.badge);
+        MenuItem item1 = menu.findItem(R.id.action_drawer_search);
+        MenuItemCompat.setActionView(item, R.layout.carticon);
+        MenuItemCompat.setActionView(item1, R.layout.cartlike);
+        RelativeLayout notifCount = (RelativeLayout)   MenuItemCompat.getActionView(item);
+        TextView tv = (TextView) notifCount.findViewById(R.id.tv_cartcount);
+        tv.setText("12");
+        return super.onCreateOptionsMenu(menu);
+    }
 }
