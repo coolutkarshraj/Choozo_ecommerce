@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10sp">
+
+    <com.io.choozo.custom.NormalTextView
+        android:id="@+id/tvConfirmation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:text="Are you sure you want to do this?"
+        android:textColor="@color/black" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvConfirmation"
+        android:layout_centerHorizontal="true">
+
+        <com.io.choozo.custom.NormalButton
+            android:id="@+id/bYes"
+            android:layout_width="50sp"
+            android:layout_height="25sp"
+            android:layout_marginRight="5sp"
+            android:layout_marginTop="30sp"
+            android:background="@color/red"
+            android:text="Yes"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <com.io.choozo.custom.NormalButton
+            android:id="@+id/bNo"
+            android:layout_width="50sp"
+            android:layout_height="25sp"
+            android:layout_marginLeft="5sp"
+            android:layout_marginTop="30sp"
+            android:layout_toRightOf="@+id/bYes"
+            android:background="@color/black"
+            android:text="No"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+</RelativeLayout>

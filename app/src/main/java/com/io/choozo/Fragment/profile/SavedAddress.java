@@ -51,4 +51,12 @@ public class SavedAddress  extends Fragment {
         adapter = new SavedAdressRvAdapter(activity,item);
         rvSavedAdress.setAdapter(adapter);
     }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+        }
+    }
 }

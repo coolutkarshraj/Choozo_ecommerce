@@ -23,7 +23,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     RelativeLayout loginTab,registerTab;
     Activity activity;
     Button btnLogin,btnRegister;
-    TextView tvSkip;
+    TextView tvSkip, tvForgotPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
       btnRegister = (Button) findViewById(R.id.btn_register);
       btnLogin = (Button) findViewById(R.id.btnlogin);
       tvSkip = (TextView) findViewById(R.id.tv_skip);
+      tvForgotPassword = (TextView) findViewById(R.id.tv_forgotpassword);
     }
 
 
@@ -54,6 +55,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnLogin.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
         tvSkip.setOnClickListener(this);
+        tvForgotPassword.setOnClickListener(this);
     }
 
 
@@ -85,11 +87,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             case R.id.tv_skip :
                 Intent i = new Intent(activity,MainActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
 
-
+            case R.id.tv_forgotpassword :
+                Intent intent = new Intent(activity,ForgotPasswodActivity.class);
+                startActivity(intent);
         }
 
     }
@@ -98,6 +100,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void registrationStartWorking() {
         Intent i =new Intent(activity, MainActivity.class);
+
         startActivity(i);
     }
 
@@ -105,6 +108,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void loginStartWorking() {
         Intent i =new Intent(activity, MainActivity.class);
+
         startActivity(i);
     }
 }

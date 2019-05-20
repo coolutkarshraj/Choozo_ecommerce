@@ -166,17 +166,21 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.home) {
             Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.profile) {
             Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.order_history) {
             Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.payment_history) {
             Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.track_order) {
             Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.about) {
+            Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show();
+        }else if (id == R.id.logout) {
+            Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show();
+        }else if (id == R.id.nav_share) {
             Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show();
         }
 

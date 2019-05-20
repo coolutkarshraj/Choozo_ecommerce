@@ -6,25 +6,48 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/home"
             android:icon="@drawable/ic_home_black_24dp"
             app:itemTextAppearance="@style/MenuItems"
             android:title="Home" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_photo_album_black_24dp"
+            android:id="@+id/profile"
+            android:icon="@drawable/profile"
             app:itemTextAppearance="@style/MenuItems"
-            android:title="Gallery" />
+            android:title="Profile" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_slideshow_black_24dp"
+            android:id="@+id/wallet"
+            android:icon="@drawable/ic_account_balance_wallet_black_24dp"
             app:itemTextAppearance="@style/MenuItems"
-            android:title="Slideshow" />
+            android:title="Wallet" />
+
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_local_mall_black_24dp"
+            android:id="@+id/order_history"
+            android:icon="@drawable/ic_list_black_24dp"
             app:itemTextAppearance="@style/MenuItems"
-            android:title="Tools" />
+            android:title="Order History" />
+
+        <item
+            android:id="@+id/payment_history"
+            android:icon="@drawable/ic_list_black_24dp"
+            app:itemTextAppearance="@style/MenuItems"
+            android:title="Payment History" />
+
+        <item
+            android:id="@+id/track_order"
+            android:icon="@drawable/ic_location_on_black_24dp"
+            app:itemTextAppearance="@style/MenuItems"
+            android:title="Track Order" />
+        <item
+            android:id="@+id/about"
+            android:icon="@drawable/ic_info_outline_black_24dp"
+            app:itemTextAppearance="@style/MenuItems"
+            android:title="About" />
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/logout"
+            app:itemTextAppearance="@style/MenuItems"
+            android:title="Logout" />
     </group>
 
     <item android:title="Communicate">
@@ -34,11 +57,6 @@
                 app:itemTextAppearance="@style/MenuItems"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/home"
-                app:itemTextAppearance="@style/MenuItems"
-                android:title="Send" />
         </menu>
     </item>
 
