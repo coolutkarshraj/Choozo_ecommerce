@@ -34,6 +34,8 @@
             android:maxLength="5"
             android:textAlignment="center"
             android:id="@+id/tv_size"
+            android:textSize="@dimen/h3"
+            android:fontFamily="@font/segoeui"
           />
     </RelativeLayout>
     </RelativeLayout>

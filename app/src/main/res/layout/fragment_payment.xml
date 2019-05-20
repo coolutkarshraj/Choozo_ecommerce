@@ -23,8 +23,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Promo Code"
-                android:textSize="18dp"
-                android:textStyle="bold"
+                android:textSize="@dimen/h1"
+                android:fontFamily="@font/segoeuib"
                 android:textColor="@color/black"
                 android:layout_marginTop="25dp"
                 android:layout_marginLeft="10dp"/>
@@ -43,7 +43,8 @@
                     android:layout_height="38dp"
                     android:textColor="@color/black"
                     android:hint="#1234"
-                    android:textSize="16dp"
+                    android:textSize="@dimen/h2"
+                    android:fontFamily="@font/seguisb"
                     android:padding="5dp"
                     android:layout_gravity="center"
                     android:layout_weight="1.9"
@@ -53,6 +54,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:text="Apply"
+                    android:textSize="@dimen/h2"
+                    android:fontFamily="@font/seguisb"
                     android:background="@color/red"
                     android:textColor="@color/white"
                     android:layout_weight=".1"/>
@@ -78,7 +81,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Cash on Delivery"
-                    android:textSize="16dp"
+                    android:textSize="@dimen/h2"
+                    android:fontFamily="@font/seguisb"
                     android:layout_toRightOf="@id/cod"
                     android:layout_marginLeft="20dp"/>
 
@@ -113,7 +117,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="E-Wallet"
-                    android:textSize="16dp"
+                    android:textSize="@dimen/h2"
+                    android:fontFamily="@font/seguisb"
                     android:layout_toRightOf="@id/ewalet"
                     android:layout_marginLeft="20dp"/>
 
@@ -147,7 +152,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Credit Card"
-                    android:textSize="16dp"
+                    android:textSize="@dimen/h2"
+                    android:fontFamily="@font/seguisb"
                      android:layout_toRightOf="@+id/card"
                     android:layout_marginLeft="20dp"/>
 
@@ -176,7 +182,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Total Amount"
-        android:textSize="16dp"
+            android:textSize="@dimen/h2"
+            android:fontFamily="@font/seguisb"
         android:padding="10dp"
         android:textColor="@color/black"/>
 
@@ -186,7 +193,8 @@
             android:text="12,960"
             android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"
-            android:textSize="16dp"
+            android:textSize="@dimen/h2"
+            android:fontFamily="@font/seguisb"
             android:padding="10dp"
             android:textColor="@color/red"
             android:id="@+id/amount"/>
@@ -212,7 +220,8 @@
             android:text="continue to confirmation"
             android:textColor="@color/white"
             android:layout_centerInParent="true"
-            android:textSize="16dp"
+            android:textSize="@dimen/h1"
+            android:fontFamily="@font/seguisb"
             android:textAllCaps="true"/>
 
         <ImageView

@@ -57,6 +57,7 @@
                     app:layout_collapseMode="pin"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
+
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="40dp">
@@ -94,10 +95,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:textSize="@dimen/text_head"
+                        android:textSize="@dimen/h1"
+                        android:fontFamily="@font/segoeuib"
                         android:text="Red Blue Striped Top"
-                        android:layout_gravity="center"
-                        android:textStyle="bold"/>
+                        android:layout_gravity="center" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -124,10 +125,10 @@
                                             android:text="3299"
                                             android:layout_toRightOf="@+id/rupee"
                                             android:layout_centerVertical="true"
-                                            android:textSize="@dimen/text_head"
                                             android:textColor="@color/red"
                                             android:id="@+id/tv_mrp"
-                                            android:textStyle="bold"/>
+                                            android:textSize="@dimen/h2"
+                                            android:fontFamily="@font/seguisb"/>
                                     <RelativeLayout
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -160,7 +161,8 @@
                                             android:maxLines="1"
                                             android:maxLength="5"
                                             android:id="@+id/tv_cutprice"
-                                            android:textSize="15dp"
+                                            android:textSize="@dimen/h3"
+                                            android:fontFamily="@font/seguisb"
                                             />
 
                                     </RelativeLayout>
@@ -195,7 +197,8 @@
                 app:tabGravity="fill"
                 app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
                 app:tabTextColor="@color/black"
-                app:tabSelectedTextColor="@color/red">
+                app:tabSelectedTextColor="@color/red"
+                style="@style/tab">
 
             </android.support.design.widget.TabLayout>
 
@@ -236,7 +239,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:textColor="@color/white"
-            android:textSize="16dp"
+            android:textSize="@dimen/h1"
+            android:fontFamily="@font/seguisb"
             android:layout_marginLeft="5dp"
             android:text="Qty :"
             android:id="@+id/qty"/>
@@ -256,7 +260,8 @@
             android:textColor="@color/white"
             android:textAllCaps="true"
             android:id="@+id/addtocart"
-            android:textSize="16dp"
+            android:textSize="@dimen/h1"
+            android:fontFamily="@font/seguisb"
            />
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

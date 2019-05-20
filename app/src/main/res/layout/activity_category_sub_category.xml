@@ -27,7 +27,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Mens Fashion"
-                        android:textSize="@dimen/text_head"
+                        android:textSize="@dimen/h1"
+                        android:fontFamily="@font/seguisb"
                         android:textColor="@color/black"
                         android:layout_centerInParent="true"
 

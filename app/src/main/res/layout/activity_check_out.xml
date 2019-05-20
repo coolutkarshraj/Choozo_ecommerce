@@ -26,7 +26,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Checkout"
-            android:textSize="@dimen/text_head"
+            android:textSize="@dimen/h1"
+            android:fontFamily="@font/segoeuib"
+
             android:textColor="@color/black"
             android:layout_centerInParent="true"
             />
@@ -41,7 +43,8 @@
         app:tabGravity="fill"
         app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
         app:tabTextColor="@color/black"
-        app:tabSelectedTextColor="@color/red">
+        app:tabSelectedTextColor="@color/red"
+        style="@style/tab">
 
     </android.support.design.widget.TabLayout>
 

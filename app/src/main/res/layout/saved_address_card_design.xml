@@ -23,7 +23,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Jhon Smith"
-                            android:textSize="16dp"
+                            android:textSize="@dimen/h2"
+                            android:fontFamily="@font/seguisb"
                             android:textColor="@color/black"
                             android:layout_marginTop="20dp"
                             android:layout_marginLeft="10dp"
@@ -41,7 +42,8 @@
                                 android:maxLines="4"
                                 android:textColor="@color/grey"
                                 android:id="@+id/tv_address"
-                                android:textSize="14dp"
+                                android:textSize="@dimen/h3"
+                                android:fontFamily="@font/seguisb"
                                 android:layout_below="@+id/tv_name"></TextView>
 
 
@@ -57,7 +59,8 @@
                 android:layout_marginLeft="20dp"
                 android:textColor="@color/red"
                 android:id="@+id/tv_edit"
-                android:textSize="12dp"></TextView>
+                android:textSize="@dimen/h3"
+                android:fontFamily="@font/seguisb"></TextView>
 
 
         </RelativeLayout>

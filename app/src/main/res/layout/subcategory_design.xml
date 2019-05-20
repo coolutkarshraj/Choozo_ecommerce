@@ -13,6 +13,7 @@
         android:paddingRight="5dp"
         android:paddingTop="5dp"
         android:paddingBottom="3dp"
-        android:textSize="14dp"
+        android:textSize="@dimen/h2"
+        android:fontFamily="@font/segoeui"
         android:textColor="@color/black"/>
 </LinearLayout>

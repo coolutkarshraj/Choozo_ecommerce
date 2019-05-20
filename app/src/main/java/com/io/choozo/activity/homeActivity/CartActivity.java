@@ -3,6 +3,7 @@ package com.io.choozo.activity.homeActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
@@ -62,6 +63,8 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     ViewPager viewPager;
     CheckoutAdapter checkoutAdapter;
     TabLayout tabLayout;
+    CollapsingToolbarLayout collapsingToolbarLayout;
+
 
 
     @Override
@@ -103,10 +106,17 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         toolbar.setTitle("Mens Fashion");
      //   getSupportActionBar().setDisplayShowTitleEnabled(false);
         setSupportActionBar(toolbar);
-        final CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-
+        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.transparent)); // transperent color = #00000000
         collapsingToolbarLayout.setCollapsedTitleTextColor(Color.rgb(0, 0, 0)); //Color of your title
+        setFont();
+    }
+
+    private void setFont() {
+
+        final Typeface tf = Typeface.createFromAsset(activity.getAssets(), "fonts/seguisb.ttf");
+        collapsingToolbarLayout.setCollapsedTitleTypeface(tf);
+        collapsingToolbarLayout.setExpandedTitleTypeface(tf);
     }
 
     private void bindListner() {

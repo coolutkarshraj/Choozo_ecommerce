@@ -26,9 +26,10 @@
             android:text="Skip"
             android:id="@+id/tv_skip"
             android:layout_alignParentRight="true"
-            android:textSize="@dimen/text_small"
+            android:textSize="@dimen/h3"
             android:layout_centerVertical="true"
             android:textColor="@color/black"
+            android:fontFamily="@font/segoeui"
             android:layout_marginRight="@dimen/endmargin"/>
     </RelativeLayout>
 
@@ -50,7 +51,7 @@
             android:text="Sign In"
             android:textColor="@color/black"
             android:textSize="25dp"
-            android:textStyle="bold" />
+            android:fontFamily="@font/segoeui"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -146,7 +147,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/red"
-                    android:hint="Email" />
+                    android:hint="Email"
+                    android:textSize="@dimen/h2"
+                    android:fontFamily="@font/segoeui"/>
             </android.support.design.widget.TextInputLayout>
 
         </RelativeLayout>
@@ -182,7 +185,9 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
                     android:textColor="@color/red"
-                    android:hint="Password" />
+                    android:hint="Password"
+                    android:textSize="@dimen/h2"
+                    android:fontFamily="@font/segoeui"/>
             </android.support.design.widget.TextInputLayout>
 
 
@@ -194,11 +199,12 @@
            android:layout_below="@+id/passwordlayout"
             android:layout_marginTop="10dp"
            android:layout_gravity="right"
-            android:textSize="@dimen/text_small"
+            android:textSize="@dimen/h3"
             android:layout_centerVertical="true"
             android:textColor="#9C9B9B"
             android:id="@+id/tv_forgotpassword"
-            android:layout_marginRight="@dimen/endmargin"/>
+            android:layout_marginRight="@dimen/endmargin"
+            android:fontFamily="@font/segoeui"/>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -208,7 +214,8 @@
             android:id="@+id/btnlogin"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:textSize="16dp"
+            android:textSize="@dimen/h1"
+            android:fontFamily="@font/seguisb"
             android:layout_marginStart="@dimen/startmargin"
             android:layout_marginEnd="@dimen/endmargin"
             android:background="@drawable/button_shape_red"
@@ -269,7 +276,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/red"
-                            android:hint="User Name" />
+                            android:hint="User Name"
+                            android:textSize="@dimen/h2"
+                            android:fontFamily="@font/segoeui"/>
                     </android.support.design.widget.TextInputLayout>
 
                 </RelativeLayout>
@@ -304,7 +313,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/red"
-                            android:hint="Email" />
+                            android:hint="Email"
+                            android:textSize="@dimen/h2"
+                            android:fontFamily="@font/segoeui"/>
                     </android.support.design.widget.TextInputLayout>
 
 
@@ -342,7 +353,9 @@
                             android:textColor="@color/red"
                             android:inputType="number"
                             android:maxLength="10"
-                            android:hint="Phone" />
+                            android:hint="Phone"
+                            android:textSize="@dimen/h2"
+                            android:fontFamily="@font/segoeui"/>
                     </android.support.design.widget.TextInputLayout>
 
 
@@ -379,7 +392,9 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/red"
                             android:inputType="textPassword"
-                            android:hint="Password" />
+                            android:hint="Password"
+                            android:textSize="@dimen/h2"
+                            android:fontFamily="@font/segoeui"/>
                     </android.support.design.widget.TextInputLayout>
 
 
@@ -397,6 +412,7 @@
                     android:textSize="16dp"
                     android:layout_marginStart="@dimen/startmargin"
                     android:layout_marginEnd="@dimen/endmargin"
+                    android:fontFamily="@font/seguisb"
                     android:background="@drawable/button_shape_red"
                     android:layout_marginBottom="10dp"/>
 

@@ -7,7 +7,9 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="btn_text">16dp</dimen>
     <dimen name="text_head">20dp</dimen>
-    <dimen name="text_small">16dp</dimen>
+    <dimen name="h1">16dp</dimen>
+    <dimen name="h2">14dp</dimen>
+    <dimen name="h3">12dp</dimen>
     <dimen name="startmargin">20dp</dimen>
     <dimen name="endmargin">20dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>

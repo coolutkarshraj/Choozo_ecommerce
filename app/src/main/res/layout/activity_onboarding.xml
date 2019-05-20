@@ -41,7 +41,8 @@
                         android:gravity="center"
                         android:text="welcome to Choozo"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_head" />
+                        android:textSize="@dimen/text_head"
+                        android:fontFamily="@font/segoeui"/>
 
                     <View
                         android:id="@+id/view_design"
@@ -65,7 +66,8 @@
                         android:lineSpacingExtra="6dp"
                         android:text="@string/start_intro"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_small" />
+                        android:textSize="14dp"
+                        android:fontFamily="@font/segoeui"/>
 
                 </RelativeLayout>
             </LinearLayout>
@@ -83,7 +85,7 @@
                 android:text="get started"
                 android:textSize="@dimen/btn_text"
                 android:textAllCaps="true"
-                android:textStyle="bold"/>
+              android:fontFamily="@font/seguisb"/>
 
 
 </RelativeLayout>

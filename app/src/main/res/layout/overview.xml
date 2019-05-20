@@ -9,7 +9,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/startmargin"
         android:text="Description"
-        android:textSize="20dp"
+        android:textSize="@dimen/h1"
+        android:fontFamily="@font/seguisb"
         android:textColor="@color/black"
         android:layout_marginStart="@dimen/startmargin"/>
     <RelativeLayout
@@ -30,7 +31,8 @@
             android:layout_height="wrap_content"
             android:text="Simple Full Sleeves"
             android:layout_marginLeft="10dp"
-            android:textSize="12dp"
+            android:textSize="@dimen/h3"
+            android:fontFamily="@font/segoeui"
             android:textColor="@color/black"
             android:layout_toRightOf="@id/icon1"/>
     </RelativeLayout>
@@ -52,7 +54,8 @@
             android:layout_height="wrap_content"
             android:text="Casual fit that is true to size"
             android:layout_marginLeft="10dp"
-            android:textSize="12dp"
+            android:textSize="@dimen/h3"
+            android:fontFamily="@font/segoeui"
             android:textColor="@color/black"
             android:layout_toRightOf="@id/icon2"/>
     </RelativeLayout>

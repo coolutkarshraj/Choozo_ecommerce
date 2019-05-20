@@ -48,7 +48,8 @@
               android:layout_height="wrap_content"
               android:layout_marginStart="5dp"
               android:layout_marginEnd="5dp"
-              android:textSize="16dp"
+              android:textSize="@dimen/h1"
+              android:fontFamily="@font/seguisb"
               android:text="Blue Strip Top"
               android:maxLines="2"
               android:id="@+id/tv_dressname"
@@ -60,7 +61,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Out of stock"
-                    android:textSize="12dp"
+                    android:textSize="@dimen/h3"
+                    android:fontFamily="@font/seguisb"
                     android:layout_centerVertical="true"
                     android:id="@+id/tv_stock"
                     android:layout_marginRight="10dp"
@@ -97,7 +99,8 @@
                 android:maxLines="1"
                 android:id="@+id/tv_mrp"
                 android:maxLength="25"
-                android:textSize="14dp"/>
+                android:textSize="@dimen/h2"
+                android:fontFamily="@font/seguisb"/>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -136,7 +139,8 @@
                     android:maxLines="1"
                     android:text="1400"
                     android:textColor="@color/black"
-                    android:textSize="12dp" />
+                    android:textSize="@dimen/h3"
+                    android:fontFamily="@font/seguisb"/>
             </RelativeLayout>
 
 
@@ -148,7 +152,8 @@
                 android:layout_below="@+id/rl_amt"
                 android:background="@drawable/outlinebutton_shape_red"
                 android:text="Add to bag"
-                android:textSize="14dp"
+                android:textSize="@dimen/h2"
+                android:fontFamily="@font/seguisb"
                 android:textAllCaps="true"
                 android:textColor="@color/red"/>
 

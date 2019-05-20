@@ -43,7 +43,8 @@
               android:layout_height="wrap_content"
               android:layout_marginStart="5dp"
               android:layout_marginEnd="5dp"
-              android:textSize="16dp"
+              android:textSize="@dimen/h1"
+              android:fontFamily="@font/segoeuib"
               android:text="Blue Strip Topd"
               android:maxLines="1"
               android:id="@+id/tv_itemname"
@@ -67,7 +68,8 @@
                    android:maxLines="1"
                    android:id="@+id/tv_size"
                    android:textColor="@color/black"
-                   android:textSize="14dp"/>
+                   android:textSize="@dimen/h3"
+                   android:fontFamily="@font/seguisb"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -78,7 +80,8 @@
                     android:id="@+id/tv_color"
                     android:layout_toRightOf="@+id/tv_size"
                     android:textColor="@color/black"
-                    android:textSize="14dp"/>
+                    android:textSize="@dimen/h3"
+                    android:fontFamily="@font/seguisb"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -86,10 +89,10 @@
                     android:layout_marginLeft="15dp"
                     android:maxLength="12"
                     android:maxLines="1"
-
                     android:layout_toRightOf="@+id/tv_color"
                     android:textColor="@color/black"
-                    android:textSize="14dp"/>
+                    android:textSize="@dimen/h3"
+                    android:fontFamily="@font/seguisb"/>
             </RelativeLayout>
             <RelativeLayout
             android:layout_width="match_parent"
@@ -119,7 +122,8 @@
                 android:maxLines="1"
                 android:id="@+id/tv_mrp"
                 android:maxLength="25"
-                android:textSize="14dp"/>
+                android:textSize="@dimen/h1"
+                android:fontFamily="@font/seguisb"/>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -158,7 +162,8 @@
                     android:maxLines="1"
                     android:text="1400"
                     android:textColor="@color/black"
-                    android:textSize="12dp" />
+                    android:textSize="@dimen/h3"
+                    android:fontFamily="@font/seguisb" />
             </RelativeLayout>
 
 
