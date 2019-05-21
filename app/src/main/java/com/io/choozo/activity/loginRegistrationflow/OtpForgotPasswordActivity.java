@@ -45,8 +45,6 @@ public class OtpForgotPasswordActivity extends AppCompatActivity implements View
 
             case R.id.btnsubmit :
                 Intent intent = new Intent(activity,ChangePasswordActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 return;
         }

@@ -144,7 +144,7 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
         catRecyclerView.setAdapter(categoryAdapter);
     }
 
-    /*------------------------------------------------ Sub Child Data into recyclerView-------------------------------------*/
+    /*------------------------------------------------ Sub Child CustomerRegistrationDataModel into recyclerView-------------------------------------*/
 
     private void subCategoryRecyclerViewData() {
         subcategoryrecyclerview.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));

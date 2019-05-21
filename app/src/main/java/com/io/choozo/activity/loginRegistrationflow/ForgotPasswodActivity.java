@@ -47,8 +47,6 @@ public class ForgotPasswodActivity extends AppCompatActivity implements View.OnC
 
             case R.id.btnrquest :
                 Intent intent = new Intent(activity,OtpForgotPasswordActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 return;
         }

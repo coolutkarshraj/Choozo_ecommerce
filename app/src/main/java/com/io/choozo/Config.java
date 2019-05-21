@@ -15,5 +15,7 @@ public class Config {
     public static class Url{
         public final static String  categoryList = "list/category-list?limit=&offset=0&keyword=&sortOrder=";
         public final static String getBanner ="list/banner-list?limit=10&offset=0";
+        public final static String registerCustomer ="customer/register";
+        public final static String loginCustomer ="customer/login";
     }
 }

@@ -5,6 +5,7 @@
 
     <dist:module dist:instant="true" />
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo"
@@ -12,9 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".activity.loginRegistrationflow.ChangePasswordActivity"></activity>
-        <activity android:name=".activity.loginRegistrationflow.OtpForgotPasswordActivity" />
-        <activity android:name=".activity.loginRegistrationflow.ForgotPasswodActivity" />
+        <activity android:name=".activity.loginRegistrationflow.ChangePasswordActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.loginRegistrationflow.OtpForgotPasswordActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.loginRegistrationflow.ForgotPasswodActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.ordersucessfull.OrderSucessfullyPlacedActivity"
             android:screenOrientation="portrait" />
