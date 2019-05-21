@@ -17,5 +17,8 @@ public class Config {
         public final static String getBanner ="list/banner-list?limit=10&offset=0";
         public final static String registerCustomer ="customer/register";
         public final static String loginCustomer ="customer/login";
+        public final static String forgotPassword ="customer/forgot-password";
+        public final static String changePassword ="customer/change-password";
+        public final static String getUserData ="customer/get-profile";
     }
 }

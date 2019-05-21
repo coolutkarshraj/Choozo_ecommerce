@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -51,7 +52,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     /* Login views*/
     Button btnLogin;
     EditText loginEmail,loginPassword;
-    String strLoginEmail,strLoginPassword,endPointLogin;
+    String strLoginEmail,strLoginPassword,endPointLogin,token,userr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +98,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginPassword = (EditText) findViewById(R.id.et_login_password);
     }
 
-
+    /*------------------------------------------- bind all views that are used in this activity-------------------------------*/
     private void bindListner() {
         imageLogin.setOnClickListener(this);
         imageRegister.setOnClickListener(this);
@@ -175,6 +176,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    /*---------------------------------------------------- api's endpoint----------------------------------------------------*/
     private void urlapi()
     {
         endpointRegistration = Config.Url.registerCustomer;
@@ -198,14 +200,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                          registrationApiData(result);
                      }
                  });
-
-
         }else {
             commonDialog comdialog = new commonDialog();
             comdialog.dialogbox(activity);
         }
 
     }
+
+    /* --------------------------------------------registration data from api----------------------------------------------*/
 
     private void registrationApiData(CustomerRegisterResponseModel result) {
       if(result.getStatus() == 1){
@@ -220,13 +222,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-
-
     /* -----------------------------------------------Login layout work-----------------------------------------------------*/
 
     private void loginStartWorking() {
         loginValidations();
     }
+
+
+    /* -------------------------------validations apply for login views like email and password-----------------------------*/
 
     private void loginValidations() {
         strLoginEmail = loginEmail.getText().toString().trim();
@@ -265,19 +268,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
+    /*-------------------------------------------------- Login data from api------------------------------------------------*/
+
     private void loginData(LoginResponseModel result) {
 
         if(result.getStatus()==1){
             dialog.dismiss();
             saveLoginData(result);
             Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
-
+            Intent i = new Intent(activity , MainActivity.class);
+            startActivity(i);
         }
         else {
             Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
             dialog.dismiss();
-            Intent i = new Intent(activity , MainActivity.class);
-            startActivity(i);
+
         }
     }
 
@@ -285,8 +290,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void saveLoginData(LoginResponseModel result) {
         Gson gson = new Gson();
-        String json = gson.toJson(result.getData().getUser());
+        String json = gson.toJson(result);
         preferenceManager.putString(loginData,json);
+
+
     }
 
 }

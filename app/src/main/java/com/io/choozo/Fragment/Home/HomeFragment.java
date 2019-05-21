@@ -121,18 +121,19 @@ public class HomeFragment extends Fragment {
     }
 
     private void setData(CategoryResponseModel result) {
+        list.clear();
         for (int i = 0 ;i < result.getData().size();i++){
             CategoryDataModel categoryDataModel = new CategoryDataModel();
             categoryDataModel.setName(result.getData().get(i).getName());
             categoryDataModel.setImage(result.getData().get(i).getImage());
             list.add(categoryDataModel);
-
+                    list2.clear();
                     for(int j = 0 ; j<result.getData().get(i).getChildren().size(); j++){
                         ChildDataModel childDataModel = new ChildDataModel();
                         childDataModel.setName(result.getData().get(i).getChildren().get(j).getName());
                         list1.add(childDataModel);
+                        list2.clear();
                         try {
-
                             for( int k =0; k< result.getData().get(i).getChildren().get(j).getChildren().size(); k++){
                                     SubChildDataModel subChildDataModel = new SubChildDataModel();
                                     subChildDataModel.setName(result.getData().get(i).getChildren().get(j).getChildren().get(k).getName());

@@ -41,14 +41,14 @@
                     android:backgroundTint="@color/red"/>
 
                 <TextView
+                    android:id="@+id/tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Johan Smith"
                     android:textColorHint="@color/black"
                     android:textColor="@color/black"
                     android:textSize="@dimen/h2"
                     android:fontFamily="@font/seguisb"
-                   android:layout_centerVertical="true"
+                    android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/person"
                     android:layout_marginLeft="20dp"/>
 
@@ -75,9 +75,10 @@
                     android:backgroundTint="@color/red"/>
 
                 <TextView
+                    android:id="@+id/tv_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="johansmith@domain.com"
+
                     android:textColorHint="@color/black"
                     android:textColor="@color/black"
                     android:textSize="@dimen/h2"
@@ -107,9 +108,9 @@
                     android:backgroundTint="@color/red"/>
 
                 <TextView
+                    android:id="@+id/tv_mobile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="+91 9856241258"
                     android:textColorHint="@color/black"
                     android:textColor="@color/black"
                     android:textSize="@dimen/h2"

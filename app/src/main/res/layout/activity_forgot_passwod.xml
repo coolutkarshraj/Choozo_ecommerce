@@ -54,34 +54,31 @@
             android:text="Please enter your email or mobile in order to reset your password"/>
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Email"
-            android:layout_marginTop="20dp"
-            android:textSize="@dimen/h2"
-            android:fontFamily="@font/seguisb"
-            android:textColor="@color/black"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"/>
-
-        <EditText
-            android:id="@+id/et_firstName"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="@dimen/h3"
-            android:fontFamily="@font/segoeui"
-            android:maxLines="1"
-            android:maxLength="20"
-            android:textColorHint="@color/black"
+            android:layout_marginTop="15dp"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"/>
+            android:layout_marginEnd="10dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_email"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey"
+                android:hint="Email"
+                android:textSize="@dimen/h2"
+                android:fontFamily="@font/segoeui"/>
+        </android.support.design.widget.TextInputLayout>
 
         <RelativeLayout android:layout_width="match_parent"
             android:layout_height="22sp"
             android:layout_marginTop="10dp"
             android:layout_marginStart="@dimen/startmargin"
+            android:visibility="gone"
             android:layout_marginEnd="@dimen/endmargin">
 
             <TextView android:layout_width="wrap_content"
@@ -116,6 +113,7 @@
             android:text="Mobile"
             android:layout_marginTop="10dp"
             android:textSize="@dimen/h2"
+            android:visibility="gone"
             android:fontFamily="@font/seguisb"
             android:textColor="@color/black"
             android:layout_marginStart="10dp"
@@ -127,6 +125,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="@dimen/h3"
+            android:visibility="gone"
             android:fontFamily="@font/segoeui"
             android:maxLines="1"
             android:maxLength="20"

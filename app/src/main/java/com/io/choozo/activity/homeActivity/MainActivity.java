@@ -7,6 +7,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,21 +17,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.io.choozo.Fragment.Home.HomeFragment;
 import com.io.choozo.Fragment.MyCart.MyCartFragment;
 import com.io.choozo.Fragment.Search.Search;
 import com.io.choozo.Fragment.hotOffer.HotOfferFragment;
 import com.io.choozo.Fragment.profile.ProfileFragment;
 import com.io.choozo.R;
+import com.io.choozo.localStorage.PreferenceManager;
+import com.io.choozo.model.responseModel.LoginResponseModel;
 import com.smarteist.autoimageslider.DefaultSliderView;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderLayout;
 import com.smarteist.autoimageslider.SliderView;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
+        View.OnClickListener {
     ImageView iv_menu_icon;
     DrawerLayout drawer;
     ActionBarDrawerToggle toggle;
@@ -42,7 +47,8 @@ public class MainActivity extends AppCompatActivity
     MyCartFragment myCartFragment;
     ProfileFragment profileFragment;
     Search searchFragment;
-
+    String localName,localEmail;
+    private PreferenceManager preferenceManager;
 
 
     @Override
@@ -51,81 +57,13 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         initView();
         bindListner();
-
+        navigationHeader();
     }
 
-    private void bindListner() {
-        iv_menu_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                 drawer.openDrawer(GravityCompat.START);
-            }
-        });
-
-        ll_lome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-             ll_lome.setBackgroundColor(Color.parseColor("#ff0000"));
-             ll_hotoffer.setBackgroundColor(Color.parseColor("#333333"));
-             ll_my_cart.setBackgroundColor(Color.parseColor("#333333"));
-             ll_search.setBackgroundColor(Color.parseColor("#333333"));
-             ll_profile.setBackgroundColor(Color.parseColor("#333333"));
-             changeFrag(homeFragment,false);
-            }
-        });
-
-        ll_hotoffer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ll_lome.setBackgroundColor(Color.parseColor("#333333"));
-                ll_hotoffer.setBackgroundColor(Color.parseColor("#ff0000"));
-                ll_my_cart.setBackgroundColor(Color.parseColor("#333333"));
-                ll_search.setBackgroundColor(Color.parseColor("#333333"));
-                ll_profile.setBackgroundColor(Color.parseColor("#333333"));
-                changeFrag(hotOfferFragment,false);
-            }
-        });
-
-        ll_my_cart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ll_lome.setBackgroundColor(Color.parseColor("#333333"));
-                ll_hotoffer.setBackgroundColor(Color.parseColor("#333333"));
-                ll_my_cart.setBackgroundColor(Color.parseColor("#ff0000"));
-                ll_search.setBackgroundColor(Color.parseColor("#333333"));
-                ll_profile.setBackgroundColor(Color.parseColor("#333333"));
-                changeFrag(myCartFragment,false);
-            }
-        });
-
-        ll_search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ll_lome.setBackgroundColor(Color.parseColor("#333333"));
-                ll_hotoffer.setBackgroundColor(Color.parseColor("#333333"));
-                ll_my_cart.setBackgroundColor(Color.parseColor("#333333"));
-                ll_search.setBackgroundColor(Color.parseColor("#ff0000"));
-                ll_profile.setBackgroundColor(Color.parseColor("#333333"));
-                changeFrag(searchFragment,false);
-
-            }
-        });
-
-        ll_profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ll_lome.setBackgroundColor(Color.parseColor("#333333"));
-                ll_hotoffer.setBackgroundColor(Color.parseColor("#333333"));
-                ll_my_cart.setBackgroundColor(Color.parseColor("#333333"));
-                ll_search.setBackgroundColor(Color.parseColor("#333333"));
-                ll_profile.setBackgroundColor(Color.parseColor("#ff0000"));
-                changeFrag(profileFragment,false);
-            }
-        });
-    }
+    /* ------------------------------------intialize all views that are used in this activity--------------------------------*/
 
     private void initView() {
-
+        preferenceManager = new PreferenceManager(this);
         iv_menu_icon =  findViewById(R.id.iv_menu_icon);
         ll_lome =  findViewById(R.id.ll_lome);
         ll_hotoffer =  findViewById(R.id.ll_hotoffer);
@@ -134,19 +72,117 @@ public class MainActivity extends AppCompatActivity
         ll_profile =  findViewById(R.id.ll_profile);
         iv_menu_icon =  findViewById(R.id.iv_menu_icon);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        toggle = new ActionBarDrawerToggle(
-                this, drawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+        tooglebar();
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
         homeFragment = new HomeFragment();
         changeFrag(homeFragment,false);
         hotOfferFragment = new HotOfferFragment();
         myCartFragment = new MyCartFragment();
         profileFragment = new ProfileFragment();
         searchFragment = new Search();
-   //set scroll delay in seconds :
+        getDataFromLocalStorage();
+
+    }
+
+    /*------------------------------------------- bind all views that are used in this activity-----------------------------*/
+
+    private void bindListner() {
+        iv_menu_icon.setOnClickListener(this);
+        ll_lome.setOnClickListener(this);
+        ll_hotoffer.setOnClickListener(this);
+        ll_my_cart.setOnClickListener(this);
+        ll_search.setOnClickListener(this);
+        ll_profile.setOnClickListener(this);
+        navigationView.setNavigationItemSelectedListener(this);
+
+    }
+
+    /* ---------------------------------------------------Navigation drawer open and close----------------------------------*/
+    private void tooglebar() {
+        toggle = new ActionBarDrawerToggle(
+                this, drawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.iv_menu_icon :
+                drawer.openDrawer(GravityCompat.START);
+                return;
+
+            case R.id.ll_lome :
+                ll_lome.setBackgroundColor(Color.parseColor("#ff0000"));
+                ll_hotoffer.setBackgroundColor(Color.parseColor("#333333"));
+                ll_my_cart.setBackgroundColor(Color.parseColor("#333333"));
+                ll_search.setBackgroundColor(Color.parseColor("#333333"));
+                ll_profile.setBackgroundColor(Color.parseColor("#333333"));
+                changeFrag(homeFragment,false);
+                return;
+
+            case R.id.ll_hotoffer :
+                ll_lome.setBackgroundColor(Color.parseColor("#333333"));
+                ll_hotoffer.setBackgroundColor(Color.parseColor("#ff0000"));
+                ll_my_cart.setBackgroundColor(Color.parseColor("#333333"));
+                ll_search.setBackgroundColor(Color.parseColor("#333333"));
+                ll_profile.setBackgroundColor(Color.parseColor("#333333"));
+                changeFrag(hotOfferFragment,false);
+                return;
+
+            case R.id.ll_my_cart :
+                ll_lome.setBackgroundColor(Color.parseColor("#333333"));
+                ll_hotoffer.setBackgroundColor(Color.parseColor("#333333"));
+                ll_my_cart.setBackgroundColor(Color.parseColor("#ff0000"));
+                ll_search.setBackgroundColor(Color.parseColor("#333333"));
+                ll_profile.setBackgroundColor(Color.parseColor("#333333"));
+                changeFrag(myCartFragment,false);
+                return;
+
+            case R.id.ll_search :
+                ll_lome.setBackgroundColor(Color.parseColor("#333333"));
+                ll_hotoffer.setBackgroundColor(Color.parseColor("#333333"));
+                ll_my_cart.setBackgroundColor(Color.parseColor("#333333"));
+                ll_search.setBackgroundColor(Color.parseColor("#ff0000"));
+                ll_profile.setBackgroundColor(Color.parseColor("#333333"));
+                changeFrag(searchFragment,false);
+                return;
+
+            case R.id.ll_profile:
+                ll_lome.setBackgroundColor(Color.parseColor("#333333"));
+                ll_hotoffer.setBackgroundColor(Color.parseColor("#333333"));
+                ll_my_cart.setBackgroundColor(Color.parseColor("#333333"));
+                ll_search.setBackgroundColor(Color.parseColor("#333333"));
+                ll_profile.setBackgroundColor(Color.parseColor("#ff0000"));
+                changeFrag(profileFragment,false);
+                return;
+
+
+        }
+
+    }
+
+
+    /* ---------------------------------------------login data get from local storgae---------------------------------------*/
+
+    private void getDataFromLocalStorage() {
+        Gson gson = new Gson();
+        String getJson = preferenceManager.getString(PreferenceManager.loginData);
+        LoginResponseModel obj = gson.fromJson(getJson, LoginResponseModel.class);
+        localName = obj.getData().getUser().getFirstName();
+        localEmail = obj.getData().getUser().getEmail();
+
+    }
+
+    /* -----------------------------------------Navigation header name and email set--------------------------------------*/
+
+    private void navigationHeader() {
+        View hView =  navigationView.getHeaderView(0);
+        TextView nav_user = (TextView)hView.findViewById(R.id.tv_name);
+        TextView nav_Email = (TextView)hView.findViewById(R.id.tv_email);
+        nav_user.setText(localName);
+        nav_Email.setText(localEmail);
     }
 
 
@@ -160,7 +196,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -189,8 +225,9 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    private void changeFrag(Fragment fragment, boolean addToBack) {
+    /* -----------------------------------------------bottom navigation tabs work-----------------------------------------*/
 
+    private void changeFrag(Fragment fragment, boolean addToBack) {
         currFrag = fragment;
         FragmentTransaction m = getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_view, fragment);

@@ -10,6 +10,8 @@ public class PreferenceManager {
     private SharedPreferences storage;
     private SharedPreferences.Editor ed;
     public static final String loginData = "loginData";
+    public static final String token = "token";
+    public static final String profileData = "profileData";
 
 
     public PreferenceManager(Context context) {

@@ -6,6 +6,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.io.choozo.model.dataModel.CustomerRegisterResponseModel;
 import com.io.choozo.model.responseModel.CategoryResponseModel;
+import com.io.choozo.model.responseModel.ChangePasswordResponseModel;
+import com.io.choozo.model.responseModel.ForgotPasswordResponseModel;
+import com.io.choozo.model.responseModel.GetProfileResponseModel;
 import com.io.choozo.model.responseModel.LoginResponseModel;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -58,6 +61,67 @@ public class ApiCaller {
                 });
     }
 
+
+    /*-------------------------------------------------------- forgot password Api---------------------------------------------------------*/
+
+    public static void forgotPassword(Activity activity,String url,String email ,
+                                     final FutureCallback<ForgotPasswordResponseModel> apiCallBack){
+        JsonObject json = new JsonObject();
+        json.addProperty("emailId",email);
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .noCache().setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        ForgotPasswordResponseModel forgotPasswordResponseModel = gson.fromJson(result,ForgotPasswordResponseModel.class);
+                        apiCallBack.onCompleted(e,forgotPasswordResponseModel);
+                    }
+                });
+    }
+    /*-------------------------------------------------------- change password Api---------------------------------------------------------*/
+
+    public static void changePassword(Activity activity,String url,String oldPassword , String newPassowrd,String token,
+                                      final FutureCallback<ChangePasswordResponseModel> apiCallBack){
+        JsonObject json = new JsonObject();
+        json.addProperty("oldPassword",oldPassword);
+        json.addProperty("newPassword",newPassowrd);
+
+
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization","Bearer "+token)
+                .noCache().setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        ChangePasswordResponseModel changePasswordResponseModel = gson.fromJson(result,ChangePasswordResponseModel.class);
+                        apiCallBack.onCompleted(e,changePasswordResponseModel);
+                    }
+                });
+    }
+
+
+    public static void  getUserProfile(Activity  activity , String url , String token ,
+                                       final FutureCallback<GetProfileResponseModel> apiCallBack){
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization","Bearer "+token)
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        GetProfileResponseModel getProfileResponseModel = gson.fromJson(result,GetProfileResponseModel.class);
+                        apiCallBack.onCompleted(e,getProfileResponseModel);
+                    }
+                });
+    }
     /*------------------------------------------------- Category Api-----------------------------------------------------------*/
 
     public static void getCategoryList(Activity activity, String url,
