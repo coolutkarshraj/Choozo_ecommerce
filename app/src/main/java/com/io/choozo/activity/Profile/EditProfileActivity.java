@@ -262,7 +262,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
     public String getStringImage(Bitmap bmp){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] imageBytes = baos.toByteArray();
 
         strImageFormet = Base64.encodeToString(imageBytes, Base64.DEFAULT);
