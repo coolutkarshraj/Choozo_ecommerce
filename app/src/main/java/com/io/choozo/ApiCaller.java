@@ -5,8 +5,10 @@ import android.app.Activity;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.io.choozo.model.dataModel.CustomerRegisterResponseModel;
+import com.io.choozo.model.dataModel.EditProfileDataModel;
 import com.io.choozo.model.responseModel.CategoryResponseModel;
 import com.io.choozo.model.responseModel.ChangePasswordResponseModel;
+import com.io.choozo.model.responseModel.EditProfileResponseModel;
 import com.io.choozo.model.responseModel.ForgotPasswordResponseModel;
 import com.io.choozo.model.responseModel.GetProfileResponseModel;
 import com.io.choozo.model.responseModel.LoginResponseModel;
@@ -105,6 +107,7 @@ public class ApiCaller {
                 });
     }
 
+    /*-------------------------------------------------get profile--------------------------------------------------------*/
 
     public static void  getUserProfile(Activity  activity , String url , String token ,
                                        final FutureCallback<GetProfileResponseModel> apiCallBack){
@@ -121,6 +124,37 @@ public class ApiCaller {
                         apiCallBack.onCompleted(e,getProfileResponseModel);
                     }
                 });
+    }
+
+    /* -----------------------------------------------------edit profile api-------------------------------------------*/
+
+    public static void editProfile(Activity activity,String url,String firstName,String lastName,String email,String Address,
+                                   String countryId,String pinCode,String mobile,String token,String image,
+                                   final FutureCallback<EditProfileResponseModel> apiCallBack)
+    {
+        final JsonObject json = new JsonObject();
+        json.addProperty("firstName",firstName);
+        json.addProperty("lastName",lastName);
+        json.addProperty("emailId",email);
+        json.addProperty("address",Address);
+        json.addProperty("countryId",countryId);
+        json.addProperty("pincode",pinCode);
+        json.addProperty("phoneNumber",mobile);
+        json.addProperty("image",image);
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization","Bearer "+token)
+                .noCache().setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        EditProfileResponseModel editProfileDataModel = gson.fromJson(result,EditProfileResponseModel.class);
+                        apiCallBack.onCompleted(e,editProfileDataModel);
+                    }
+                });
+
     }
     /*------------------------------------------------- Category Api-----------------------------------------------------------*/
 

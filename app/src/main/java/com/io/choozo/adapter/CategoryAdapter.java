@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,11 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.io.choozo.R;
+import com.io.choozo.activity.homeActivity.CategorySubCategory;
 import com.io.choozo.model.dataModel.CategoryDataModel;
 import com.io.choozo.model.dataModel.ChildDataModel;
+import com.io.choozo.util.CategorySubCatChildCat;
+import com.io.choozo.util.SubCatChildCat;
 
 import java.util.List;
 
@@ -24,10 +28,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     Context context;
     List<ChildDataModel> item;
     public static  int recyclerviewPostion;
+    public static int subCategoryId;
+    CategorySubCatChildCat ad_interface;
 
-    public CategoryAdapter(Context context, List<ChildDataModel> item) {
+    public CategoryAdapter(Context context,CategorySubCatChildCat ad_interface, List<ChildDataModel> item) {
         this.context = context;
         this.item = item;
+        this.ad_interface = ad_interface;
+
     }
 
     @NonNull
@@ -41,16 +49,17 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.ViewHolder viewHolder, final int i) {
 
-        ChildDataModel model = item.get(i);
+        final ChildDataModel model = item.get(i);
         viewHolder.name.setText(model.getName());
-
         viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 recyclerviewPostion = i;
-                notifyDataSetChanged();
-
+                subCategoryId = model.getCategoryId();
+                ad_interface.subCategoryId(subCategoryId);
+                CategorySubCategory.categoryAdapter.notifyDataSetChanged();
+                CategorySubCategory.subCategoryAdapter.notifyDataSetChanged();
             }
         });
 

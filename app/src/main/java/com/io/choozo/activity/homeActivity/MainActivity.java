@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     /* ---------------------------------------------------Navigation drawer open and close----------------------------------*/
+
     private void tooglebar() {
         toggle = new ActionBarDrawerToggle(
                 this, drawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -238,7 +239,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         m.commit();
     }
-
-
-
 }

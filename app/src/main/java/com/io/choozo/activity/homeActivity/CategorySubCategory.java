@@ -2,6 +2,7 @@ package com.io.choozo.activity.homeActivity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListen
 import com.crystal.crystalrangeseekbar.widgets.BubbleThumbRangeSeekbar;
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.io.choozo.Config;
+import com.io.choozo.Fragment.Home.HomeFragment;
 import com.io.choozo.R;
 import com.io.choozo.adapter.CategoryAdapter;
 import com.io.choozo.adapter.ChooseColorAdapter;
@@ -32,9 +34,12 @@ import com.io.choozo.adapter.ItemCategoryAdapter;
 import com.io.choozo.adapter.SelectFilterSizeAdapter;
 import com.io.choozo.adapter.SelectSizeAdapter;
 import com.io.choozo.adapter.SubCategoryAdapter;
+import com.io.choozo.model.dataModel.SubChildDataModel;
 import com.io.choozo.model.dummydataModel.ChooseColorModel;
 import com.io.choozo.model.dummydataModel.ItemCatModel;
 import com.io.choozo.model.dummydataModel.SelectSizeDataMode;
+import com.io.choozo.util.CategorySubCatChildCat;
+import com.io.choozo.util.SubCatChildCat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,12 +51,12 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
     ImageView back;
     RelativeLayout rlFilter;
     ImageView Cancel ,filterbtn;
-    CategoryAdapter categoryAdapter;
-    SubCategoryAdapter subCategoryAdapter;
+    public static CategoryAdapter categoryAdapter;
+    public static SubCategoryAdapter subCategoryAdapter;
     ItemCategoryAdapter itemCategoryAdapter;
     List<ItemCatModel> item = new ArrayList<>();
     CrystalRangeSeekbar  rangeSeekbar;
-    TextView tvMin,tvMax;
+    TextView tvMin,tvMax,toolbarName;
     String[] country = {"- Nothing Selected -","Prada", "Gucci", "Louis Vuittion", "Hermes","Tommy Hilfiger","Nike","Ralph Lauren","Levi Strauss & Co.",
     "Burberry","Adidas","Versace","Diesel","Calvin Klein"};
     String[] Category = {"- Nothing Selected -","Mens Fashion", "Womens Fashion", "Electronics", "Laptops","Provisional & Utensils","Baby & Kids"};
@@ -62,6 +67,7 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
     SelectFilterSizeAdapter selectSizeAdapter;
     List<SelectSizeDataMode> itemslectsize = new ArrayList<>();
     List<ChooseColorModel> item1 = new ArrayList<>();
+    CategorySubCatChildCat ad_interface;
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -93,8 +99,16 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
         discountSpin = (Spinner) findViewById(R.id.spinner2);
         rv_producrtsize = (RecyclerView)findViewById(R.id.rv_productsize);
         rv_color = (RecyclerView)findViewById(R.id.rv_choosecolor);
-
+        toolbarName = (TextView) findViewById(R.id.tv_name);
+        getDataFrimIntent();
     }
+
+    private void getDataFrimIntent() {
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("name");
+        toolbarName.setText(name);
+    }
+
     private void bindListner() {
 
         back.setOnClickListener(this);
@@ -135,13 +149,13 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
 
 
 
-
     /* -----------------------------------------------child data set into recyclerView-------------------------------------------*/
 
     private void categoryRecyclerViewData() {
         catRecyclerView.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
-        categoryAdapter = new CategoryAdapter(activity,Config.childDataModel);
+        categoryAdapter = new CategoryAdapter(activity, HomeFragment.ad_interface,Config.childDataModel);
         catRecyclerView.setAdapter(categoryAdapter);
+        categoryAdapter.notifyDataSetChanged();
     }
 
     /*------------------------------------------------ Sub Child CustomerRegistrationDataModel into recyclerView-------------------------------------*/
@@ -150,7 +164,11 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
         subcategoryrecyclerview.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
         subCategoryAdapter = new SubCategoryAdapter(activity,Config.subChildDataModels);
         subcategoryrecyclerview.setAdapter(subCategoryAdapter);
+
     }
+
+
+
 
     private void CategorySubCategoryDataSetToRv() {
 
@@ -246,4 +264,6 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
         adapter = new ChooseColorForFilterAdapter(activity, item1);
         rv_color.setAdapter(adapter);
     }
+
+
 }

@@ -4,15 +4,18 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.io.choozo.R;
 import com.io.choozo.model.dataModel.ChildDataModel;
 import com.io.choozo.model.dataModel.SubChildDataModel;
+import com.io.choozo.util.CategorySubCatChildCat;
 
 import java.util.List;
 
@@ -23,9 +26,12 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
     int i;
     public static int recyclerViewClickPostion;
 
+
+
     public SubCategoryAdapter(Context context, List<SubChildDataModel> item) {
         this.context = context;
         this.item = item;
+
     }
 
     @NonNull
@@ -39,9 +45,9 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
     @Override
     public void onBindViewHolder(@NonNull SubCategoryAdapter.ViewHolder viewHolder, final int i) {
 
-        SubChildDataModel model = item.get(i);
+        final SubChildDataModel model = item.get(i);
         viewHolder.name.setText(model.getName());
-        viewHolder. linearLayout.setOnClickListener(new View.OnClickListener() {
+        viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 recyclerViewClickPostion = i;

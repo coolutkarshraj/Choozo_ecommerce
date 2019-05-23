@@ -38,7 +38,7 @@ public class GetProfileDataModel {
     @SerializedName("lastLogin")
     private String mLastLogin;
     @SerializedName("lastName")
-    private Object mLastName;
+    private String mLastName;
     @SerializedName("mailStatus")
     private Object mMailStatus;
     @SerializedName("mobileNumber")
@@ -180,11 +180,11 @@ public class GetProfileDataModel {
         mLastLogin = lastLogin;
     }
 
-    public Object getLastName() {
+    public String getLastName() {
         return mLastName;
     }
 
-    public void setLastName(Object lastName) {
+    public void setLastName(String lastName) {
         mLastName = lastName;
     }
 

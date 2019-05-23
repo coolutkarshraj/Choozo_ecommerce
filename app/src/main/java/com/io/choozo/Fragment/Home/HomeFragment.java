@@ -21,6 +21,7 @@ import com.io.choozo.model.dataModel.CategoryDataModel;
 import com.io.choozo.model.dataModel.ChildDataModel;
 import com.io.choozo.model.dataModel.SubChildDataModel;
 import com.io.choozo.model.responseModel.CategoryResponseModel;
+import com.io.choozo.util.CategorySubCatChildCat;
 import com.koushikdutta.async.future.FutureCallback;
 import com.smarteist.autoimageslider.DefaultSliderView;
 import com.smarteist.autoimageslider.IndicatorAnimations;
@@ -30,15 +31,19 @@ import com.smarteist.autoimageslider.SliderView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements CategorySubCatChildCat {
     Activity activity;
     SliderLayout sliderLayout;
     RecyclerView rv_Shop;
     String endPoint;
+    int i,subCategoryId = 0;
+    int intCategoryId,intSubCategoryId;
+    int intCategoryIdfori,intSubCategoryIdforj ;
     ShopingCategoryAdapter adapter;
     List<CategoryDataModel> list = new ArrayList<>();
     List<ChildDataModel> list1 = new ArrayList<>();
     List<SubChildDataModel> list2 = new ArrayList<>();
+    public static CategorySubCatChildCat ad_interface;
 
 
     @Nullable
@@ -52,6 +57,7 @@ public class HomeFragment extends Fragment {
 
     private void initializeView(View view) {
         activity = getActivity();
+        ad_interface = this;
         sliderLayout = view.findViewById(R.id.image);
         sliderLayout.setIndicatorAnimation(IndicatorAnimations.FILL); //set indicator animation by using SliderLayout.Animations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
         sliderLayout.setScrollTimeInSec(2);
@@ -104,6 +110,8 @@ public class HomeFragment extends Fragment {
         endPoint = Config.Url.categoryList;
     }
 
+
+
     private void ApiCallData() {
         apiUrl();
         ApiCaller.getCategoryList(activity, endPoint, new
@@ -114,45 +122,79 @@ public class HomeFragment extends Fragment {
                             return;
                         }
                         setData(result);
+                        Config.categoryResponseModel = result;
 
                     }
                 });
 
     }
 
+
+
     private void setData(CategoryResponseModel result) {
         list.clear();
-        for (int i = 0 ;i < result.getData().size();i++){
+        list1.clear();
+        list2.clear();
+        for ( i = 0 ;i < result.getData().size();i++) {
+            intCategoryId = result.getData().get(i).getCategoryId();
             CategoryDataModel categoryDataModel = new CategoryDataModel();
             categoryDataModel.setName(result.getData().get(i).getName());
             categoryDataModel.setImage(result.getData().get(i).getImage());
+            categoryDataModel.setCategoryId(result.getData().get(i).getCategoryId());
             list.add(categoryDataModel);
-                    list2.clear();
-                    for(int j = 0 ; j<result.getData().get(i).getChildren().size(); j++){
-                        ChildDataModel childDataModel = new ChildDataModel();
-                        childDataModel.setName(result.getData().get(i).getChildren().get(j).getName());
-                        list1.add(childDataModel);
-                        list2.clear();
+            if (intCategoryId == intCategoryIdfori) {
+
+                for (int j = 0; j < result.getData().get(i).getChildren().size(); j++) {
+                    intSubCategoryId = result.getData().get(i).getChildren().get(j).getCategoryId();
+                    if(this.subCategoryId == 0){
+                        intSubCategoryIdforj = result.getData().get(i).getChildren().get(0).getCategoryId();
+                    }else {
+                        intSubCategoryIdforj = this.subCategoryId;
+                    }
+                    ChildDataModel childDataModel = new ChildDataModel();
+                    childDataModel.setName(result.getData().get(i).getChildren().get(j).getName());
+                    childDataModel.setCategoryId(result.getData().get(i).getChildren().get(j).getCategoryId());
+                    list1.add(childDataModel);
                         try {
-                            for( int k =0; k< result.getData().get(i).getChildren().get(j).getChildren().size(); k++){
-                                    SubChildDataModel subChildDataModel = new SubChildDataModel();
-                                    subChildDataModel.setName(result.getData().get(i).getChildren().get(j).getChildren().get(k).getName());
-                                    list2.add(subChildDataModel);
-                                }
-                                }catch (Exception e){
-                                    System.out.println(e);
-                                }
+
+                            if (intSubCategoryId == intSubCategoryIdforj) {
+                            for (int k = 0; k < result.getData().get(i).getChildren().get(j).getChildren().size(); k++) {
+                                SubChildDataModel subChildDataModel = new SubChildDataModel();
+                                subChildDataModel.setName(result.getData().get(i).getChildren().get(j).getChildren().get(k).getName());
+                                list2.add(subChildDataModel);
+                            }}
+                        } catch (Exception e) {
+                            System.out.println(e);
                         }
+
+                }
             }
+        }
+
         setAdapterTabs();
 
     }
 
     private void setAdapterTabs() {
-        adapter = new ShopingCategoryAdapter(activity, list);
+        adapter = new ShopingCategoryAdapter(activity,ad_interface, list);
         rv_Shop.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
         Config.childDataModel = list1;
         Config.subChildDataModels = list2;
+    }
+
+
+    @Override
+    public void catId(int cateId) {
+        intCategoryIdfori = cateId;
+        setData(Config.categoryResponseModel);
+
+    }
+
+    @Override
+    public void subCategoryId(int subCategoryId) {
+        this.subCategoryId = subCategoryId;
+        setData(Config.categoryResponseModel);
     }
 
 

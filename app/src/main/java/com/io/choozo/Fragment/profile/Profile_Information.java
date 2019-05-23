@@ -3,8 +3,10 @@ package com.io.choozo.Fragment.profile;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,6 +28,7 @@ import com.google.gson.Gson;
 import com.io.choozo.ApiCaller;
 import com.io.choozo.Config;
 import com.io.choozo.R;
+import com.io.choozo.activity.Profile.EditProfileActivity;
 import com.io.choozo.localStorage.PreferenceManager;
 import com.io.choozo.model.responseModel.ChangePasswordResponseModel;
 import com.io.choozo.model.responseModel.GetProfileResponseModel;
@@ -40,6 +43,7 @@ import static com.io.choozo.localStorage.PreferenceManager.loginData;
 public class Profile_Information extends Fragment implements View.OnClickListener {
     Dialog dialog;
     Activity activity;
+    ImageView imEditProfile;
     TextView tvName,tvEmail,tvMobile;
     String token,strOldPassword,strNewPassword,endPoint,endPointProfile;
     RelativeLayout rl_changepassword;
@@ -69,6 +73,7 @@ public class Profile_Information extends Fragment implements View.OnClickListene
         user = new userOnlineInfo();
         preferenceManager = new PreferenceManager(activity);
         tvName = (TextView)v.findViewById(R.id.tv_name);
+        imEditProfile = (ImageView) v.findViewById(R.id.edit_profile);
         tvEmail = (TextView)v.findViewById(R.id.tv_email);
         tvMobile = (TextView)v.findViewById(R.id.tv_mobile);
         rl_changepassword = (RelativeLayout)v.findViewById(R.id.rl_changepassword);
@@ -79,6 +84,7 @@ public class Profile_Information extends Fragment implements View.OnClickListene
 
     private void bindListner() {
         rl_changepassword.setOnClickListener(this);
+        imEditProfile.setOnClickListener(this);
     }
 
 
@@ -87,6 +93,10 @@ public class Profile_Information extends Fragment implements View.OnClickListene
         switch (v.getId()){
             case R.id.rl_changepassword :
                 changePassword();
+
+            case R.id.edit_profile :
+                Intent i =new Intent(activity, EditProfileActivity.class);
+                startActivity(i);
 
         }
 
@@ -98,7 +108,7 @@ public class Profile_Information extends Fragment implements View.OnClickListene
 
     /*-------------------------------------------------- get profile data from  api-----------------------------------------*/
 
-    private void getProfileDataApi() {
+    public  void getProfileDataApi() {
 
         if(user.isOnline(activity)){
 
@@ -125,7 +135,7 @@ public class Profile_Information extends Fragment implements View.OnClickListene
     private void getProfileData(GetProfileResponseModel result) {
         if(result.getStatus()==1){
 
-         tvName.setText(result.getData().getFirstName());
+         tvName.setText(result.getData().getFirstName() +" "+result.getData().getLastName());
          tvEmail.setText(result.getData().getEmail());
          tvMobile.setText(result.getData().getMobileNumber());
          dataAddIntoLocalStorage(result);

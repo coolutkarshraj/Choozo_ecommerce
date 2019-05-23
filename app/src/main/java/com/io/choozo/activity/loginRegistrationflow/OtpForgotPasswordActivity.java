@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.io.choozo.R;
+import com.io.choozo.activity.Profile.EditProfileActivity;
 
 public class OtpForgotPasswordActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -44,7 +45,7 @@ public class OtpForgotPasswordActivity extends AppCompatActivity implements View
                 return;
 
             case R.id.btnsubmit :
-                Intent intent = new Intent(activity,ChangePasswordActivity.class);
+                Intent intent = new Intent(activity, EditProfileActivity.class);
                 startActivity(intent);
                 return;
         }
