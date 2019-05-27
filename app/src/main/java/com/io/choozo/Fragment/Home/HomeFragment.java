@@ -161,6 +161,7 @@ public class HomeFragment extends Fragment implements CategorySubCatChildCat {
                             for (int k = 0; k < result.getData().get(i).getChildren().get(j).getChildren().size(); k++) {
                                 SubChildDataModel subChildDataModel = new SubChildDataModel();
                                 subChildDataModel.setName(result.getData().get(i).getChildren().get(j).getChildren().get(k).getName());
+                                subChildDataModel.setCategoryId(result.getData().get(i).getChildren().get(j).getChildren().get(k).getCategoryId());
                                 list2.add(subChildDataModel);
                             }}
                         } catch (Exception e) {
@@ -187,6 +188,7 @@ public class HomeFragment extends Fragment implements CategorySubCatChildCat {
     @Override
     public void catId(int cateId) {
         intCategoryIdfori = cateId;
+        Config.categoryClickId = cateId;
         setData(Config.categoryResponseModel);
 
     }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.io.choozo.Config;
 import com.io.choozo.R;
 import com.io.choozo.activity.homeActivity.CategorySubCategory;
 import com.io.choozo.model.dataModel.CategoryDataModel;
@@ -57,6 +58,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             public void onClick(View v) {
                 recyclerviewPostion = i;
                 subCategoryId = model.getCategoryId();
+                Config.categoryClickId = model.getCategoryId();
                 ad_interface.subCategoryId(subCategoryId);
                 CategorySubCategory.categoryAdapter.notifyDataSetChanged();
                 CategorySubCategory.subCategoryAdapter.notifyDataSetChanged();

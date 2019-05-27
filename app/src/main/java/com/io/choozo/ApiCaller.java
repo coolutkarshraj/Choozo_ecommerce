@@ -1,19 +1,23 @@
 package com.io.choozo;
 
 import android.app.Activity;
+import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.io.choozo.model.dataModel.CustomerRegisterResponseModel;
-import com.io.choozo.model.dataModel.EditProfileDataModel;
+import com.io.choozo.model.responseModel.AddAddressResponseModel;
 import com.io.choozo.model.responseModel.CategoryResponseModel;
 import com.io.choozo.model.responseModel.ChangePasswordResponseModel;
 import com.io.choozo.model.responseModel.ContactUsResponseModel;
 import com.io.choozo.model.responseModel.EditProfileResponseModel;
 import com.io.choozo.model.responseModel.ForgotPasswordResponseModel;
+import com.io.choozo.model.responseModel.GetAddressResponseModel;
 import com.io.choozo.model.responseModel.GetPageListResponseModel;
 import com.io.choozo.model.responseModel.GetProfileResponseModel;
 import com.io.choozo.model.responseModel.LoginResponseModel;
+import com.io.choozo.model.responseModel.ProductListResponseModel;
+import com.io.choozo.model.responseModel.UpdateAddressResponseModel;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
@@ -197,6 +201,8 @@ public class ApiCaller {
 }
 
 
+    /*------------------------------------------------------ about -----------------------------------------------------------------*/
+
     public static void pageList(Activity activity, String url,
                                 final FutureCallback<GetPageListResponseModel> apiCallBack) {
 
@@ -214,4 +220,101 @@ public class ApiCaller {
                 });
 
     }
+
+    /* ------------------------------------------------------Add address api-------------------------------------------------------*/
+
+
+    public static  void addAddress(Activity activity , String url, Long customerId, String address1, String address2, String city , String state,
+                                   String pincode, String addressType, String token, final FutureCallback<AddAddressResponseModel> apiCallBack){
+
+        final  JsonObject json =new JsonObject();
+        json.addProperty("customerId",customerId);
+        json.addProperty("address1",address1);
+        json.addProperty("address2",address2);
+        json.addProperty("city",city);
+        json.addProperty("state",state);
+        json.addProperty("postcode",pincode);
+        json.addProperty("addressType",addressType);
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization","Bearer "+token)
+                .noCache().setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        AddAddressResponseModel addAddressResponseModel = gson.fromJson(result,AddAddressResponseModel.class);
+                        apiCallBack.onCompleted(e,addAddressResponseModel);
+                    }
+                });
+    }
+
+    /*------------------------------------------------------ get Customer Address list----------------------------------------------*/
+
+    public static void getCustomerAddress(Activity activity,String url,String token,
+                                          final FutureCallback<GetAddressResponseModel> apiCallBack){
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization","Bearer "+token)
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        GetAddressResponseModel getAddressResponseModel = gson.fromJson(result,GetAddressResponseModel.class);
+                        apiCallBack.onCompleted(e,getAddressResponseModel);
+                    }
+                });
+    }
+
+    /*----------------------------------------------------- Update address api---------------------------------------------*/
+
+
+    public static void updateAddressApi(Context activity, String url, Long customerId, String address1, String address2, String city
+                                        , String state, String pinCode, String addressType,
+                                        String token, final FutureCallback<UpdateAddressResponseModel> apiCallBack){
+
+        final  JsonObject json =new JsonObject();
+        json.addProperty("customerId",customerId);
+        json.addProperty("address1",address1);
+        json.addProperty("address2",address2);
+        json.addProperty("city",city);
+        json.addProperty("state",state);
+        json.addProperty("postcode",pinCode);
+        json.addProperty("addressType",addressType);
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization","Bearer "+token)
+                .noCache().setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        UpdateAddressResponseModel updateAddressResponseModel = gson.fromJson(result,UpdateAddressResponseModel.class);
+                        apiCallBack.onCompleted(e,updateAddressResponseModel);
+                    }
+                });
+    }
+
+    public static  void productList(Activity activity , String url,  final FutureCallback<ProductListResponseModel> apiCallBack){
+
+
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(url)
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        ProductListResponseModel addAddressResponseModel = gson.fromJson(result,ProductListResponseModel.class);
+                        apiCallBack.onCompleted(e,addAddressResponseModel);
+                    }
+                });
+    }
+
+
 }

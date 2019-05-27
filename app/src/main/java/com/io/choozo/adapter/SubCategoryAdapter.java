@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.io.choozo.Config;
 import com.io.choozo.R;
 import com.io.choozo.model.dataModel.ChildDataModel;
 import com.io.choozo.model.dataModel.SubChildDataModel;
@@ -51,6 +52,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
             @Override
             public void onClick(View v) {
                 recyclerViewClickPostion = i;
+                Config.subCategoryClickId = model.getCategoryId();
                 notifyDataSetChanged();
             }
         });
@@ -80,8 +82,6 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
             name = (TextView)itemView.findViewById(R.id.tv_subcate);
             linearLayout = (LinearLayout)itemView.findViewById(R.id.subcategorylayout);
             i= getAdapterPosition();
-
-
         }
     }
 }

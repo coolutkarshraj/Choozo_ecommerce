@@ -108,7 +108,7 @@ public class Shipping extends Fragment implements View.OnClickListener , Adapter
                 NewAdressLayout.setVisibility(View.GONE);
                 paymentbtn.setVisibility(View.GONE);
                 rvSavedAdress.setVisibility(View.VISIBLE);
-                dataSetToRecyclerView();
+               // dataSetToRecyclerView();
                 return;
 
             case R.id.ll_first :
@@ -196,7 +196,7 @@ public class Shipping extends Fragment implements View.OnClickListener , Adapter
 
     /*----------------------------------------------- Saved Adress data---------------------------------------------------*/
 
-    private void dataSetToRecyclerView() {
+  /*  private void dataSetToRecyclerView() {
         rvSavedAdress.setLayoutManager(new LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false));
         item.clear();
         item.add(new SavedAdressDataModel("John smith","701, Block - B, Siddhi Vinayak Tower,Ahmedabad-380051, Gujarat, INDIA +91 98765 43210"));
@@ -204,7 +204,7 @@ public class Shipping extends Fragment implements View.OnClickListener , Adapter
         item.add(new SavedAdressDataModel("Ian Grant","4855 Durgan Wall, Perfect Arcade, USA 380152 +91 98765 43210"));
         adapter = new SavedAdressRvAdapter(activity,item);
         rvSavedAdress.setAdapter(adapter);
-    }
+    }*/
 
 
 }
