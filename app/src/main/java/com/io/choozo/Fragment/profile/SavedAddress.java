@@ -18,6 +18,8 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.io.choozo.R;
@@ -95,13 +97,15 @@ public class SavedAddress  extends Fragment implements View.OnClickListener {
         final EditText etCity = (EditText) dialog.findViewById(R.id.et_city);
         final EditText etState= (EditText) dialog.findViewById(R.id.et_state);
         final EditText etPinCode = (EditText) dialog.findViewById(R.id.et_post_code);
-        final EditText etAddressType = (EditText) dialog.findViewById(R.id.et_address_type);
+        final RadioGroup radioGroup = (RadioGroup) dialog.findViewById(R.id.rg_addressType);
+        final RadioButton rbHome = (RadioButton) dialog.findViewById(R.id.rb_home);
+        final RadioButton rbWork = (RadioButton) dialog.findViewById(R.id.rb_work);
         final ImageView Clear = (ImageView) dialog.findViewById(R.id.clear);
 
         Yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               addAddressValidateData(etAddress1,etAddress2,etCity,etState,etPinCode,etAddressType);
+               addAddressValidateData(etAddress1,etAddress2,etCity,etState,etPinCode);
             }
         });
         No.setOnClickListener(new View.OnClickListener() {
@@ -125,20 +129,20 @@ public class SavedAddress  extends Fragment implements View.OnClickListener {
     /*----------------------------------------------- add address check fields empty or not----------------------------------------*/
 
     private void addAddressValidateData(EditText etAddress1, EditText etAddress2, EditText etCity,
-                                        EditText etState, EditText etPinCode, EditText etAddressType) {
+                                        EditText etState, EditText etPinCode) {
         strAddress1 = etAddress1.getText().toString().trim();
         strAddress2 = etAddress2.getText().toString().trim();
         strCity = etCity.getText().toString().trim();
         strState = etState.getText().toString().trim();
         strPinCode = etPinCode.getText().toString().trim();
-        strAddressType = etAddressType.getText().toString().trim();
-        if(strAddress1.isEmpty() || strAddress2.isEmpty() || strCity.isEmpty() || strState.isEmpty() || strPinCode.isEmpty() || strAddressType.isEmpty()){
+        //strAddressType = etAddressType.getText().toString().trim();
+        if(strAddress1.isEmpty() || strAddress2.isEmpty() || strCity.isEmpty() || strState.isEmpty() || strPinCode.isEmpty()){
             etAddress1.setError("Please Enter Address 1");
             etAddress2.setError("Please Enter Address 2");
             etCity.setError("Please Enter City");
             etState.setError("Please Enter State");
             etPinCode.setError("Please Enter PinCode");
-            etAddressType.setError("Please Enter Address Type");
+            //etAddressType.setError("Please Enter Address Type");
         }else {
 
         }

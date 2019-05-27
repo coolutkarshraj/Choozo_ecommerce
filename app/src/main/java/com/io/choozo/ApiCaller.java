@@ -8,8 +8,10 @@ import com.io.choozo.model.dataModel.CustomerRegisterResponseModel;
 import com.io.choozo.model.dataModel.EditProfileDataModel;
 import com.io.choozo.model.responseModel.CategoryResponseModel;
 import com.io.choozo.model.responseModel.ChangePasswordResponseModel;
+import com.io.choozo.model.responseModel.ContactUsResponseModel;
 import com.io.choozo.model.responseModel.EditProfileResponseModel;
 import com.io.choozo.model.responseModel.ForgotPasswordResponseModel;
+import com.io.choozo.model.responseModel.GetPageListResponseModel;
 import com.io.choozo.model.responseModel.GetProfileResponseModel;
 import com.io.choozo.model.responseModel.LoginResponseModel;
 import com.koushikdutta.async.future.FutureCallback;
@@ -156,6 +158,24 @@ public class ApiCaller {
                 });
 
     }
+
+    /*------------------------------------------------------ contact us--------------------------------------------------------*/
+
+    public static void getSettings(Activity activity, String url,
+                                   final FutureCallback<ContactUsResponseModel> apiCallBack){
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                    ContactUsResponseModel contactUsResponseModel = gson.fromJson(result,ContactUsResponseModel.class);
+                    apiCallBack.onCompleted(e,contactUsResponseModel);
+                    }
+                });
+    }
     /*------------------------------------------------- Category Api-----------------------------------------------------------*/
 
     public static void getCategoryList(Activity activity, String url,
@@ -172,7 +192,26 @@ public class ApiCaller {
             apiCallBack.onCompleted(e,categoryResponseModel);
         }
     });
+
+
 }
 
-    /*-------------------------------------------- Banner Image Get-----------------------------------------------------------*/
+
+    public static void pageList(Activity activity, String url,
+                                final FutureCallback<GetPageListResponseModel> apiCallBack) {
+
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        GetPageListResponseModel getPageListResponseModel = gson.fromJson(result, GetPageListResponseModel.class);
+                        apiCallBack.onCompleted(e, getPageListResponseModel);
+                    }
+                });
+
+    }
 }

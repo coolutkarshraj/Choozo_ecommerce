@@ -2,6 +2,8 @@ package com.io.choozo;
 
 /* Created By Inderjot Singh 3 may - 2019*/
 
+import android.util.Log;
+
 public class UrlLocator {
     private static String tempIP = "";
 
@@ -12,6 +14,7 @@ public class UrlLocator {
 
     public static String getFinalUrl(String url) {
         String ip = getBaseIP();
+        Log.e("strurl","http://" + ip + ":9000/api/" + url);
         return "http://" + ip + ":9000/api/" + url;
     }
 

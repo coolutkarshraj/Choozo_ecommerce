@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Config {
 
-    public static String Base_url = "13.233.195.231";
+    public static String Base_url = "13.235.17.203";
     public static List<ChildDataModel> childDataModel;
     public static List<SubChildDataModel> subChildDataModels;
     public static String CartCount;
@@ -24,5 +24,7 @@ public class Config {
         public final static String changePassword ="customer/change-password";
         public final static String getUserData ="customer/get-profile";
         public final static String editProfile ="customer/edit-profile";
+        public final static String getSetting ="settings/get-settings";
+        public final static String getPageList ="pages/pagelist?limit=&offset=0&keyword=";
     }
 }

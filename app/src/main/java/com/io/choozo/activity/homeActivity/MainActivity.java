@@ -1,6 +1,7 @@
 package com.io.choozo.activity.homeActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -27,6 +28,8 @@ import com.io.choozo.Fragment.Search.Search;
 import com.io.choozo.Fragment.hotOffer.HotOfferFragment;
 import com.io.choozo.Fragment.profile.ProfileFragment;
 import com.io.choozo.R;
+import com.io.choozo.activity.About.AboutUsActivity;
+import com.io.choozo.activity.About.ContactUsActivity;
 import com.io.choozo.localStorage.PreferenceManager;
 import com.io.choozo.model.responseModel.LoginResponseModel;
 import com.smarteist.autoimageslider.DefaultSliderView;
@@ -38,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         View.OnClickListener {
     ImageView iv_menu_icon;
     DrawerLayout drawer;
+    Activity activity;
     ActionBarDrawerToggle toggle;
     NavigationView navigationView;
     LinearLayout ll_lome,ll_hotoffer,ll_my_cart,ll_search,ll_profile;
@@ -63,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /* ------------------------------------intialize all views that are used in this activity--------------------------------*/
 
     private void initView() {
+        activity = MainActivity.this;
         preferenceManager = new PreferenceManager(this);
         iv_menu_icon =  findViewById(R.id.iv_menu_icon);
         ll_lome =  findViewById(R.id.ll_lome);
@@ -214,11 +219,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.track_order) {
             Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.about) {
-            Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(activity, AboutUsActivity.class);
+            startActivity(i);
         }else if (id == R.id.logout) {
             Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_share) {
             Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show();
+        }
+        else if (id == R.id.contactus) {
+            Intent i = new Intent(activity, ContactUsActivity.class);
+            startActivity(i);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
