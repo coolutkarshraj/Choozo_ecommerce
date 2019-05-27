@@ -52,7 +52,8 @@
               android:layout_height="wrap_content"
               android:layout_marginStart="5dp"
               android:layout_marginEnd="5dp"
-              android:textSize="16dp"
+              android:textSize="@dimen/h1"
+              android:fontFamily="@font/seguisb"
               android:text="Blue Strip Topd"
               android:maxLines="1"
               android:id="@+id/tv_itemname"
@@ -76,7 +77,8 @@
                    android:maxLines="1"
                    android:id="@+id/tv_size"
                    android:textColor="@color/black"
-                   android:textSize="14dp"/>
+                   android:textSize="@dimen/h3"
+                   android:fontFamily="@font/segoeui"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -87,7 +89,8 @@
                     android:id="@+id/tv_color"
                     android:layout_toRightOf="@+id/tv_size"
                     android:textColor="@color/black"
-                    android:textSize="14dp"/>
+                    android:textSize="@dimen/h3"
+                    android:fontFamily="@font/segoeui"/>
             </RelativeLayout>
             <RelativeLayout
             android:layout_width="match_parent"
@@ -117,7 +120,8 @@
                 android:maxLines="1"
                 android:id="@+id/tv_mrp"
                 android:maxLength="25"
-                android:textSize="14dp"/>
+                 android:textSize="@dimen/h2"
+                android:fontFamily="@font/segoeui"/>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -148,15 +152,13 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp"
                     android:layout_toRightOf="@+id/iv_cutprice"
-                    android:baselineAligned="false"
-                    android:includeFontPadding="false"
                     android:maxLength="25"
                     android:maxLines="1"
                     android:text="1400"
                     android:textColor="@color/black"
-                    android:textSize="12dp" />
+                    android:textSize="@dimen/h3"
+                    android:fontFamily="@font/segoeui" />
             </RelativeLayout>
 
 
@@ -183,10 +185,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:textSize="12dp"
                 android:maxLines="1"
                 android:maxLength="5"
-                android:text="12"
+                android:textSize="@dimen/h3"
+                android:fontFamily="@font/segoeui"
                 android:textColor="@color/black"
                 android:textAlignment="center"
                 />

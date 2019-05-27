@@ -26,9 +26,10 @@
             android:text="Skip"
             android:id="@+id/tv_skip"
             android:layout_alignParentRight="true"
-            android:textSize="@dimen/text_small"
+            android:textSize="@dimen/h3"
             android:layout_centerVertical="true"
             android:textColor="@color/black"
+            android:fontFamily="@font/segoeui"
             android:layout_marginRight="@dimen/endmargin"/>
     </RelativeLayout>
 
@@ -50,7 +51,7 @@
             android:text="Sign In"
             android:textColor="@color/black"
             android:textSize="25dp"
-            android:textStyle="bold" />
+            android:fontFamily="@font/segoeui"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -91,6 +92,7 @@
                             <RelativeLayout
                                 android:layout_width="50dp"
                                 android:layout_height="5dp"
+                                android:background="@color/black"
                                 android:id="@+id/tab1">
                             </RelativeLayout>
                 </RelativeLayout>
@@ -128,7 +130,7 @@
                 android:id="@+id/iv_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/ic_email_black_24dp"
                 android:backgroundTint="@color/red" />
@@ -137,16 +139,19 @@
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/text_input_layout"
                 android:layout_width="match_parent"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:layout_toRightOf="@+id/iv_email"
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/editText"
+                    android:id="@+id/et_login_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/red"
-                    android:hint="Email" />
+                    android:textColor="@color/grey"
+                    android:hint="Email"
+                    android:textSize="@dimen/h2"
+                    android:fontFamily="@font/segoeui"/>
             </android.support.design.widget.TextInputLayout>
 
         </RelativeLayout>
@@ -163,8 +168,8 @@
                 android:id="@+id/iv_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="5dp"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="18dp"
                 android:background="@drawable/ic_lock_outline_black_24dp"
                 android:backgroundTint="@color/red" />
 
@@ -173,16 +178,19 @@
                 android:id="@+id/text_input_layout1"
                 android:layout_width="match_parent"
                 android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/iv_password"
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/editText1"
+                    android:id="@+id/et_login_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
-                    android:textColor="@color/red"
-                    android:hint="Password" />
+                    android:textColor="@color/grey"
+                    android:hint="Password"
+                    android:textSize="@dimen/h2"
+                    android:fontFamily="@font/segoeui"/>
             </android.support.design.widget.TextInputLayout>
 
 
@@ -194,11 +202,12 @@
            android:layout_below="@+id/passwordlayout"
             android:layout_marginTop="10dp"
            android:layout_gravity="right"
-            android:textSize="@dimen/text_small"
+            android:textSize="@dimen/h3"
             android:layout_centerVertical="true"
             android:textColor="#9C9B9B"
             android:id="@+id/tv_forgotpassword"
-            android:layout_marginRight="@dimen/endmargin"/>
+            android:layout_marginRight="@dimen/endmargin"
+            android:fontFamily="@font/segoeui"/>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -208,7 +217,8 @@
             android:id="@+id/btnlogin"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:textSize="16dp"
+            android:textSize="@dimen/h1"
+            android:fontFamily="@font/seguisb"
             android:layout_marginStart="@dimen/startmargin"
             android:layout_marginEnd="@dimen/endmargin"
             android:background="@drawable/button_shape_red"
@@ -251,7 +261,7 @@
                         android:id="@+id/iv_username"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
+                       android:layout_centerVertical="true"
                         android:layout_marginBottom="5dp"
                         android:background="@drawable/ic_person_outline_black_24dp"
                         android:backgroundTint="@color/red" />
@@ -261,15 +271,18 @@
                         android:id="@+id/usertext"
                         android:layout_width="match_parent"
                         android:layout_marginLeft="20dp"
+                        android:layout_centerVertical="true"
                         android:layout_toRightOf="@+id/iv_username"
                         android:layout_height="wrap_content">
 
                         <EditText
-                            android:id="@+id/et_username"
+                            android:id="@+id/et_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/red"
-                            android:hint="User Name" />
+                            android:textColor="@color/grey"
+                            android:hint="Name"
+                            android:textSize="@dimen/h2"
+                            android:fontFamily="@font/segoeui"/>
                     </android.support.design.widget.TextInputLayout>
 
                 </RelativeLayout>
@@ -279,6 +292,7 @@
                     android:layout_marginTop="5dp"
                     android:id="@+id/register_email_layout"
                     android:layout_below="@+id/emaillayout"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/startmargin"
                     android:layout_marginEnd="@dimen/endmargin">
 
@@ -286,7 +300,7 @@
                         android:id="@+id/iv_email_register"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginBottom="5dp"
                         android:background="@drawable/ic_email_black_24dp"
                         android:backgroundTint="@color/red" />
@@ -296,15 +310,18 @@
                         android:id="@+id/email_register"
                         android:layout_width="match_parent"
                         android:layout_marginLeft="20dp"
+                        android:layout_centerVertical="true"
                         android:layout_toRightOf="@+id/iv_email_register"
                         android:layout_height="wrap_content">
 
                         <EditText
-                            android:id="@+id/email"
+                            android:id="@+id/et_email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/red"
-                            android:hint="Email" />
+                            android:textColor="@color/grey"
+                            android:hint="Email"
+                            android:textSize="@dimen/h2"
+                            android:fontFamily="@font/segoeui"/>
                     </android.support.design.widget.TextInputLayout>
 
 
@@ -313,6 +330,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
+                    android:layout_centerVertical="true"
                     android:id="@+id/register_phone_layout"
                     android:layout_below="@+id/emaillayout"
                     android:layout_marginStart="@dimen/startmargin"
@@ -322,7 +340,7 @@
                         android:id="@+id/iv_phone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginBottom="5dp"
                         android:background="@drawable/ic_phone_black_24dp"
                         android:backgroundTint="@color/red" />
@@ -336,13 +354,15 @@
                         android:layout_height="wrap_content">
 
                         <EditText
-                            android:id="@+id/phone"
+                            android:id="@+id/et_phone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/red"
+                            android:textColor="@color/grey"
                             android:inputType="number"
                             android:maxLength="10"
-                            android:hint="Phone" />
+                            android:hint="Phone"
+                            android:textSize="@dimen/h2"
+                            android:fontFamily="@font/segoeui"/>
                     </android.support.design.widget.TextInputLayout>
 
 
@@ -360,7 +380,7 @@
                         android:id="@+id/iv_password_register"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginBottom="5dp"
                         android:background="@drawable/ic_lock_outline_black_24dp"
                         android:backgroundTint="@color/red" />
@@ -370,6 +390,7 @@
                         android:id="@+id/password"
                         android:layout_width="match_parent"
                         android:layout_marginLeft="20dp"
+
                         android:layout_toRightOf="@+id/iv_password_register"
                         android:layout_height="wrap_content">
 
@@ -377,9 +398,11 @@
                             android:id="@+id/et_password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/red"
+                            android:textColor="@color/grey"
                             android:inputType="textPassword"
-                            android:hint="Password" />
+                            android:hint="Password"
+                            android:textSize="@dimen/h2"
+                            android:fontFamily="@font/segoeui"/>
                     </android.support.design.widget.TextInputLayout>
 
 
@@ -397,6 +420,7 @@
                     android:textSize="16dp"
                     android:layout_marginStart="@dimen/startmargin"
                     android:layout_marginEnd="@dimen/endmargin"
+                    android:fontFamily="@font/seguisb"
                     android:background="@drawable/button_shape_red"
                     android:layout_marginBottom="10dp"/>
 

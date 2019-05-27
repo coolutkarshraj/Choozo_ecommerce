@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.io.choozo.R;
-import com.io.choozo.activity.homeActivity.ProductAddCartActivity;
+import com.io.choozo.activity.homeActivity.CartActivity;
 import com.io.choozo.model.dummydataModel.ItemCatModel;
 
 import java.util.List;
@@ -90,7 +90,7 @@ public class ItemCategoryAdapter extends RecyclerView.Adapter<ItemCategoryAdapte
             relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i =new Intent(context, ProductAddCartActivity.class);
+                    Intent i =new Intent(context, CartActivity.class);
                     i.putExtra("productName",model.getProductName());
                     i.putExtra("productImage",model.getImage());
                     i.putExtra("productMRP",model.getProductMRP());

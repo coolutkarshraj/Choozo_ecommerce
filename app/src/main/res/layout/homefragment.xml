@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="30dp"
-                android:textStyle="bold"
+                android:fontFamily="@font/seguisb"
                 android:textAllCaps="true"
                 android:layout_marginStart="@dimen/startmargin"
                 android:layout_marginEnd="@dimen/endmargin"
@@ -50,6 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
+                android:fontFamily="@font/seguisb"
                 android:layout_marginStart="@dimen/startmargin"
                 android:layout_marginEnd="@dimen/endmargin"
                 android:layout_marginTop="10dp"
@@ -66,7 +67,7 @@
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="60dp"></android.support.v7.widget.RecyclerView>
+              ></android.support.v7.widget.RecyclerView>
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

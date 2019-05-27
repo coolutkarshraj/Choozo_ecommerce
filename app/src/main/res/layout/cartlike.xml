@@ -1,0 +1,21 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="48dp"
+    android:paddingTop="8dp"
+    android:layout_height="fill_parent"
+    android:layout_gravity="right" >
+
+
+
+    <ImageView
+
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:clickable="true"
+        android:background="@drawable/heart"
+        android:backgroundTint="@color/black" />
+
+
+
+</RelativeLayout>

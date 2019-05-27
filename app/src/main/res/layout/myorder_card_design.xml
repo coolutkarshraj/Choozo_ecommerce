@@ -15,7 +15,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="08-jun-2018"
-            android:textSize="16dp"
+            android:textSize="@dimen/h2"
+            android:fontFamily="@font/seguisb"
             android:textColor="@color/black"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="10dp"/>
@@ -33,7 +34,8 @@
                 android:text="Order Id:"
                 android:textColor="@color/grey"
                 android:id="@+id/order_nu"
-                android:textSize="16dp"></TextView>
+                android:textSize="@dimen/h2"
+                android:fontFamily="@font/seguisb"></TextView>
             <TextView
                 android:id="@+id/order_id"
                 android:layout_width="wrap_content"
@@ -42,7 +44,8 @@
                 android:textColor="@color/black"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/order_nu"
-                android:textSize="16dp"></TextView>
+                android:textSize="@dimen/h3"
+                android:fontFamily="@font/seguisb"></TextView>
         </RelativeLayout>
 </RelativeLayout>
         <RelativeLayout
@@ -60,7 +63,8 @@
                 android:text="Dispatched"
                 android:textColor="@color/grey"
                 android:id="@+id/tv_orderstatus"
-                android:textSize="16dp"></TextView>
+                android:textSize="@dimen/h2"
+                android:fontFamily="@font/seguisb"></TextView>
             <ImageView
                 android:layout_width="10dp"
                 android:layout_height="16dp"

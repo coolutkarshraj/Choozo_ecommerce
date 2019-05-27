@@ -54,4 +54,12 @@ public class Wishlist extends Fragment {
 
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+        }
+    }
+
 }

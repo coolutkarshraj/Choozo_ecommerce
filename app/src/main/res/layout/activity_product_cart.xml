@@ -1,173 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:fillViewport="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <android.support.v4.widget.NestedScrollView
+
+<android.support.v4.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   >
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
 
-        <LinearLayout
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textSize="@dimen/text_head"
+            android:text="Red Blue Striped Top"
+            android:layout_gravity="center"
+            android:textStyle="bold"/>
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp">
 
-
-            <TextView
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:textSize="@dimen/text_head"
-                android:text="Red Blue Striped Top"
-                android:layout_gravity="center"
-                android:textStyle="bold"/>
+                android:layout_centerHorizontal="true">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/rupeeindian"
+                    android:backgroundTint="@color/red"
+                    android:layout_alignParentBottom="true"
+                    android:id="@+id/rupee"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:maxLength="5"
+                    android:text="3299"
+                    android:layout_toRightOf="@+id/rupee"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/text_head"
+                    android:textColor="@color/red"
+                    android:id="@+id/tv_mrp"
+                    android:textStyle="bold"/>
 
                 <RelativeLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp">
+                    android:layout_toRightOf="@+id/tv_mrp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="5dp">
 
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
+                    <View
+                        android:layout_width="50dp"
+                        android:layout_height="1dp"
+                        android:background="@color/black"
+                        android:layout_centerVertical="true"></View>
+                    <ImageView
+                        android:id="@+id/iv_cutprice"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentBottom="true"
+                        android:background="@drawable/rupeeindian"
+                        android:backgroundTint="@color/black" />
+                    <TextView
+                        android:layout_width="35dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true">
-                        
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:background="@drawable/rupeeindian"
-                            android:backgroundTint="@color/red"
-                            android:layout_alignParentBottom="true"
-                            android:id="@+id/rupee"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:maxLines="1"
-                            android:maxLength="5"
-                            android:text="3299"
-                            android:layout_toRightOf="@+id/rupee"
-                            android:layout_centerVertical="true"
-                            android:textSize="@dimen/text_head"
-                            android:textColor="@color/red"
-                            android:id="@+id/tv_mrp"
-                            android:textStyle="bold"/>
-
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toRightOf="@+id/tv_mrp"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginLeft="5dp">
-
-                            <View
-                                android:layout_width="50dp"
-                                android:layout_height="1dp"
-                                android:background="@color/black"
-                                android:layout_centerVertical="true"></View>
-                            <ImageView
-                                android:id="@+id/iv_cutprice"
-                                android:layout_width="15dp"
-                                android:layout_height="15dp"
-                                android:layout_centerVertical="true"
-                                android:layout_alignParentBottom="true"
-                                android:background="@drawable/rupeeindian"
-                                android:backgroundTint="@color/black" />
-                            <TextView
-                                android:layout_width="35dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:layout_toRightOf="@+id/iv_cutprice"
-                                android:text="1400"
-                                android:baselineAligned="false"
-                                android:includeFontPadding="false"
-                                android:layout_centerVertical="true"
-                                android:textColor="@color/black"
-                                android:maxLines="1"
-                                android:maxLength="5"
-                                android:id="@+id/tv_cutprice"
-                                android:textSize="15dp"
-                                />
-                        </RelativeLayout>
-
-                    </RelativeLayout>
+                        android:layout_marginTop="10dp"
+                        android:layout_toRightOf="@+id/iv_cutprice"
+                        android:text="1400"
+                        android:baselineAligned="false"
+                        android:includeFontPadding="false"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/black"
+                        android:maxLines="1"
+                        android:maxLength="5"
+                        android:id="@+id/tv_cutprice"
+                        android:textSize="15dp"
+                        />
                 </RelativeLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/rv_choosecolor">
-            </android.support.v7.widget.RecyclerView>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/grey"></View>
-            <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/rv_productsize">
-            </android.support.v7.widget.RecyclerView>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/grey"></View>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/startmargin"
-                android:text="Description"
-                android:textSize="20dp"
-                android:textColor="@color/black"
-                android:layout_marginStart="@dimen/startmargin"/>
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/startmargin"
-                android:layout_marginTop="@dimen/startmargin">
-
-                <ImageView
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:id="@+id/icon1"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/button_shape_red_oval"
-                    android:backgroundTint="@color/black"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Simple Full Sleeves"
-                    android:layout_marginLeft="10dp"
-                    android:textSize="12dp"
-                    android:textColor="@color/black"
-                    android:layout_toRightOf="@id/icon1"/>
             </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/startmargin"
-                android:layout_marginTop="5dp">
+        </RelativeLayout>
 
-                <ImageView
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:id="@+id/icon2"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/button_shape_red_oval"
-                    android:backgroundTint="@color/black"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Casual fit that is true to size"
-                    android:layout_marginLeft="10dp"
-                    android:textSize="12dp"
-                    android:textColor="@color/black"
-                    android:layout_toRightOf="@id/icon2"/>
-            </RelativeLayout>
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rv_choosecolor">
+        </android.support.v7.widget.RecyclerView>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey"></View>
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rv_productsize">
+        </android.support.v7.widget.RecyclerView>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey"></View>
 
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            app:tabIndicatorColor="@color/red"
+            app:tabGravity="fill"
+            app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
+            app:tabTextColor="@color/black"
+            app:tabSelectedTextColor="@color/red">
+
+        </android.support.design.widget.TabLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+
+        </android.support.v4.view.ViewPager>
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
 
 
 </LinearLayout>

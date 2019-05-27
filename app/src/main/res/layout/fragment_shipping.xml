@@ -30,7 +30,8 @@
                     android:paddingBottom="7dp"
                     android:text="New Address"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/h2"
+                    android:fontFamily="@font/seguisb"
                     android:background="@drawable/button_shape_red_left"
                     android:gravity="center"
                     android:layout_weight="1"
@@ -43,7 +44,8 @@
                     android:text="Saved address"
                     android:background="@drawable/red_outline_rectangle_right"
                     android:textColor="@color/grey"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/h2"
+                    android:fontFamily="@font/seguisb"
                     android:id="@+id/second"
                     android:gravity="center"
                     android:layout_weight="1"/>
@@ -74,6 +76,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="First Name"
+                    android:textSize="@dimen/h2"
+                    android:fontFamily="@font/seguisb"
                     android:textColor="@color/grey"/>
 
                     <EditText
@@ -81,7 +85,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/grey"
-                        android:textSize="14dp"
+                        android:textSize="@dimen/h3"
+                        android:fontFamily="@font/segoeui"
                         android:hint="First Name"
                         android:maxLines="1"
                         android:maxLength="20"
@@ -99,17 +104,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Last Name"
-                        android:textColor="@color/grey"/>
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/h2"
+                        android:fontFamily="@font/seguisb"/>
 
                     <EditText
                         android:id="@+id/et_lastName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/grey"
-                        android:textSize="14dp"
                         android:maxLines="1"
                         android:maxLength="15"
-                        android:hint="Last Name" />
+                        android:hint="Last Name"
+                        android:textSize="@dimen/h3"
+                        android:fontFamily="@font/segoeui"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -128,16 +136,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Address"
-                    android:textColor="@color/grey"/>
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/h2"
+                    android:fontFamily="@font/seguisb"/>
 
             <EditText
                 android:id="@+id/et_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:textSize="14dp"
                 android:maxLines="2"
                 android:maxLength="100"
+                android:textSize="@dimen/h3"
+                android:fontFamily="@font/segoeui"
                 android:hint="701,Block -B, Sidhhi vinayak Tower" />
             </LinearLayout>
 
@@ -155,16 +166,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Phone Number"
-                    android:textColor="@color/grey"/>
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/h2"
+                    android:fontFamily="@font/seguisb"/>
                 <EditText
                     android:id="@+id/et_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
                     android:inputType="number"
-                    android:textSize="14dp"
                     android:maxLines="1"
                     android:maxLength="12"
+                    android:textSize="@dimen/h3"
+                    android:fontFamily="@font/segoeui"
                     android:hint="+918532587452" />
             </LinearLayout>
             <!--city and state -->
@@ -190,7 +204,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="City"
-                        android:textColor="@color/grey"/>
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/h2"
+                        android:fontFamily="@font/seguisb"/>
 
                     <Spinner
                         android:id="@+id/spinner_city"
@@ -199,8 +215,8 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
                         android:textColor="@color/black"
-                        android:textSize="12dp"
-                        android:hint="First Name" />
+                        android:hint="First Name"
+                        style="@style/spinner"/>
                 </LinearLayout>
 
                 <!--state-->
@@ -217,7 +233,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="State"
-                        android:textColor="@color/grey"/>
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/h2"
+                        android:fontFamily="@font/seguisb"/>
 
                     <Spinner
                         android:id="@+id/spinner_state"
@@ -226,8 +244,8 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
                         android:textColor="@color/black"
-                        android:textSize="12dp"
-                        android:hint="Last Name" />
+                        android:hint="Last Name"
+                        style="@style/spinner"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -251,7 +269,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Country"
-                        android:textColor="@color/grey"/>
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/h2"
+                        android:fontFamily="@font/seguisb"/>
 
 
                     <Spinner
@@ -262,7 +282,7 @@
                         android:layout_gravity="bottom"
                         android:hint="First Name"
                         android:textColor="@color/black"
-                        android:textSize="12dp" />
+                        style="@style/spinner"/>
                 </LinearLayout>
 
                 <!--state-->
@@ -279,7 +299,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Zip Code"
-                        android:textColor="@color/grey"/>
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/h2"
+                        android:fontFamily="@font/seguisb"/>
 
 
                     <EditText
@@ -290,7 +312,8 @@
                         android:inputType="number"
                         android:maxLength="6"
                         android:maxLines="1"
-                        android:textSize="14dp"
+                        android:textSize="@dimen/h3"
+                        android:fontFamily="@font/segoeui"
                         android:hint="144007" />
                 </LinearLayout>
             </LinearLayout>
@@ -309,8 +332,8 @@
                     android:layout_height="wrap_content"
                     android:text="Delivery"
                     android:textColor="@color/black"
-                    android:textSize="16dp"
-                    android:textStyle="bold"
+                    android:textSize="@dimen/h1"
+                    android:fontFamily="@font/segoeuib"
                     android:layout_marginTop="20dp"
                     android:layout_marginLeft="10dp"/>
 
@@ -344,12 +367,14 @@
                             android:layout_marginTop="10dp"
                             android:text="Free"
                             android:textColor="@color/red"
-                            android:textSize="18dp" />
+                            android:textSize="@dimen/h2"
+                            android:fontFamily="@font/seguisb" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Standard"
-                            android:textSize="14dp"
+                            android:textSize="@dimen/h2"
+                            android:fontFamily="@font/seguisb"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:layout_marginBottom="10dp"/>
@@ -383,7 +408,8 @@
                         android:text="149"
                             android:id="@+id/tv_second"
                             android:layout_toRightOf="@+id/rupeeicon"
-                        android:textSize="18dp"
+                            android:textSize="@dimen/h2"
+                            android:fontFamily="@font/seguisb"
                         android:layout_marginTop="10dp"
                         android:layout_gravity="center"
                         android:textColor="@color/black"/>
@@ -392,7 +418,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Standard"
-                            android:textSize="14dp"
+                            android:textSize="@dimen/h2"
+                            android:fontFamily="@font/seguisb"
 
                             android:layout_gravity="center"
                             android:textColor="@color/black"
@@ -427,7 +454,8 @@
                                 android:text="249"
                                 android:id="@+id/tv_third"
                                 android:layout_toRightOf="@+id/rupeeicon1"
-                                android:textSize="18dp"
+                                android:textSize="@dimen/h2"
+                                android:fontFamily="@font/seguisb"
                                 android:layout_marginTop="10dp"
                                 android:layout_gravity="center"
                                 android:textColor="@color/black"/>
@@ -436,7 +464,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Next - day"
-                            android:textSize="14dp"
+                            android:textSize="@dimen/h2"
+                            android:fontFamily="@font/seguisb"
                             android:layout_gravity="center"
                             android:textColor="@color/black"
                             android:layout_marginBottom="10dp"/></LinearLayout>
@@ -470,7 +499,8 @@
         android:text="continue to payment"
         android:textColor="@color/white"
         android:layout_centerInParent="true"
-        android:textSize="16dp"
+        android:textSize="@dimen/h1"
+        android:fontFamily="@font/seguisb"
         android:textAllCaps="true"/>
 
     <ImageView

@@ -10,12 +10,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.io.choozo.Config;
 import com.io.choozo.R;
 import com.io.choozo.activity.homeActivity.CategorySubCategory;
 import com.io.choozo.model.dataModel.CategoryDataModel;
 import com.io.choozo.model.dummydataModel.ShoppingBagModel;
+import com.io.choozo.util.CategorySubCatChildCat;
 
 import java.util.List;
 
@@ -23,10 +26,13 @@ public class ShopingCategoryAdapter extends RecyclerView.Adapter<ShopingCategory
 
     Context context;
     List<CategoryDataModel> item;
+    CategorySubCatChildCat ad_interface;
+    public static int cateId;
 
-    public ShopingCategoryAdapter(Context context, List<CategoryDataModel> item) {
+    public ShopingCategoryAdapter(Context context, CategorySubCatChildCat ad_interface, List<CategoryDataModel> item) {
         this.context = context;
         this.item = item;
+        this.ad_interface = ad_interface;
     }
 
     @NonNull
@@ -40,10 +46,22 @@ public class ShopingCategoryAdapter extends RecyclerView.Adapter<ShopingCategory
     @Override
     public void onBindViewHolder(@NonNull ShopingCategoryAdapter.ViewHolder viewHolder, int i) {
 
-        CategoryDataModel model = item.get(i);
+        final CategoryDataModel model = item.get(i);
         viewHolder.name.setText(model.getName());
         Glide.with(context).load(model.getImagePath()).into(viewHolder.imageView);
+        viewHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // Toast.makeText(context, ""+model.getCategoryId(), Toast.LENGTH_SHORT).show();
 
+                Intent i =new Intent(context, CategorySubCategory.class);
+                i.putExtra("name",model.getName());
+                context.startActivity(i);
+                cateId = model.getCategoryId();
+                ad_interface.catId(cateId);
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
@@ -61,14 +79,7 @@ public class ShopingCategoryAdapter extends RecyclerView.Adapter<ShopingCategory
             name = (TextView)itemView.findViewById(R.id.tv_name);
             imageView = (ImageView)itemView.findViewById(R.id.imageview);
             relativeLayout = (RelativeLayout)itemView.findViewById(R.id.rl_click);
-            relativeLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int postion = getAdapterPosition();
-                    Intent i =new Intent(context, CategorySubCategory.class);
-                    context.startActivity(i);
-                }
-            });
+
         }
     }
 }

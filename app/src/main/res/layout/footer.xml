@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="56dp"
     android:layout_weight="5"
+    android:id="@+id/footer"
     android:background="#333333"
     android:layout_gravity="bottom"
     android:orientation="horizontal">
@@ -28,7 +29,8 @@
             android:layout_gravity="center"
             android:layout_marginRight="10dp"
             android:layout_marginTop="2dp"
-            android:textSize="10sp"
+            android:textSize="@dimen/h3"
+            android:fontFamily="@font/segoeui"
             android:textColor="@android:color/white"
             android:text="Home"/>
 
@@ -56,7 +58,8 @@
             android:layout_gravity="center"
             android:layout_marginRight="10dp"
             android:layout_marginTop="2dp"
-            android:textSize="10sp"
+            android:textSize="@dimen/h3"
+            android:fontFamily="@font/segoeui"
             android:textColor="@android:color/white"
             android:text="Hot Offer"/>
 
@@ -84,7 +87,8 @@
             android:layout_marginRight="10dp"
             android:layout_gravity="center"
             android:layout_marginTop="2dp"
-            android:textSize="10sp"
+            android:textSize="@dimen/h3"
+            android:fontFamily="@font/segoeui"
             android:textColor="@android:color/white"
             android:text="My Cart"/>
 
@@ -110,7 +114,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_gravity="center"
-            android:textSize="10sp"
+            android:textSize="@dimen/h3"
+            android:fontFamily="@font/segoeui"
             android:layout_marginTop="2dp"
             android:textColor="@android:color/white"
             android:text="Searrch"/>
@@ -138,7 +143,8 @@
             android:layout_gravity="center"
             android:layout_marginRight="10dp"
             android:layout_marginTop="2dp"
-            android:textSize="10sp"
+            android:textSize="@dimen/h3"
+            android:fontFamily="@font/segoeui"
             android:textColor="@android:color/white"
             android:text="Profile"/>
 

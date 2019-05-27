@@ -25,7 +25,8 @@
                 android:textStyle="bold"
                 android:textColor="@color/red"
                 android:layout_marginBottom="5dp"
-                android:textSize="30dp"></TextView>
+                android:textSize="@dimen/text_head"
+                android:fontFamily="@font/segoeuib"></TextView>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -35,8 +36,8 @@
                 android:id="@+id/tv_thanks"
                 android:textColor="@color/black"
                 android:layout_marginBottom="15dp"
-
-                android:textSize="17dp"></TextView>
+                android:textSize="@dimen/h1"
+                android:fontFamily="@font/seguisb"></TextView>
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -50,15 +51,18 @@
                     android:text="Order number:"
                     android:textColor="@color/grey"
                     android:id="@+id/order_nu"
-                    android:textSize="16dp"></TextView>
+                    android:textSize="@dimen/h2"
+                    android:fontFamily="@font/seguisb"></TextView>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="#SC123456"
                     android:textColor="@color/black"
                     android:layout_marginLeft="5dp"
+                    android:layout_alignParentBottom="true"
                     android:layout_toRightOf="@+id/order_nu"
-                    android:textSize="16dp"></TextView>
+                    android:textSize="@dimen/h3"
+                    android:fontFamily="@font/seguisb"></TextView>
             </RelativeLayout>
 
         <ImageView
@@ -84,7 +88,8 @@
             android:textColor="@color/red"
             android:layout_marginTop="15dp"
             android:layout_below="@+id/imageview"
-            android:textSize="17dp"></TextView>
+            android:textSize="@dimen/h1"
+            android:fontFamily="@font/seguisb"></TextView>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -95,7 +100,8 @@
             android:layout_marginTop="5dp"
             android:id="@+id/tv_estmatedtime"
             android:layout_below="@+id/tv_estimatedtime"
-            android:textSize="14dp"></TextView>
+            android:textSize="@dimen/h2"
+            android:fontFamily="@font/seguisb"></TextView>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -106,16 +112,17 @@
             android:layout_marginStart="@dimen/startmargin"
             android:layout_marginEnd="@dimen/endmargin"
             android:background="@drawable/button_shape_grey">
-            
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:textSize="16dp"
-                android:textStyle="bold"
+
                 android:textAllCaps="true"
                 android:layout_centerInParent="true"
-                android:text="track your order here"/>
+                android:text="track your order here"
+                android:textSize="@dimen/h1"
+                android:fontFamily="@font/seguisb"/>
         </RelativeLayout>
         <TextView
             android:layout_width="wrap_content"
@@ -142,7 +149,8 @@
             android:text="continue shopping"
             android:textColor="@color/white"
             android:layout_centerInParent="true"
-            android:textSize="16dp"
+            android:textSize="@dimen/h1"
+            android:fontFamily="@font/seguisb"
             android:textAllCaps="true"/>
 
         <ImageView

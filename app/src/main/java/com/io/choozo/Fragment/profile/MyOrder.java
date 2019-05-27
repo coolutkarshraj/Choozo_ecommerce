@@ -61,5 +61,13 @@ public class MyOrder extends Fragment {
         rv_MyOrder.setAdapter(adapter);
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+        }
+    }
+
 
 }

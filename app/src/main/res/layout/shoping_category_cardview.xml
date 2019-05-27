@@ -53,7 +53,8 @@
                 android:textAlignment="center"
                 android:text="Kids Wear"
                 android:maxLength="25"
-                android:textSize="12dp"
+                android:textSize="@dimen/h3"
+                android:fontFamily="@font/segoeui"
                 android:layout_marginStart="22dp"
                 android:layout_marginEnd="22dp"
                 android:layout_centerInParent="true"/>

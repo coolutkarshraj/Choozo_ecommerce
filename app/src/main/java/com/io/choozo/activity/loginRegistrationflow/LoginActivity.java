@@ -5,15 +5,32 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.io.choozo.ApiCaller;
+import com.io.choozo.Config;
 import com.io.choozo.R;
 import com.io.choozo.activity.homeActivity.MainActivity;
+import com.io.choozo.localStorage.PreferenceManager;
+import com.io.choozo.model.dataModel.CustomerRegisterResponseModel;
+import com.io.choozo.model.responseModel.LoginResponseModel;
+import com.io.choozo.util.NewProgressBar;
+import com.io.choozo.util.commonDialog;
+import com.io.choozo.util.userOnlineInfo;
+import com.koushikdutta.async.future.FutureCallback;
+
+import java.util.regex.Pattern;
+
+import static com.io.choozo.localStorage.PreferenceManager.loginData;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -22,8 +39,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     RelativeLayout imageLogin,imageRegister;
     RelativeLayout loginTab,registerTab;
     Activity activity;
-    Button btnLogin,btnRegister;
-    TextView tvSkip;
+    TextView tvSkip, tvForgotPassword;
+    userOnlineInfo user;
+    NewProgressBar dialog;
+    private PreferenceManager preferenceManager;
+
+    /* Registration views*/
+    EditText etName,etEmail,etPhone,etPassword;
+    String strName,strEmail,strPhone,strPassword,strConfrimPassword,endpointRegistration;
+    Button btnRegister;
+
+    /* Login views*/
+    Button btnLogin;
+    EditText loginEmail,loginPassword;
+    String strLoginEmail,strLoginPassword,endPointLogin,token,userr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +64,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void initializeViews() {
       activity = LoginActivity.this;
+      user = new userOnlineInfo();
+      preferenceManager = new PreferenceManager(this);
       loginLayout = (RelativeLayout)findViewById(R.id.loginlayout) ;
       registerLayout = (RelativeLayout)findViewById(R.id.register_layout) ;
       loginOrRegister = (TextView) findViewById(R.id.tv_signin);
@@ -42,18 +73,39 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
       imageRegister = (RelativeLayout)findViewById(R.id.image_signup);
       loginTab = (RelativeLayout)findViewById(R.id.tab);
       registerTab = (RelativeLayout)findViewById(R.id.tab1);
-      btnRegister = (Button) findViewById(R.id.btn_register);
-      btnLogin = (Button) findViewById(R.id.btnlogin);
       tvSkip = (TextView) findViewById(R.id.tv_skip);
+      tvForgotPassword = (TextView) findViewById(R.id.tv_forgotpassword);
+      intializeViewsRegistration();
+      intializeViewsLogin();
     }
 
 
+    /*------------------------------------- intialize Views of Registration layout--------------------------------------------*/
+
+    private void intializeViewsRegistration() {
+        etName = (EditText)findViewById(R.id.et_name);
+        etEmail = (EditText)findViewById(R.id.et_email);
+        etPhone = (EditText)findViewById(R.id.et_phone);
+        etPassword = (EditText)findViewById(R.id.et_password);
+        btnRegister = (Button) findViewById(R.id.btn_register);
+
+    }
+    /*------------------------------------- intialize Views of Login layout--------------------------------------------------*/
+
+    private void intializeViewsLogin() {
+        btnLogin = (Button) findViewById(R.id.btnlogin);
+        loginEmail = (EditText) findViewById(R.id.et_login_email);
+        loginPassword = (EditText) findViewById(R.id.et_login_password);
+    }
+
+    /*------------------------------------------- bind all views that are used in this activity-------------------------------*/
     private void bindListner() {
         imageLogin.setOnClickListener(this);
         imageRegister.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
         tvSkip.setOnClickListener(this);
+        tvForgotPassword.setOnClickListener(this);
     }
 
 
@@ -80,31 +132,168 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     registrationStartWorking();
                     return;
 
+
             case R.id.btnlogin :
                 loginStartWorking();
+                return;
 
             case R.id.tv_skip :
                 Intent i = new Intent(activity,MainActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
+                return;
 
-
+            case R.id.tv_forgotpassword :
+                Intent intent = new Intent(activity,ForgotPasswodActivity.class);
+                startActivity(intent);
+                return;
         }
 
     }
 
-    /* -------------------------------------------------Registrion layout work----------------------------------------*/
+    /* -------------------------------------------------Registrion layout work-----------------------------------------------*/
 
     private void registrationStartWorking() {
-        Intent i =new Intent(activity, MainActivity.class);
-        startActivity(i);
+        registrationValidation();
     }
 
-    /* ----------------------------------------------------Login layout work----------------------------------------*/
+    /* --------------------------------------------------registration validation----------------------------------------------*/
+
+    private void registrationValidation() {
+        strName = etName.getText().toString().trim();
+        strEmail = etEmail.getText().toString().trim();
+        strPhone = etPhone.getText().toString().trim();
+        strPassword = etPassword.getText().toString().trim();
+        strConfrimPassword = etPassword.getText().toString().trim();
+
+        if(strName.equals("") || strEmail.equals("") || strPhone.equals("") ||strPassword.equals("")){
+            etName.setError("Please Enter Name");
+            etEmail.setError("Please Enter Email");
+            etPhone.setError("Please Enter Phone");
+            etPassword.setError("Please Enter Password");
+        }
+        else {
+            registrationApi();
+        }
+    }
+
+    /*---------------------------------------------------- api's endpoint----------------------------------------------------*/
+    private void urlapi()
+    {
+        endpointRegistration = Config.Url.registerCustomer;
+        endPointLogin = Config.Url.loginCustomer;
+    }
+
+    /*----------------------------------------------- Registration Api------------------------------------------------------*/
+
+    private void registrationApi() {
+        if (user.isOnline(activity)) {
+        dialog = new NewProgressBar(activity);
+        dialog.show();
+         urlapi();
+         ApiCaller.registerCustomer(activity, endpointRegistration, strName, strEmail, strPhone, strPassword, strConfrimPassword,
+                 new FutureCallback<CustomerRegisterResponseModel>() {
+                     @Override
+                     public void onCompleted(Exception e, CustomerRegisterResponseModel result) {
+                         if(e!=null){
+                             return;
+                         }
+                         registrationApiData(result);
+                     }
+                 });
+        }else {
+            commonDialog comdialog = new commonDialog();
+            comdialog.dialogbox(activity);
+        }
+
+    }
+
+    /* --------------------------------------------registration data from api----------------------------------------------*/
+
+    private void registrationApiData(CustomerRegisterResponseModel result) {
+      if(result.getStatus() == 1){
+          dialog.dismiss();
+          Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+          Intent i =new Intent(activity, LoginActivity.class);
+          startActivity(i);
+      }else {
+          Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+          dialog.dismiss();
+      }
+
+    }
+
+    /* -----------------------------------------------Login layout work-----------------------------------------------------*/
 
     private void loginStartWorking() {
-        Intent i =new Intent(activity, MainActivity.class);
-        startActivity(i);
+        loginValidations();
     }
+
+
+    /* -------------------------------validations apply for login views like email and password-----------------------------*/
+
+    private void loginValidations() {
+        strLoginEmail = loginEmail.getText().toString().trim();
+        strLoginPassword = loginPassword.getText().toString().trim();
+        if(strLoginEmail.equals("") || strLoginPassword.equals("")){
+            loginEmail.setError("Please Enter Email");
+            loginPassword.setError("Please Enter Password");
+        }
+        else {
+            loginApi();
+        }
+    }
+
+    /* ------------------------------------------------------lOGIN Api-------------------------------------------------------*/
+    private void loginApi() {
+        if (user.isOnline(activity)) {
+            dialog = new NewProgressBar(activity);
+            dialog.show();
+            urlapi();
+            ApiCaller.loginCustomer(activity, endPointLogin, strLoginEmail, strLoginPassword,
+                    new FutureCallback<LoginResponseModel>() {
+                        @Override
+                        public void onCompleted(Exception e, LoginResponseModel result) {
+                            if(e!=null){
+                                return;
+                            }
+                            loginData(result);
+                        }
+                    });
+
+        }else {
+            commonDialog comdialog = new commonDialog();
+            comdialog.dialogbox(activity);
+        }
+
+
+    }
+
+    /*-------------------------------------------------- Login data from api------------------------------------------------*/
+
+    private void loginData(LoginResponseModel result) {
+
+        if(result.getStatus()==1){
+            dialog.dismiss();
+            saveLoginData(result);
+            Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(activity , MainActivity.class);
+            startActivity(i);
+        }
+        else {
+            Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+            dialog.dismiss();
+
+        }
+    }
+
+    /* ----------------------------------------save Login data into sharedPrefrence ---------------------------------*/
+
+    private void saveLoginData(LoginResponseModel result) {
+        Gson gson = new Gson();
+        String json = gson.toJson(result);
+        preferenceManager.putString(loginData,json);
+
+
+    }
+
 }

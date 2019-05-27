@@ -1,0 +1,36 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:paddingRight="10dp"
+    android:paddingLeft="5dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="right" >
+
+
+
+    <ImageView
+
+        android:layout_width="20dp"
+        android:layout_height="27dp"
+        android:id="@+id/bag"
+        android:layout_centerVertical="true"
+        android:clickable="true"
+        android:background="@drawable/shopcart"
+        android:backgroundTint="@color/black" />
+
+
+    <TextView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="2dp"
+         android:layout_marginLeft="8dp"
+        android:background="@drawable/button_shape_red_oval"
+        android:maxLength="2"
+        android:maxLines="1"
+        android:text="1"
+        android:id="@+id/tv_cartcount"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+
+        android:textSize="10dp" />
+
+</RelativeLayout>
