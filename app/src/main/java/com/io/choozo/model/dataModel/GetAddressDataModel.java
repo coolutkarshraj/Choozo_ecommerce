@@ -12,9 +12,9 @@ public class GetAddressDataModel {
     @SerializedName("address2")
     private String mAddress2;
     @SerializedName("addressId")
-    private Long mAddressId;
+    private int mAddressId;
     @SerializedName("addressType")
-    private Long mAddressType;
+    private int mAddressType;
     @SerializedName("city")
     private String mCity;
     @SerializedName("company")
@@ -64,19 +64,19 @@ public class GetAddressDataModel {
         mAddress2 = address2;
     }
 
-    public Long getAddressId() {
+    public int getAddressId() {
         return mAddressId;
     }
 
-    public void setAddressId(Long addressId) {
+    public void setAddressId(int addressId) {
         mAddressId = addressId;
     }
 
-    public Long getAddressType() {
+    public int getAddressType() {
         return mAddressType;
     }
 
-    public void setAddressType(Long addressType) {
+    public void setAddressType(int addressType) {
         mAddressType = addressType;
     }
 

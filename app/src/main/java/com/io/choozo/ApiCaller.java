@@ -10,6 +10,7 @@ import com.io.choozo.model.responseModel.AddAddressResponseModel;
 import com.io.choozo.model.responseModel.CategoryResponseModel;
 import com.io.choozo.model.responseModel.ChangePasswordResponseModel;
 import com.io.choozo.model.responseModel.ContactUsResponseModel;
+import com.io.choozo.model.responseModel.DeleteAddressResponseModel;
 import com.io.choozo.model.responseModel.EditProfileResponseModel;
 import com.io.choozo.model.responseModel.ForgotPasswordResponseModel;
 import com.io.choozo.model.responseModel.GetAddressResponseModel;
@@ -285,7 +286,7 @@ public class ApiCaller {
         json.addProperty("addressType",addressType);
         final Gson gson = new Gson();
         Ion.with(activity)
-                .load(UrlLocator.getFinalUrl(url))
+                .load("PUT",UrlLocator.getFinalUrl(url))
                 .setHeader("Authorization","Bearer "+token)
                 .noCache().setJsonObjectBody(json)
                 .asJsonObject()
@@ -293,6 +294,27 @@ public class ApiCaller {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
                         UpdateAddResponseModel updateAddResponseModel = gson.fromJson(result,UpdateAddResponseModel.class);
+                        apiCallBack.onCompleted(e,updateAddResponseModel);
+                    }
+                });
+    }
+
+    /* ---------------------------------------------Delete address api--------------------------------------------------------------*/
+
+    public static  void deleteAddress(Context activity , String url,
+                                      String token, final FutureCallback<DeleteAddressResponseModel> apiCallBack){
+
+
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load("DELETE ",UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization","Bearer "+token)
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        DeleteAddressResponseModel updateAddResponseModel = gson.fromJson(result,DeleteAddressResponseModel.class);
                         apiCallBack.onCompleted(e,updateAddResponseModel);
                     }
                 });

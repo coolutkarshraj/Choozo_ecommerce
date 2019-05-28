@@ -44,9 +44,9 @@ import java.util.List;
 
 public class SavedAddress  extends Fragment implements View.OnClickListener {
 
-    RecyclerView rvSavedAdress;
+    public static RecyclerView rvSavedAdress;
     String addressType = "0";
-   public static SavedAdressRvAdapter adapter;
+    public static SavedAdressRvAdapter adapter;
     List<SavedAdressDataModel> item =new ArrayList<>();
     Activity activity;
     Button btnAddAddress;
@@ -269,7 +269,6 @@ public class SavedAddress  extends Fragment implements View.OnClickListener {
     private void getAddressListApi(){
         if(user.isOnline(activity)){
             apiUrl();
-            dialogs.show();
             ApiCaller.getCustomerAddress(activity, endPointGetAddress, token, new FutureCallback<GetAddressResponseModel>() {
                 @Override
                 public void onCompleted(Exception e, GetAddressResponseModel result) {
@@ -291,14 +290,14 @@ public class SavedAddress  extends Fragment implements View.OnClickListener {
 
     private void getAllAddressData(GetAddressResponseModel result) {
        if(result.getStatus() == 1){
-           dialogs.dismiss();
+
            rvSavedAdress.setLayoutManager(new LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false));
            adapter = new SavedAdressRvAdapter(activity,result.getData());
            rvSavedAdress.setAdapter(adapter);
        }
        else {
            Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
-           dialogs.dismiss();
+
        }
     }
 
