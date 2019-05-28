@@ -298,6 +298,7 @@ public class SavedAddress  extends Fragment implements View.OnClickListener {
        }
        else {
            Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+           dialogs.dismiss();
        }
     }
 

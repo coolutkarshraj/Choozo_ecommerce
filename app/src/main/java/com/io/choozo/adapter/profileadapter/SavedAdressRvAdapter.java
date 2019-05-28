@@ -24,9 +24,12 @@ import com.io.choozo.Config;
 import com.io.choozo.R;
 import com.io.choozo.localStorage.PreferenceManager;
 import com.io.choozo.model.dataModel.GetAddressDataModel;
+import com.io.choozo.model.responseModel.AddAddressResponseModel;
 import com.io.choozo.model.responseModel.LoginResponseModel;
-import com.io.choozo.model.responseModel.UpdateAddressResponseModel;
+import com.io.choozo.model.responseModel.UpdateAddResponseModel;
 import com.io.choozo.util.NewProgressBar;
+import com.io.choozo.util.commonDialog;
+import com.io.choozo.util.userOnlineInfo;
 import com.koushikdutta.async.future.FutureCallback;
 
 import java.util.List;
@@ -40,7 +43,8 @@ public class SavedAdressRvAdapter extends RecyclerView.Adapter<SavedAdressRvAdap
     private PreferenceManager preferenceManager;
     String endPointofUpdateAddress,addressId;
     Long userId;
-    NewProgressBar bar;
+    NewProgressBar dialogs;
+    userOnlineInfo user;
     String strAddress1,strAddress2,strCity,strState,strPincode,token;
 
     public SavedAdressRvAdapter(Context context, List<GetAddressDataModel> item) {
@@ -54,7 +58,8 @@ public class SavedAdressRvAdapter extends RecyclerView.Adapter<SavedAdressRvAdap
 
     View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.saved_address_card_design,viewGroup,false);
     preferenceManager = new PreferenceManager(context);
-    bar = new NewProgressBar(context);
+    user = new userOnlineInfo();
+    dialogs = new NewProgressBar(context);
     getDataFromLocalStorage();
     return new ViewHolder(view);
     }
@@ -115,7 +120,7 @@ public class SavedAdressRvAdapter extends RecyclerView.Adapter<SavedAdressRvAdap
         Toast.makeText(context, ""+model.getAddressId() +"id = "+i, Toast.LENGTH_SHORT).show();
         addressId = String.valueOf(model.getAddressId());
         dataAddIntoString(model);
-        updateDataDialog(model);
+        updateDataDialog();
     }
 
     private void dataAddIntoString(GetAddressDataModel model) {
@@ -130,7 +135,7 @@ public class SavedAdressRvAdapter extends RecyclerView.Adapter<SavedAdressRvAdap
 
     /* --------------------------------------------------Update Data Dialog-----------------------------------------------------------*/
 
-    private void updateDataDialog(GetAddressDataModel model) {
+    private void updateDataDialog() {
 
         dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -153,7 +158,18 @@ public class SavedAdressRvAdapter extends RecyclerView.Adapter<SavedAdressRvAdap
         final RadioButton rbWork = (RadioButton) dialog.findViewById(R.id.rb_work);
         final ImageView Clear = (ImageView) dialog.findViewById(R.id.clear);
 
-        getAddressDataSetIntoViews(etAddress1,etAddress2,etCity,etState,etPinCode,rbHome,rbWork);
+        etAddress1.setText(strAddress1);
+        etAddress2.setText(strAddress2);
+        etCity.setText(strCity);
+        etState.setText(strState);
+        etPinCode.setText(strPincode);
+        if(addressType == "0"){
+            rbWork.setChecked(false);
+            rbHome.setChecked(true);
+        }else {
+            rbHome.setChecked(false);
+            rbWork.setChecked(true);
+        }
 
         rbHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,7 +193,12 @@ public class SavedAdressRvAdapter extends RecyclerView.Adapter<SavedAdressRvAdap
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, "yes", Toast.LENGTH_SHORT).show();
-                adddataValidate(etAddress1,etAddress2,etCity,etState,etPinCode,addressType);
+                strAddress1 = etAddress1.getText().toString();
+                strAddress2 = etAddress2.getText().toString();
+                strState = etState.getText().toString();
+                strCity = etCity.getText().toString();
+                strPincode = etPinCode.getText().toString();
+                addDataIntoApi(strAddress1,strAddress2,strCity,strState,strPincode,addressType);
 
             }
         });
@@ -199,69 +220,40 @@ public class SavedAdressRvAdapter extends RecyclerView.Adapter<SavedAdressRvAdap
 
     }
 
-    /* ----------------------------------------particlar get address data set into views of dialog----------------------------------*/
-
-    private void getAddressDataSetIntoViews(EditText etAddress1, EditText etAddress2, EditText etCity, EditText etState,
-                                            EditText etPinCode, RadioButton rbHome, RadioButton rbWork) {
-        etAddress1.setText(strAddress1);
-        etAddress2.setText(strAddress2);
-        etCity.setText(strCity);
-        etState.setText(strState);
-        etPinCode.setText(strPincode);
-        if(addressType == "0"){
-            rbWork.setChecked(false);
-            rbHome.setChecked(true);
-        }else {
-            rbHome.setChecked(false);
-            rbWork.setChecked(true);
-        }
-    }
-
-    /* ----------------------------------------------------data validate for updation----------------------------------------------------*/
-
-    private void adddataValidate(EditText etAddress1, EditText etAddress2, EditText etCity,
-                                 EditText etState, EditText etPincode, String addressType) {
-        strAddress1 = etAddress1.getText().toString().trim();
-        strAddress2 = etAddress2.getText().toString().trim();
-        strState = etState.getText().toString().trim();
-        strCity = etCity.getText().toString().trim();
-        strPincode = etPincode.getText().toString().trim();
-        addDataIntoApiandUpdateOperationPerfom();
-    }
-
-
 
     private void apiUrl(){
-        endPointofUpdateAddress = Config.Url.UpdateAddress + addressId;
+        endPointofUpdateAddress = Config.Url.UpdateAddress+"/"+addressId;
 
     }
 
     /*------------------------------------------------------- Api for Update Data---------------------------------------------------*/
 
-    private void addDataIntoApiandUpdateOperationPerfom() {
-        bar.show();
-        apiUrl();
-        ApiCaller.updateAddressApi(context, endPointofUpdateAddress, userId, strAddress1,
-                strAddress2, strCity, strState, strPincode, addressType, token, new FutureCallback<UpdateAddressResponseModel>() {
-                    @Override
-                    public void onCompleted(Exception e, UpdateAddressResponseModel result) {
-                     if(e!=null){
-                         return;
-                     }
-                    dataset(result);
-                    }
-                });
+    private void addDataIntoApi(String strAddress1, String strAddress2, String strCity,
+                                String strState, String strPinCode, String addressType) {
+            dialogs.show();
+            apiUrl();
+            ApiCaller.updateAddress(context, endPointofUpdateAddress, userId, strAddress1, strAddress2, strCity, strState, strPinCode, addressType, token,
+                    new FutureCallback<UpdateAddResponseModel>() {
+                        @Override
+                        public void onCompleted(Exception e, UpdateAddResponseModel result) {
+                            if(e!=null){
+                                return;
+                            }
+                            getData(result);
+                        }
+                    });
+
 
 
     }
 
-    private void dataset(UpdateAddressResponseModel result) {
+    private void getData(UpdateAddResponseModel result) {
         if(result.getStatus() == 1){
-            bar.dismiss();
+            dialogs.dismiss();
             dialog.dismiss();
             Toast.makeText(context, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
         }else {
-            bar.dismiss();
+            dialogs.dismiss();
             dialog.dismiss();
             Toast.makeText(context, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
         }

@@ -17,7 +17,7 @@ import com.io.choozo.model.responseModel.GetPageListResponseModel;
 import com.io.choozo.model.responseModel.GetProfileResponseModel;
 import com.io.choozo.model.responseModel.LoginResponseModel;
 import com.io.choozo.model.responseModel.ProductListResponseModel;
-import com.io.choozo.model.responseModel.UpdateAddressResponseModel;
+import com.io.choozo.model.responseModel.UpdateAddResponseModel;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
@@ -272,9 +272,8 @@ public class ApiCaller {
     /*----------------------------------------------------- Update address api---------------------------------------------*/
 
 
-    public static void updateAddressApi(Context activity, String url, Long customerId, String address1, String address2, String city
-                                        , String state, String pinCode, String addressType,
-                                        String token, final FutureCallback<UpdateAddressResponseModel> apiCallBack){
+    public static  void updateAddress(Context activity , String url, Long customerId, String address1, String address2, String city , String state,
+                                   String pincode, String addressType, String token, final FutureCallback<UpdateAddResponseModel> apiCallBack){
 
         final  JsonObject json =new JsonObject();
         json.addProperty("customerId",customerId);
@@ -282,7 +281,7 @@ public class ApiCaller {
         json.addProperty("address2",address2);
         json.addProperty("city",city);
         json.addProperty("state",state);
-        json.addProperty("postcode",pinCode);
+        json.addProperty("postcode",pincode);
         json.addProperty("addressType",addressType);
         final Gson gson = new Gson();
         Ion.with(activity)
@@ -293,11 +292,12 @@ public class ApiCaller {
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
-                        UpdateAddressResponseModel updateAddressResponseModel = gson.fromJson(result,UpdateAddressResponseModel.class);
-                        apiCallBack.onCompleted(e,updateAddressResponseModel);
+                        UpdateAddResponseModel updateAddResponseModel = gson.fromJson(result,UpdateAddResponseModel.class);
+                        apiCallBack.onCompleted(e,updateAddResponseModel);
                     }
                 });
     }
+
 
     public static  void productList(Activity activity , String url,  final FutureCallback<ProductListResponseModel> apiCallBack){
 
