@@ -60,7 +60,7 @@ public class SavedAddress  extends Fragment implements View.OnClickListener {
     String strPinCode;
     String token;
     String strendPointAddAdres,endPointGetAddress;
-    Long userId;
+    int userId;
     private PreferenceManager preferenceManager;
 
     public SavedAddress(){

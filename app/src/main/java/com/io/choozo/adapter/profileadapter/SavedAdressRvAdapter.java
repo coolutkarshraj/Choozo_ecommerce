@@ -47,7 +47,7 @@ public class SavedAdressRvAdapter extends RecyclerView.Adapter<SavedAdressRvAdap
     String addressType = "0";
     private PreferenceManager preferenceManager;
     String endPointofUpdateAddress,addressId;
-    Long userId;
+    int userId;
     NewProgressBar dialogs;
     userOnlineInfo user;
     String strAddress1,strAddress2,strCity,strState,strPincode,token,endPointDelete,endPointGetAddress;

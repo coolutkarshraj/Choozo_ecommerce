@@ -140,6 +140,7 @@ public class HomeFragment extends Fragment implements CategorySubCatChildCat {
             CategoryDataModel categoryDataModel = new CategoryDataModel();
             categoryDataModel.setName(result.getData().get(i).getName());
             categoryDataModel.setImage(result.getData().get(i).getImage());
+            categoryDataModel.setImagePath(result.getData().get(i).getImagePath());
             categoryDataModel.setCategoryId(result.getData().get(i).getCategoryId());
             list.add(categoryDataModel);
             if (intCategoryId == intCategoryIdfori) {

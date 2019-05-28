@@ -16,10 +16,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListener;
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
+import com.io.choozo.ApiCaller;
 import com.io.choozo.Config;
 import com.io.choozo.Fragment.Home.HomeFragment;
 import com.io.choozo.R;
@@ -27,10 +29,14 @@ import com.io.choozo.adapter.CategoryAdapter;
 import com.io.choozo.adapter.ChooseColorForFilterAdapter;
 import com.io.choozo.adapter.ItemCategoryAdapter;
 import com.io.choozo.adapter.SelectFilterSizeAdapter;
+import com.io.choozo.adapter.ShopingCategoryAdapter;
 import com.io.choozo.adapter.SubCategoryAdapter;
 import com.io.choozo.model.dummydataModel.ChooseColorModel;
 import com.io.choozo.model.dummydataModel.ItemCatModel;
 import com.io.choozo.model.dummydataModel.SelectSizeDataMode;
+import com.io.choozo.model.responseModel.ProductListResponseModel;
+import com.io.choozo.util.NewProgressBar;
+import com.koushikdutta.async.future.FutureCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +53,7 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
     ItemCategoryAdapter itemCategoryAdapter;
     List<ItemCatModel> item = new ArrayList<>();
     CrystalRangeSeekbar  rangeSeekbar;
-    TextView tvMin,tvMax,toolbarName;
+    TextView tvMin,tvMax,toolbarName,tvDataNotFound;
     String[] country = {"- Nothing Selected -","Prada", "Gucci", "Louis Vuittion", "Hermes","Tommy Hilfiger","Nike","Ralph Lauren","Levi Strauss & Co.",
     "Burberry","Adidas","Versace","Diesel","Calvin Klein"};
     String[] Category = {"- Nothing Selected -","Mens Fashion", "Womens Fashion", "Electronics", "Laptops","Provisional & Utensils","Baby & Kids"};
@@ -58,7 +64,9 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
     SelectFilterSizeAdapter selectSizeAdapter;
     List<SelectSizeDataMode> itemslectsize = new ArrayList<>();
     List<ChooseColorModel> item1 = new ArrayList<>();
-    int categoryid ,subcategoryid;
+    String intentName,endPoint;
+    int intentCategoryId;
+    NewProgressBar dialog;
 
 
     @SuppressLint("ResourceAsColor")
@@ -72,12 +80,10 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
 
     }
 
-
-
-
     private void intilaizeviews() {
         activity = CategorySubCategory.this;
         back = (ImageView)findViewById(R.id.back);
+        dialog = new NewProgressBar(activity);
         catRecyclerView = (RecyclerView)findViewById(R.id.rv_category);
         subcategoryrecyclerview = (RecyclerView)findViewById(R.id.rv_subcategory);
         itemsRecyclerView = (RecyclerView)findViewById(R.id.rv_items_catsub);
@@ -93,6 +99,7 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
         rv_producrtsize = (RecyclerView)findViewById(R.id.rv_productsize);
         rv_color = (RecyclerView)findViewById(R.id.rv_choosecolor);
         toolbarName = (TextView) findViewById(R.id.tv_name);
+        tvDataNotFound = (TextView) findViewById(R.id.tv_data_notFound);
         getDataFrimIntent();
     }
 
@@ -100,8 +107,9 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
 
     private void getDataFrimIntent() {
         Intent intent = getIntent();
-        String name = intent.getStringExtra("name");
-        toolbarName.setText(name);
+        intentName = intent.getStringExtra("name");
+        intentCategoryId = ShopingCategoryAdapter.cateId;
+        toolbarName.setText(intentName);
     }
 
     private void bindListner() {
@@ -133,7 +141,7 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
     private void startWorking() {
         categoryRecyclerViewData();
         subCategoryRecyclerViewData();
-        CategorySubCategoryDataSetToRv();
+        ProductListApi();
         seekBarSet();
         adapterSetToSpinner();
         rv_setSizeofProductData();
@@ -162,20 +170,58 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
 
     }
 
+    /* ----------------------------------------------------------- Api url of product List ----------------------------------------------------*/
+    private void apiUrl(){
+     endPoint = Config.Url.productlist+"limit=10&offset=0&manufacturerId=&categoryId="+intentCategoryId+"&keyword=&price=1&priceFrom=&priceT";
+       // endPoint = Config.Url.productlist;
+    }
 
 
-    private void CategorySubCategoryDataSetToRv() {
+    /*----------------------------------------------------------- Product list Api ----------------------------------------------------------*/
 
-        itemsRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        item.clear();
-        item.add(new ItemCatModel(R.drawable.boy,"Round Neck Dress","1200","2000"));
-        item.add(new ItemCatModel(R.drawable.redbluetop,"Red Blue Strip Top","3000","3500"));
-        item.add(new ItemCatModel(R.drawable.bluestriptop,"Blue Strip Top","1800","2200"));
-        item.add(new ItemCatModel(R.drawable.green,"Green Crop T- Shirt","1200","1800"));
-        itemCategoryAdapter = new ItemCategoryAdapter(activity, item);
-        itemsRecyclerView.setAdapter(itemCategoryAdapter);
+    private void ProductListApi(){
+        dialog.show();
+        apiUrl();
+        ApiCaller.productList(activity, endPoint,intentCategoryId, new FutureCallback<ProductListResponseModel>() {
+            @Override
+            public void onCompleted(Exception e, ProductListResponseModel result) {
+                if(e!=null){
+                    return;
+                }
+                CategorySubCategoryDataSetToRv(result);
+            }
+        });
 
     }
+
+    /* -------------------------------------------------------Api Data Set Into Recycler View-------------------------------------------------------*/
+
+    private void CategorySubCategoryDataSetToRv(ProductListResponseModel result) {
+
+        if(result.getStatus() == 1){
+            dialog.dismiss();
+            if(result.getData().getProductList().isEmpty()){
+                tvDataNotFound.setVisibility(View.VISIBLE);
+                itemsRecyclerView.setVisibility(View.GONE);
+            }else {
+                tvDataNotFound.setVisibility(View.GONE);
+                itemsRecyclerView.setVisibility(View.VISIBLE);
+                itemsRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+                itemCategoryAdapter = new ItemCategoryAdapter(activity, result.getData().getProductList());
+                itemsRecyclerView.setAdapter(itemCategoryAdapter);
+                itemCategoryAdapter.notifyDataSetChanged();
+            }
+        }
+        else{
+            Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+            dialog.dismiss();
+
+        }
+
+    }
+
+
+
     private void seekBarSet() {
         // set listener
         rangeSeekbar.setOnRangeSeekbarChangeListener(new OnRangeSeekbarChangeListener() {
@@ -258,9 +304,5 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
         adapter = new ChooseColorForFilterAdapter(activity, item1);
         rv_color.setAdapter(adapter);
     }
-
-
-
-
 
 }

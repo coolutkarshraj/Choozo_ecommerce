@@ -12,8 +12,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.io.choozo.Config;
 import com.io.choozo.R;
+import com.io.choozo.UrlLocator;
 import com.io.choozo.activity.homeActivity.CartActivity;
+import com.io.choozo.model.dataModel.productListDataModel.ProductList;
 import com.io.choozo.model.dummydataModel.ItemCatModel;
 
 import java.util.List;
@@ -21,9 +24,10 @@ import java.util.List;
 public class ItemCategoryAdapter extends RecyclerView.Adapter<ItemCategoryAdapter.ViewHolder> {
 
     Context context;
-    List<ItemCatModel> item;
+    List<ProductList> item;
+    String image,imagePath ,endPoint;
 
-    public ItemCategoryAdapter(Context context, List<ItemCatModel> item) {
+    public ItemCategoryAdapter(Context context, List<ProductList> item) {
         this.context = context;
         this.item = item;
     }
@@ -39,14 +43,18 @@ public class ItemCategoryAdapter extends RecyclerView.Adapter<ItemCategoryAdapte
     @Override
     public void onBindViewHolder(@NonNull ItemCategoryAdapter.ViewHolder viewHolder, int i) {
 
-        ItemCatModel model = item.get(i);
-        viewHolder.productName.setText(model.getProductName());
-        viewHolder.productPrice.setText(model.getProductMRP());
-        viewHolder.productCutPrice.setText(model.getProductCutPrice());
-        Glide.with(context).load(model.getImage()).into(viewHolder.productImage);
+        ProductList model = item.get(i);
+        viewHolder.productName.setText(model.getName());
+        viewHolder.productPrice.setText(model.getPrice());
+        viewHolder.productCutPrice.setText(model.getPricerefer());
+        image = model.getImages().getImage();
+        imagePath = model.getImages().getContainerName();
+        imageResizeApi(image,imagePath);
+        Glide.with(context).load(UrlLocator.getFinalUrl(endPoint)).into(viewHolder.productImage);
         viewHolder.data(item.get(i));
 
     }
+
 
     @Override
     public int getItemCount() {
@@ -84,20 +92,25 @@ public class ItemCategoryAdapter extends RecyclerView.Adapter<ItemCategoryAdapte
             });
         }
 
-        public void data(ItemCatModel itemCatModel) {
-            final ItemCatModel model = itemCatModel;
+        public void data(ProductList itemCatModel) {
+            final ProductList model = itemCatModel;
 
             relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i =new Intent(context, CartActivity.class);
-                    i.putExtra("productName",model.getProductName());
-                    i.putExtra("productImage",model.getImage());
-                    i.putExtra("productMRP",model.getProductMRP());
-                    i.putExtra("productpricecut",model.getProductCutPrice());
+                    i.putExtra("productName",model.getName());
+                  //  i.putExtra("productImage",model.getImage());
+                    i.putExtra("productMRP",model.getPrice());
+                    i.putExtra("productpricecut",model.getPricerefer());
                     context.startActivity(i);
                 }
             });
         }
     }
+
+    private void imageResizeApi(String image, String imagePath) {
+     endPoint = Config.Url.imageResize +"width=260&height=360&name="+image+"&path="+imagePath+"";
+    }
+
 }

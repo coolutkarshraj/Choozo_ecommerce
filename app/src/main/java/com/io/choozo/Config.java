@@ -32,7 +32,8 @@ public class Config {
         public final static String getCustomerAddress ="address/addresslist";
         public final static String UpdateAddress ="address/update-address";
         public final static String deleteAddress ="address/delete-address";
-        public final static String productlist ="list/productlist?limit=10&offset=0&manufacturerId=&categoryId=10&keyword=&price=1&priceFrom=&priceT";
+        public final static String productlist ="list/productlist?";
+        public final static String imageResize ="media/image-resize?";
 
     }
 }

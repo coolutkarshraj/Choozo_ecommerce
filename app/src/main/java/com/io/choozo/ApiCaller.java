@@ -14,6 +14,7 @@ import com.io.choozo.model.responseModel.DeleteAddressResponseModel;
 import com.io.choozo.model.responseModel.EditProfileResponseModel;
 import com.io.choozo.model.responseModel.ForgotPasswordResponseModel;
 import com.io.choozo.model.responseModel.GetAddressResponseModel;
+import com.io.choozo.model.responseModel.GetBannerListResponseModel;
 import com.io.choozo.model.responseModel.GetPageListResponseModel;
 import com.io.choozo.model.responseModel.GetProfileResponseModel;
 import com.io.choozo.model.responseModel.LoginResponseModel;
@@ -225,7 +226,7 @@ public class ApiCaller {
     /* ------------------------------------------------------Add address api-------------------------------------------------------*/
 
 
-    public static  void addAddress(Activity activity , String url, Long customerId, String address1, String address2, String city , String state,
+    public static  void addAddress(Activity activity , String url, int customerId, String address1, String address2, String city , String state,
                                    String pincode, String addressType, String token, final FutureCallback<AddAddressResponseModel> apiCallBack){
 
         final  JsonObject json =new JsonObject();
@@ -273,7 +274,7 @@ public class ApiCaller {
     /*----------------------------------------------------- Update address api---------------------------------------------*/
 
 
-    public static  void updateAddress(Context activity , String url, Long customerId, String address1, String address2, String city , String state,
+    public static  void updateAddress(Context activity , String url, int customerId, String address1, String address2, String city , String state,
                                    String pincode, String addressType, String token, final FutureCallback<UpdateAddResponseModel> apiCallBack){
 
         final  JsonObject json =new JsonObject();
@@ -321,12 +322,13 @@ public class ApiCaller {
     }
 
 
-    public static  void productList(Activity activity , String url,  final FutureCallback<ProductListResponseModel> apiCallBack){
+    /*-------------------------------------- get Product List According to categorty--------------------------------------------*/
 
+    public static  void productList(Activity activity , String url,int cateid,  final FutureCallback<ProductListResponseModel> apiCallBack){
 
         final Gson gson = new Gson();
         Ion.with(activity)
-                .load(url)
+                .load(UrlLocator.getFinalUrl(url))
                 .noCache()
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
@@ -337,6 +339,19 @@ public class ApiCaller {
                     }
                 });
     }
+
+   /*----------------------------------------------------------- get Banner api----------------------------------------------------*/
+
+ /*   public static void getBanner(Activity activity , String url,
+                                 final FutureCallback<GetBannerListResponseModel> apiCallBack){
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .noCache()
+                .asJ
+    }*/
+
+
 
 
 }

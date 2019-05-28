@@ -15,7 +15,7 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:id="@+id/imageview"
-            android:background="@drawable/boy"
+            android:background="@drawable/noimage"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp"/>
 
