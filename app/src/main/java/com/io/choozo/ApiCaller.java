@@ -342,14 +342,21 @@ public class ApiCaller {
 
    /*----------------------------------------------------------- get Banner api----------------------------------------------------*/
 
- /*   public static void getBanner(Activity activity , String url,
+    public static void getBanner(Activity activity , String url,
                                  final FutureCallback<GetBannerListResponseModel> apiCallBack){
         final Gson gson = new Gson();
         Ion.with(activity)
                 .load(UrlLocator.getFinalUrl(url))
                 .noCache()
-                .asJ
-    }*/
+                 .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        GetBannerListResponseModel getBannerListResponseModel = gson.fromJson(result,GetBannerListResponseModel.class);
+                        apiCallBack.onCompleted(e,getBannerListResponseModel);
+                    }
+                });
+    }
 
 
 

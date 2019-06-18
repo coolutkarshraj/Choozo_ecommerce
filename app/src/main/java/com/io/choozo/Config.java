@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Config {
 
-    public static String Base_url = "13.235.17.203";
+    public static String Base_url = "54.85.253.222";
     public static List<ChildDataModel> childDataModel;
     public static List<SubChildDataModel> subChildDataModels;
     public static String CartCount;
@@ -19,7 +19,7 @@ public class Config {
 
     public static class Url{
         public final static String  categoryList = "list/category-list?limit=&offset=0&keyword=&sortOrder=";
-        public final static String getBanner ="list/banner-list?limit=10&offset=0";
+        public final static String getBanner ="list/banner-list?limit=100&offset=0";
         public final static String registerCustomer ="customer/register";
         public final static String loginCustomer ="customer/login";
         public final static String forgotPassword ="customer/forgot-password";

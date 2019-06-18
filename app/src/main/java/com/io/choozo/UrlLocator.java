@@ -9,13 +9,12 @@ public class UrlLocator {
 
     public static String getBaseIP() {
         return Config.Base_url;
-
     }
 
     public static String getFinalUrl(String url) {
         String ip = getBaseIP();
-        Log.e("strurl","http://" + ip + ":9000/api/" + url);
-        return "http://" + ip + ":9000/api/" + url;
+        Log.e("strurl","http://" + ip + ":8000/api/" + url);
+        return "http://" + ip + ":8000/api/" + url;
     }
 
 }
