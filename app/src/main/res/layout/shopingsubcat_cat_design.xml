@@ -15,9 +15,8 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="220dp"
-            android:scaleType="centerCrop"
+            android:scaleType="fitCenter"
             android:id="@+id/imageview"
-            android:background="@drawable/noimage"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp"/>
 

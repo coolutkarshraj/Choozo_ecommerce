@@ -1,8 +1,11 @@
 package com.io.choozo.activity.homeActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -13,9 +16,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -42,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         View.OnClickListener {
     ImageView iv_menu_icon;
     DrawerLayout drawer;
+    Dialog dialog;
     Activity activity;
     ActionBarDrawerToggle toggle;
     NavigationView navigationView;
@@ -223,8 +231,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent i = new Intent(activity, AboutUsActivity.class);
             startActivity(i);
         }else if (id == R.id.logout) {
-            logout();
-            Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show();
+            logoutDialog();
         }else if (id == R.id.nav_share) {
             Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show();
         }
@@ -238,8 +245,49 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    private void logout() {
+    /*---------------------------------------------------------- logout dialog-------------------------------------------------------*/
 
+    public void logoutDialog() {
+        dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
+        dialog.getWindow().setLayout((6 * width) / 7, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setContentView(R.layout.logout_dialog);
+        dialog.setTitle("");
+        final TextView tvLogout = (TextView) dialog.findViewById(R.id.tv_logout);
+        final TextView tvCancel = (TextView) dialog.findViewById(R.id.tv_cancel);
+        final ImageView Clear = (ImageView) dialog.findViewById(R.id.clear);
+
+        tvLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logout();
+                dialog.dismiss();
+            }
+        });
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        Clear.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
+    }
+
+    /* ------------------------------------------------------- Logout Action ---------------------------------------------------------*/
+    private void logout() {
         preferenceManager.putString(PreferenceManager.loginData,"");
         Intent intent = new Intent(activity, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -248,7 +296,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    /* -----------------------------------------------bottom navigation tabs work-----------------------------------------*/
+    /* ----------------------------------------------- bottom navigation tabs work --------------------------------------------------*/
 
     private void changeFrag(Fragment fragment, boolean addToBack) {
         currFrag = fragment;

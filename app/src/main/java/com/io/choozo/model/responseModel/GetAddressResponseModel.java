@@ -14,7 +14,7 @@ public class GetAddressResponseModel {
     @SerializedName("message")
     private String mMessage;
     @SerializedName("status")
-    private Long mStatus;
+    private int mStatus;
 
     public List<GetAddressDataModel> getData() {
         return mData;
@@ -32,11 +32,11 @@ public class GetAddressResponseModel {
         mMessage = message;
     }
 
-    public Long getStatus() {
+    public int getStatus() {
         return mStatus;
     }
 
-    public void setStatus(Long status) {
+    public void setStatus(int status) {
         mStatus = status;
     }
 
