@@ -30,6 +30,7 @@ import com.io.choozo.Fragment.profile.ProfileFragment;
 import com.io.choozo.R;
 import com.io.choozo.activity.About.AboutUsActivity;
 import com.io.choozo.activity.About.ContactUsActivity;
+import com.io.choozo.activity.loginRegistrationflow.LoginActivity;
 import com.io.choozo.localStorage.PreferenceManager;
 import com.io.choozo.model.responseModel.LoginResponseModel;
 import com.smarteist.autoimageslider.DefaultSliderView;
@@ -222,6 +223,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent i = new Intent(activity, AboutUsActivity.class);
             startActivity(i);
         }else if (id == R.id.logout) {
+            logout();
             Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show();
         }else if (id == R.id.nav_share) {
             Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show();
@@ -234,6 +236,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void logout() {
+
+        preferenceManager.putString(PreferenceManager.loginData,"");
+        Intent intent = new Intent(activity, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+
     }
 
     /* -----------------------------------------------bottom navigation tabs work-----------------------------------------*/
