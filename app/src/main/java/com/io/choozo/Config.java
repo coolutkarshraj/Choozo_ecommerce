@@ -8,13 +8,15 @@ import java.util.List;
 
 public class Config {
 
-    public static String Base_url = "54.85.253.222";
+    public static String Base_url = "18.207.190.116";
     public static List<ChildDataModel> childDataModel;
     public static List<SubChildDataModel> subChildDataModels;
     public static String CartCount;
     public static String getProfileApi;
     public static CategoryResponseModel categoryResponseModel;
     public static int categoryClickId;
+    public static String productId;
+    public static String toolbarName;
     public static int subCategoryClickId;
 
     public static class Url{
@@ -34,6 +36,7 @@ public class Config {
         public final static String deleteAddress ="address/delete-address";
         public final static String productlist ="list/productlist?";
         public final static String imageResize ="media/image-resize?";
+        public final static String productdetail ="product-store/productdetail/";
 
     }
 }

@@ -1,15 +1,15 @@
 
-package com.io.choozo.model.dataModel.productListDataModel;
+package com.io.choozo.model.dataModel.productdataModel;
+
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
-import com.google.gson.annotations.SerializedName;
+
 
 
 @SuppressWarnings("unused")
-public class ProductList {
+public class Datum {
 
-    @SerializedName("amount")
-    private Object mAmount;
     @SerializedName("Category")
     private List<Category> mCategory;
     @SerializedName("condition")
@@ -18,18 +18,18 @@ public class ProductList {
     private String mDateAvailable;
     @SerializedName("description")
     private String mDescription;
-    @SerializedName("discount")
-    private Object mDiscount;
     @SerializedName("flag")
     private String mFlag;
-    @SerializedName("Images")
-    private Images mImages;
-    @SerializedName("metaTagDescription")
-    private Object mMetaTagDescription;
-    @SerializedName("metaTagKeyword")
-    private Object mMetaTagKeyword;
+    @SerializedName("isActive")
+    private Long mIsActive;
+    @SerializedName("location")
+    private String mLocation;
+    @SerializedName("manufacturerId")
+    private Long mManufacturerId;
     @SerializedName("metaTagTitle")
     private String mMetaTagTitle;
+    @SerializedName("minimumQuantity")
+    private Long mMinimumQuantity;
     @SerializedName("name")
     private String mName;
     @SerializedName("price")
@@ -37,11 +37,15 @@ public class ProductList {
     @SerializedName("pricerefer")
     private String mPricerefer;
     @SerializedName("productId")
-    private int mProductId;
+    private Long mProductId;
+    @SerializedName("productImage")
+    private List<ProductImage> mProductImage;
     @SerializedName("quantity")
     private Long mQuantity;
     @SerializedName("rating")
-    private Object mRating;
+    private Long mRating;
+    @SerializedName("relatedProductDetail")
+    private List<RelatedProductDetail> mRelatedProductDetail;
     @SerializedName("shipping")
     private Long mShipping;
     @SerializedName("sku")
@@ -52,16 +56,10 @@ public class ProductList {
     private Long mStockStatusId;
     @SerializedName("subtractStock")
     private Long mSubtractStock;
+    @SerializedName("upc")
+    private String mUpc;
     @SerializedName("wishListStatus")
     private Long mWishListStatus;
-
-    public Object getAmount() {
-        return mAmount;
-    }
-
-    public void setAmount(Object amount) {
-        mAmount = amount;
-    }
 
     public List<Category> getCategory() {
         return mCategory;
@@ -95,14 +93,6 @@ public class ProductList {
         mDescription = description;
     }
 
-    public Object getDiscount() {
-        return mDiscount;
-    }
-
-    public void setDiscount(Object discount) {
-        mDiscount = discount;
-    }
-
     public String getFlag() {
         return mFlag;
     }
@@ -111,28 +101,28 @@ public class ProductList {
         mFlag = flag;
     }
 
-    public Images getImages() {
-        return mImages;
+    public Long getIsActive() {
+        return mIsActive;
     }
 
-    public void setImages(Images images) {
-        mImages = images;
+    public void setIsActive(Long isActive) {
+        mIsActive = isActive;
     }
 
-    public Object getMetaTagDescription() {
-        return mMetaTagDescription;
+    public String getLocation() {
+        return mLocation;
     }
 
-    public void setMetaTagDescription(Object metaTagDescription) {
-        mMetaTagDescription = metaTagDescription;
+    public void setLocation(String location) {
+        mLocation = location;
     }
 
-    public Object getMetaTagKeyword() {
-        return mMetaTagKeyword;
+    public Long getManufacturerId() {
+        return mManufacturerId;
     }
 
-    public void setMetaTagKeyword(Object metaTagKeyword) {
-        mMetaTagKeyword = metaTagKeyword;
+    public void setManufacturerId(Long manufacturerId) {
+        mManufacturerId = manufacturerId;
     }
 
     public String getMetaTagTitle() {
@@ -141,6 +131,14 @@ public class ProductList {
 
     public void setMetaTagTitle(String metaTagTitle) {
         mMetaTagTitle = metaTagTitle;
+    }
+
+    public Long getMinimumQuantity() {
+        return mMinimumQuantity;
+    }
+
+    public void setMinimumQuantity(Long minimumQuantity) {
+        mMinimumQuantity = minimumQuantity;
     }
 
     public String getName() {
@@ -167,12 +165,20 @@ public class ProductList {
         mPricerefer = pricerefer;
     }
 
-    public int getProductId() {
+    public Long getProductId() {
         return mProductId;
     }
 
-    public void setProductId(int productId) {
+    public void setProductId(Long productId) {
         mProductId = productId;
+    }
+
+    public List<ProductImage> getProductImage() {
+        return mProductImage;
+    }
+
+    public void setProductImage(List<ProductImage> productImage) {
+        mProductImage = productImage;
     }
 
     public Long getQuantity() {
@@ -183,12 +189,20 @@ public class ProductList {
         mQuantity = quantity;
     }
 
-    public Object getRating() {
+    public Long getRating() {
         return mRating;
     }
 
-    public void setRating(Object rating) {
+    public void setRating(Long rating) {
         mRating = rating;
+    }
+
+    public List<RelatedProductDetail> getRelatedProductDetail() {
+        return mRelatedProductDetail;
+    }
+
+    public void setRelatedProductDetail(List<RelatedProductDetail> relatedProductDetail) {
+        mRelatedProductDetail = relatedProductDetail;
     }
 
     public Long getShipping() {
@@ -229,6 +243,14 @@ public class ProductList {
 
     public void setSubtractStock(Long subtractStock) {
         mSubtractStock = subtractStock;
+    }
+
+    public String getUpc() {
+        return mUpc;
+    }
+
+    public void setUpc(String upc) {
+        mUpc = upc;
     }
 
     public Long getWishListStatus() {

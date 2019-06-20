@@ -13,8 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,16 +24,21 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.io.choozo.ApiCaller;
 import com.io.choozo.Config;
 import com.io.choozo.Fragment.ProductView.OverView;
 import com.io.choozo.Fragment.ProductView.Review;
 import com.io.choozo.R;
+import com.io.choozo.UrlLocator;
 import com.io.choozo.adapter.ChooseColorAdapter;
 import com.io.choozo.adapter.SelectSizeAdapter;
 import com.io.choozo.adapter.fragmentadapter.CheckoutAdapter;
 import com.io.choozo.model.dummydataModel.ChooseColorModel;
 import com.io.choozo.model.dummydataModel.SelectSizeDataMode;
+import com.io.choozo.model.responseModel.GetProductDataResponseModel;
+import com.koushikdutta.async.future.FutureCallback;
 import com.smarteist.autoimageslider.DefaultSliderView;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderLayout;
@@ -44,11 +49,11 @@ import java.util.List;
 
 public class CartActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     SliderLayout sliderLayout;
-    String productName;
-    String productMRP;
-    String productPriceCut;
+    String strImage,strImagePath,endPointImageResize,strImageUrl;
+    String endPointProductDetail;
+    String toolbarName;
     String spinnerData;
-    int productImage;
+    int productImage ,Id;
     Activity activity;
     ImageView back,Like,Unlike;
     RecyclerView rv_color,rv_producrtsize;
@@ -59,7 +64,9 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     String[] items = {"0","1", "2", "3", "4", "5","6","7","8","9","10"};
     Spinner spin;
     Button addToCart;
-    TextView cartCount;
+    TextView cartCount,tvProductName,tvActualPrice,tvCutPrice;
+    String strActualPrice , strCutPrice;
+    RelativeLayout rlCut;
     ViewPager viewPager;
     CheckoutAdapter checkoutAdapter;
     TabLayout tabLayout;
@@ -77,11 +84,10 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         startWorking();
     }
 
-
+/* ------------------------------------------------ intialize all Views that are used in this activity ---------------------------------*/
 
     private void initializeViews() {
         activity = CartActivity.this;
-
         sliderLayout = findViewById(R.id.slider);
         sliderLayout.setIndicatorAnimation(IndicatorAnimations.FILL); //set indicator animation by using SliderLayout.Animations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
         sliderLayout.setAutoScrolling(false);
@@ -90,6 +96,10 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         Unlike = (ImageView)findViewById(R.id.unlike);
         rv_color = (RecyclerView)findViewById(R.id.rv_choosecolor);
         rv_producrtsize = (RecyclerView)findViewById(R.id.rv_productsize);
+        tvProductName = (TextView)findViewById(R.id.tv_product_name);
+        tvActualPrice = (TextView)findViewById(R.id.tv_mrp);
+        tvCutPrice = (TextView)findViewById(R.id.tv_cutprice);
+        rlCut = (RelativeLayout)findViewById(R.id.rl_cut);
         spin = (Spinner) findViewById(R.id.spinner);
         addToCart = (Button)findViewById(R.id.addtocart);
         cartCount = (TextView)findViewById(R.id.tv_cartcount);
@@ -98,13 +108,22 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         tabLayout = (TabLayout)findViewById(R.id.tab);
         setUpFragment(viewPager);
         tabLayout.setupWithViewPager(viewPager);
+        getDataFromIntent();
+    }
+
+    private void getDataFromIntent() {
+        Intent intent = getIntent();
+        Id = intent.getIntExtra("productId",0);
+        toolbarName = intent.getStringExtra("toolbarName");
+
 
     }
 
+  /* ------------------------------------------------------set up of toolbar-------------------------------------------------------*/
+
     private void toolbar() {
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-        toolbar.setTitle("Mens Fashion");
-     //   getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar.setTitle(toolbarName);
         setSupportActionBar(toolbar);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.transparent)); // transperent color = #00000000
@@ -112,6 +131,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         setFont();
     }
 
+    /*---------------------------------------------- font style apply on toolbar text-------------------------------------------------*/
     private void setFont() {
 
         final Typeface tf = Typeface.createFromAsset(activity.getAssets(), "fonts/seguisb.ttf");
@@ -119,16 +139,16 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         collapsingToolbarLayout.setExpandedTitleTypeface(tf);
     }
 
+    /* ----------------------------------------------bind all views that are used in this activity-------------------------------------*/
+
     private void bindListner() {
       back.setOnClickListener(this);
-      //  Unlike.setOnClickListener(this);
-       // Like.setOnClickListener(this);
-        spin.setOnItemSelectedListener(this);
-        spinnerAdapterSet();
-        addToCart.setOnClickListener(this);
+      spin.setOnItemSelectedListener(this);
+      spinnerAdapterSet();
+       addToCart.setOnClickListener(this);
     }
 
-
+    /*------------------------------------------------------------- Click Listner ----------------------------------------------------------*/
 
     @Override
     public void onClick(View v) {
@@ -150,22 +170,54 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-
+  /*----------------------------------------------------------- start Working---------------------------------------------------------*/
     private void startWorking() {
-        getDataFromIntent();
-        setSliderViews();
-        rv_SetData(); // for color chooser
-        rv_setSizeofProductData();
+       productdetailApi();
+       rv_SetData(); // for color chooser
+       rv_setSizeofProductData();
     }
 
-
-    private void getDataFromIntent() {
-        Intent intent = getIntent();
-        productName = intent.getStringExtra("productName");
-        productImage = intent.getIntExtra("productImage",0);
-        productMRP = intent.getStringExtra("productMRP");
-        productPriceCut = intent.getStringExtra("productpricecut");
+    private void apiurl(){
+        endPointProductDetail = Config.Url.productdetail+Id;
+        endPointImageResize = Config.Url.imageResize;
     }
+
+    private void productdetailApi(){
+
+        apiurl();
+        ApiCaller.getproductDetail(activity,
+                endPointProductDetail, new FutureCallback<GetProductDataResponseModel>() {
+            @Override
+            public void onCompleted(Exception e, GetProductDataResponseModel result) {
+                if(e!=null){
+                    return;
+                }
+              apiResponseData(result);
+
+            }
+        });
+    }
+
+    private void apiResponseData(GetProductDataResponseModel result) {
+
+        if(result.getStatus() == 1){
+            tvProductName.setText(result.getData().get(0).getName());
+
+              for (int i=0 ; i<result.getData().get(0).getProductImage().size();i++){
+                  strImage = result.getData().get(0).getProductImage().get(i).getImage();
+                  strImagePath = result.getData().get(0).getProductImage().get(i).getContainerName();
+                  strImageUrl = UrlLocator.getFinalUrl(endPointImageResize +"width=3840&height=2160&name="+strImage+"&path="+strImagePath+"");
+                  SliderView sliderView = new DefaultSliderView(activity);
+                  sliderView.setImageUrl(strImageUrl);
+                  sliderView.setImageScaleType(ImageView.ScaleType.FIT_CENTER);
+                  final int finalI = i;
+                  sliderLayout.addSliderView(sliderView);
+              }
+        }else {
+            Toast.makeText(activity, "Something wentWrong", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     private void setSliderViews() {
 

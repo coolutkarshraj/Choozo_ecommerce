@@ -84,7 +84,6 @@ public class HomeFragment extends Fragment implements CategorySubCatChildCat {
     /*-------------------------------------------------- get Banner from Api ---------------------------------------------------------*/
 
     private void getBannerApi() {
-
         apiUrl();
         ApiCaller.getBanner(activity, endPointBanner, new FutureCallback<GetBannerListResponseModel>() {
             @Override
@@ -104,12 +103,14 @@ public class HomeFragment extends Fragment implements CategorySubCatChildCat {
             for (int i=0 ; i<result.getData().size();i++) {
                 strImage = result.getData().get(i).getImage();
                 strImagePath = result.getData().get(i).getImagePath();
-                tvSliderName.setText(result.getData().get(i).getTitle());
+                //tvSliderName.setText(result.getData().get(i).getTitle());
                 endPointImageResize = UrlLocator.getFinalUrl(Config.Url.imageResize +"width=3840&height=2160&name="+strImage+"&path="+strImagePath+"");
-                Log.e("Imageurl",endPointImageResize);
                 SliderView sliderView = new DefaultSliderView(activity);
                 sliderView.setImageUrl(endPointImageResize);
                 sliderView.setImageScaleType(ImageView.ScaleType.CENTER_CROP);
+                sliderView.setDescription(result.getData().get(i).getTitle());
+                ((DefaultSliderView) sliderView).setDescriptionTextSize(20);
+
                 final int finalI = i;
                 sliderView.setOnSliderClickListener(new SliderView.OnSliderClickListener() {
                     @Override
@@ -169,11 +170,11 @@ public class HomeFragment extends Fragment implements CategorySubCatChildCat {
 
                 for (int j = 0; j < result.getData().get(i).getChildren().size(); j++) {
                     intSubCategoryId = result.getData().get(i).getChildren().get(j).getCategoryId();
-                    if(this.subCategoryId == 0){
+                  /*  if(this.subCategoryId == 0){
                         intSubCategoryIdforj = result.getData().get(i).getChildren().get(0).getCategoryId();
-                    }else {
+                    }else {*/
                         intSubCategoryIdforj = this.subCategoryId;
-                    }
+                  //  }
                     ChildDataModel childDataModel = new ChildDataModel();
                     childDataModel.setName(result.getData().get(i).getChildren().get(j).getName());
                     childDataModel.setCategoryId(result.getData().get(i).getChildren().get(j).getCategoryId());
@@ -212,7 +213,7 @@ public class HomeFragment extends Fragment implements CategorySubCatChildCat {
     @Override
     public void catId(int cateId) {
         intCategoryIdfori = cateId;
-        Config.categoryClickId = cateId;
+      //  Config.categoryClickId = cateId;
         setData(Config.categoryResponseModel);
 
     }
@@ -222,6 +223,7 @@ public class HomeFragment extends Fragment implements CategorySubCatChildCat {
     @Override
     public void subCategoryId(int subCategoryId) {
         this.subCategoryId = subCategoryId;
+        Config.productId = String.valueOf(subCategoryId);
         setData(Config.categoryResponseModel);
     }
 

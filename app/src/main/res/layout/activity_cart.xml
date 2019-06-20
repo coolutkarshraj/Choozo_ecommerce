@@ -55,6 +55,7 @@
                     app:contentInsetStart="0dp"
                     app:contentInsetStartWithNavigation="0dp"
                     app:layout_collapseMode="pin"
+                    app:titleTextAppearance="@style/TextAppearance.TabsFont"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
 
@@ -92,18 +93,21 @@
            >
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:textSize="@dimen/h1"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:id="@+id/tv_product_name"
                         android:fontFamily="@font/segoeuib"
                         android:text="Red Blue Striped Top"
-                        android:layout_gravity="center" />
+                        android:gravity="center" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp">
+                        android:layout_marginTop="10dp">
 
                                 <RelativeLayout
                                     android:layout_width="wrap_content"
@@ -133,6 +137,8 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
+                                        android:id="@+id/rl_pricecut"
+                                        android:visibility="gone"
                                         android:layout_toRightOf="@+id/tv_mrp">
 
                                         <View
@@ -142,8 +148,8 @@
                                             android:layout_centerVertical="true"></View>
                                         <ImageView
                                             android:id="@+id/iv_cutprice"
-                                            android:layout_width="15dp"
-                                            android:layout_height="15dp"
+                                            android:layout_width="10dp"
+                                            android:layout_height="10dp"
                                             android:layout_centerVertical="true"
                                             android:layout_alignParentBottom="true"
                                             android:background="@drawable/rupeeindian"

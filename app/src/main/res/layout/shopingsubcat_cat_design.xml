@@ -14,7 +14,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="220dp"
+            android:layout_height="200dp"
             android:scaleType="fitCenter"
             android:id="@+id/imageview"
             tools:layout_editor_absoluteX="0dp"
@@ -66,27 +66,32 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/rl_cut"
+
                 android:layout_toRightOf="@+id/tv_mrp"
                 android:layout_marginLeft="5dp">
 
                 <View
-                    android:layout_width="33dp"
+                    android:layout_width="25dp"
                     android:layout_height="1dp"
+                    android:visibility="gone"
+                    android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:background="@color/black"></View>
                                 <ImageView
                                     android:id="@+id/iv_cutprice"
                                     android:layout_width="10dp"
                                     android:layout_height="10dp"
+                                    android:visibility="gone"
                                     android:layout_centerVertical="true"
                                     android:background="@drawable/rupeeindian"
                                     android:backgroundTint="@color/black" />
                                 <TextView
-                                    android:layout_width="25dp"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
                                     android:layout_toRightOf="@+id/iv_cutprice"
-                                    android:text="1400"
+                                    android:text="₹1400"
                                     android:layout_centerVertical="true"
                                     android:textColor="@color/black"
                                     android:maxLines="1"

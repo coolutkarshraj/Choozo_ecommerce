@@ -16,6 +16,7 @@ import com.io.choozo.model.responseModel.ForgotPasswordResponseModel;
 import com.io.choozo.model.responseModel.GetAddressResponseModel;
 import com.io.choozo.model.responseModel.GetBannerListResponseModel;
 import com.io.choozo.model.responseModel.GetPageListResponseModel;
+import com.io.choozo.model.responseModel.GetProductDataResponseModel;
 import com.io.choozo.model.responseModel.GetProfileResponseModel;
 import com.io.choozo.model.responseModel.LoginResponseModel;
 import com.io.choozo.model.responseModel.ProductListResponseModel;
@@ -324,7 +325,7 @@ public class ApiCaller {
 
     /*-------------------------------------- get Product List According to categorty--------------------------------------------*/
 
-    public static  void productList(Activity activity , String url,int cateid,  final FutureCallback<ProductListResponseModel> apiCallBack){
+    public static  void productList(Context activity , String url, final FutureCallback<ProductListResponseModel> apiCallBack){
 
         final Gson gson = new Gson();
         Ion.with(activity)
@@ -354,6 +355,26 @@ public class ApiCaller {
                     public void onCompleted(Exception e, JsonObject result) {
                         GetBannerListResponseModel getBannerListResponseModel = gson.fromJson(result,GetBannerListResponseModel.class);
                         apiCallBack.onCompleted(e,getBannerListResponseModel);
+                    }
+                });
+    }
+
+
+    /* --------------------------------------------------------get product Detail--------------------------------------------------*/
+
+    public static void getproductDetail(Activity activity, String url ,
+                                        final FutureCallback<GetProductDataResponseModel> apiCallBack){
+
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        GetProductDataResponseModel productDetailResponseModel = gson.fromJson(result,GetProductDataResponseModel.class);
+                        apiCallBack.onCompleted(e,productDetailResponseModel);
                     }
                 });
     }

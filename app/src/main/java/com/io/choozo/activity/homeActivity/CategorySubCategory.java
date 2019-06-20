@@ -43,17 +43,17 @@ import java.util.List;
 
 public class CategorySubCategory extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-    RecyclerView catRecyclerView,subcategoryrecyclerview,itemsRecyclerView;
+    public static RecyclerView catRecyclerView,subcategoryrecyclerview,itemsRecyclerView;
     Activity activity;
     ImageView back;
     RelativeLayout rlFilter;
     ImageView Cancel ,filterbtn;
     public static CategoryAdapter categoryAdapter;
     public static SubCategoryAdapter subCategoryAdapter;
-    ItemCategoryAdapter itemCategoryAdapter;
+    public static ItemCategoryAdapter itemCategoryAdapter;
     List<ItemCatModel> item = new ArrayList<>();
     CrystalRangeSeekbar  rangeSeekbar;
-    TextView tvMin,tvMax,toolbarName,tvDataNotFound;
+    public static TextView tvMin,tvMax,toolbarName,tvDataNotFound;
     String[] country = {"- Nothing Selected -","Prada", "Gucci", "Louis Vuittion", "Hermes","Tommy Hilfiger","Nike","Ralph Lauren","Levi Strauss & Co.",
     "Burberry","Adidas","Versace","Diesel","Calvin Klein"};
     String[] Category = {"- Nothing Selected -","Mens Fashion", "Womens Fashion", "Electronics", "Laptops","Provisional & Utensils","Baby & Kids"};
@@ -65,7 +65,9 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
     List<SelectSizeDataMode> itemslectsize = new ArrayList<>();
     List<ChooseColorModel> item1 = new ArrayList<>();
     String intentName,endPoint;
-    int intentCategoryId;
+    String intentCategoryId ="";
+    String child ="";
+    String subchild ="";
     NewProgressBar dialog;
 
 
@@ -79,6 +81,8 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
         startWorking();
 
     }
+
+    /* -------------------------------------------- intailize All Views that are used in this activity ---------------------------------*/
 
     private void intilaizeviews() {
         activity = CategorySubCategory.this;
@@ -103,12 +107,13 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
         getDataFrimIntent();
     }
 
-
-
+    /* ------------------------------------------------ get Data from Intent ------------------------------------------------------*/
     private void getDataFrimIntent() {
         Intent intent = getIntent();
         intentName = intent.getStringExtra("name");
-        intentCategoryId = ShopingCategoryAdapter.cateId;
+        Config.toolbarName = intentName;
+        intentCategoryId = String.valueOf(ShopingCategoryAdapter.cateId);
+        Log.e("category",""+intentCategoryId);
         toolbarName.setText(intentName);
     }
 
@@ -135,8 +140,9 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
                  rlFilter.setVisibility(View.GONE);
                  return;
         }
-
     }
+
+    /* -------------------------------------------------------- start working ----------------------------------------------------*/
 
     private void startWorking() {
         categoryRecyclerViewData();
@@ -149,7 +155,6 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
         adapterSetToSpinnerforCategory();
         adapterSetToSpinnerfordiscount();
     }
-
 
 
     /* -----------------------------------------------child data set into recyclerView-------------------------------------------*/
@@ -170,9 +175,12 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
 
     }
 
+
+
     /* ----------------------------------------------------------- Api url of product List ----------------------------------------------------*/
     private void apiUrl(){
-     endPoint = Config.Url.productlist+"limit=10&offset=0&manufacturerId=&categoryId="+intentCategoryId+"&keyword=&price=1&priceFrom=&priceT";
+            endPoint = Config.Url.productlist+"limit=10&offset=0&manufacturerId=&categoryId="+intentCategoryId+"&keyword=&price=1&priceFrom=&priceT";
+
        // endPoint = Config.Url.productlist;
     }
 
@@ -182,7 +190,7 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
     private void ProductListApi(){
         dialog.show();
         apiUrl();
-        ApiCaller.productList(activity, endPoint,intentCategoryId, new FutureCallback<ProductListResponseModel>() {
+        ApiCaller.productList(activity, endPoint, new FutureCallback<ProductListResponseModel>() {
             @Override
             public void onCompleted(Exception e, ProductListResponseModel result) {
                 if(e!=null){

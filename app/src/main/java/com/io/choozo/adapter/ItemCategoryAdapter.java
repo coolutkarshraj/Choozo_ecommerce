@@ -2,6 +2,8 @@ package com.io.choozo.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.io.choozo.Config;
@@ -25,7 +28,8 @@ public class ItemCategoryAdapter extends RecyclerView.Adapter<ItemCategoryAdapte
 
     Context context;
     List<ProductList> item;
-    String image,imagePath ,endPoint;
+    int productId;
+    String image,imagePath ,endPoint,strCutPrice,strPreferPrice;
 
     public ItemCategoryAdapter(Context context, List<ProductList> item) {
         this.context = context;
@@ -45,8 +49,19 @@ public class ItemCategoryAdapter extends RecyclerView.Adapter<ItemCategoryAdapte
 
         ProductList model = item.get(i);
         viewHolder.productName.setText(model.getName());
-        viewHolder.productPrice.setText(model.getPrice());
-        viewHolder.productCutPrice.setText(model.getPricerefer());
+        productId = model.getProductId();
+        strCutPrice = model.getPrice();
+        strPreferPrice = model.getPricerefer();
+        if(strPreferPrice.equals("") ){
+            viewHolder.productPrice.setText(model.getPrice());
+            viewHolder.rlCutPrice.setVisibility(View.GONE);
+        }else {
+            viewHolder.rlCutPrice.setVisibility(View.VISIBLE);
+            viewHolder.productPrice.setText(model.getPricerefer());
+            viewHolder.productCutPrice.setText( "\u20B9" +model.getPrice());
+            viewHolder.productCutPrice.setPaintFlags( viewHolder.productCutPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }
+        viewHolder.productCutPrice.setText(model.getPrice());
         image = model.getImages().getImage();
         imagePath = model.getImages().getContainerName();
         imageResizeApi(image,imagePath);
@@ -66,7 +81,7 @@ public class ItemCategoryAdapter extends RecyclerView.Adapter<ItemCategoryAdapte
         TextView productName,productPrice,productCutPrice;
         ImageView productImage ,Like,Dislike;
         TextView line;
-        RelativeLayout relativeLayout;
+        RelativeLayout relativeLayout,rlCutPrice;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             productName = (TextView)itemView.findViewById(R.id.tv_dress);
@@ -76,6 +91,7 @@ public class ItemCategoryAdapter extends RecyclerView.Adapter<ItemCategoryAdapte
             Like = (ImageView) itemView.findViewById(R.id.like);
             Dislike = (ImageView) itemView.findViewById(R.id.heart);
             relativeLayout = (RelativeLayout) itemView.findViewById(R.id.rl_click);
+            rlCutPrice = (RelativeLayout)itemView.findViewById(R.id.rl_cut);
             Like.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -99,10 +115,8 @@ public class ItemCategoryAdapter extends RecyclerView.Adapter<ItemCategoryAdapte
                 @Override
                 public void onClick(View v) {
                     Intent i =new Intent(context, CartActivity.class);
-                    i.putExtra("productName",model.getName());
-                  //  i.putExtra("productImage",model.getImage());
-                    i.putExtra("productMRP",model.getPrice());
-                    i.putExtra("productpricecut",model.getPricerefer());
+                    i.putExtra("productId",model.getProductId());
+                    i.putExtra("toolbarName",Config.toolbarName);
                     context.startActivity(i);
                 }
             });
