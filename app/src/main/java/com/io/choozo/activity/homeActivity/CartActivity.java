@@ -1,7 +1,9 @@
 package com.io.choozo.activity.homeActivity;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -31,6 +33,7 @@ import com.io.choozo.Config;
 import com.io.choozo.Fragment.ProductView.OverView;
 import com.io.choozo.Fragment.ProductView.Review;
 import com.io.choozo.R;
+import com.io.choozo.SqlDB.DbHelper;
 import com.io.choozo.UrlLocator;
 import com.io.choozo.adapter.ChooseColorAdapter;
 import com.io.choozo.adapter.SelectSizeAdapter;
@@ -44,6 +47,9 @@ import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderLayout;
 import com.smarteist.autoimageslider.SliderView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +59,8 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     String endPointProductDetail;
     String toolbarName;
     String spinnerData;
-    int productImage ,Id;
+    String ProductId = "" , Id;
+    int productImage ,PID;
     Activity activity;
     ImageView back,Like,Unlike;
     RecyclerView rv_color,rv_producrtsize;
@@ -61,16 +68,28 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     SelectSizeAdapter selectSizeAdapter;
     List<SelectSizeDataMode> itemslectsize = new ArrayList<>();
     List<ChooseColorModel> item = new ArrayList<>();
-    String[] items = {"0","1", "2", "3", "4", "5","6","7","8","9","10"};
+    String[] items = {"0","1", "2", "3", "4", "5","6","7","8","9","10"
+                        ,"11", "12", "13", "14", "15","16","17","18","19","20",
+                            "21", "22", "23", "24", "25","26","27","28","29","30",
+                                "31", "32", "33", "34", "35","36","37","38","39","40",
+                                  "41", "42", "43", "44", "45","46","47","48","49","50",
+                                      "51", "52", "53", "54", "55","56","57","58","59","60",
+                                         "61", "62", "63", "64", "65","66","67","68","69","70",
+                                           "71", "72", "73", "74", "75","76","77","78","79","80",
+                                             "81", "82", "83", "84", "85","86","87","88","89","90",
+                                                 "91", "92", "93", "94", "95","96","97","98","99","100"};
     Spinner spin;
     Button addToCart;
     TextView cartCount,tvProductName,tvActualPrice,tvCutPrice;
-    String strActualPrice , strCutPrice;
+    String strActualPrice , strCutPrice , strProductName;
     RelativeLayout rlCut;
     ViewPager viewPager;
     CheckoutAdapter checkoutAdapter;
     TabLayout tabLayout;
     CollapsingToolbarLayout collapsingToolbarLayout;
+
+    DbHelper dbHelper;
+    TextView tvCount;
 
 
 
@@ -88,6 +107,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initializeViews() {
         activity = CartActivity.this;
+        dbHelper = new DbHelper(activity);
         sliderLayout = findViewById(R.id.slider);
         sliderLayout.setIndicatorAnimation(IndicatorAnimations.FILL); //set indicator animation by using SliderLayout.Animations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
         sliderLayout.setAutoScrolling(false);
@@ -99,7 +119,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         tvProductName = (TextView)findViewById(R.id.tv_product_name);
         tvActualPrice = (TextView)findViewById(R.id.tv_mrp);
         tvCutPrice = (TextView)findViewById(R.id.tv_cutprice);
-        rlCut = (RelativeLayout)findViewById(R.id.rl_cut);
+        rlCut = (RelativeLayout)findViewById(R.id.rl_pricecut);
         spin = (Spinner) findViewById(R.id.spinner);
         addToCart = (Button)findViewById(R.id.addtocart);
         cartCount = (TextView)findViewById(R.id.tv_cartcount);
@@ -113,7 +133,8 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
     private void getDataFromIntent() {
         Intent intent = getIntent();
-        Id = intent.getIntExtra("productId",0);
+        PID = intent.getIntExtra("productId",0);
+        Log.e("id",""+PID);
         toolbarName = intent.getStringExtra("toolbarName");
 
 
@@ -145,7 +166,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
       back.setOnClickListener(this);
       spin.setOnItemSelectedListener(this);
       spinnerAdapterSet();
-       addToCart.setOnClickListener(this);
+      addToCart.setOnClickListener(this);
     }
 
     /*------------------------------------------------------------- Click Listner ----------------------------------------------------------*/
@@ -154,7 +175,8 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.back :
-                onBackPressed();
+               /* onBackPressed();*/
+                getSqliteData1();
                 return;
             case R.id.unlike :
                 Unlike.setVisibility(View.GONE);
@@ -165,7 +187,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                 Like.setVisibility(View.GONE);
                 return;
             case R.id.addtocart :
-                //addToCartData();
+                addToCartData();
         }
 
     }
@@ -175,12 +197,17 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
        productdetailApi();
        rv_SetData(); // for color chooser
        rv_setSizeofProductData();
+       getSqliteData();
     }
 
+    /*------------------------------------------------------------ Api end points -------------------------------------------------- */
+
     private void apiurl(){
-        endPointProductDetail = Config.Url.productdetail+Id;
+        endPointProductDetail = Config.Url.productdetail+PID;
         endPointImageResize = Config.Url.imageResize;
     }
+
+    /* ---------------------------------------------------------api product detail--------------------------------------------------*/
 
     private void productdetailApi(){
 
@@ -198,11 +225,22 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    /* ------------------------------------------------------------api data set----------------------------------------------------------*/
     private void apiResponseData(GetProductDataResponseModel result) {
 
         if(result.getStatus() == 1){
-            tvProductName.setText(result.getData().get(0).getName());
-
+            strProductName = result.getData().get(0).getName();
+            tvProductName.setText(strProductName);
+            strActualPrice = result.getData().get(0).getPrice();
+            strCutPrice = result.getData().get(0).getPricerefer();
+            if(strCutPrice.equals("")){
+                rlCut.setVisibility(View.GONE);
+                tvActualPrice.setText(strActualPrice);
+            }else {
+                rlCut.setVisibility(View.VISIBLE);
+                tvActualPrice.setText(strCutPrice);
+                tvCutPrice.setText(strActualPrice);
+            }
               for (int i=0 ; i<result.getData().get(0).getProductImage().size();i++){
                   strImage = result.getData().get(0).getProductImage().get(i).getImage();
                   strImagePath = result.getData().get(0).getProductImage().get(i).getContainerName();
@@ -217,39 +255,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(activity, "Something wentWrong", Toast.LENGTH_SHORT).show();
         }
     }
-
-
-    private void setSliderViews() {
-
-        for (int i = 0; i <= 2; i++) {
-
-            SliderView sliderView = new DefaultSliderView(this);
-
-            switch (i) {
-                case 0:
-                    sliderView.setImageDrawable(productImage);
-                    break;
-                case 1:
-                    sliderView.setImageDrawable(productImage);
-                    break;
-                case 2:
-                    sliderView.setImageDrawable(productImage);
-                    break;
-
-            }
-
-            sliderView.setImageScaleType(ImageView.ScaleType.CENTER_CROP);
-            final int finalI = i;
-            sliderView.setOnSliderClickListener(new SliderView.OnSliderClickListener() {
-                @Override
-                public void onSliderClick(SliderView sliderView) {
-
-                }
-            });
-            sliderLayout.addSliderView(sliderView);
-        }
-    }
-
+    /* --------------------------------------------------------color recycler view-------------------------------------------------*/
     private void rv_SetData() {
         rv_color.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
         item.clear();
@@ -265,6 +271,8 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         rv_color.setAdapter(adapter);
     }
 
+    /* ---------------------------------------------------------------size recycler view-------------------------------------------*/
+
     private void rv_setSizeofProductData() {
         rv_producrtsize.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
         itemslectsize.clear();
@@ -279,12 +287,11 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    /* ----------------------------------------------Spinner work----------------------------------------------------*/
+    /* ----------------------------------------------------Spinner work-------------------------------------------------------------*/
 
     private void spinnerAdapterSet() {
         ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,items);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //Setting the ArrayAdapter data on the Spinner
         spin.setAdapter(aa);
     }
 
@@ -300,18 +307,102 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    /* ---------------------------------------------------Add to cart work-------------------------------------*/
+    /* ---------------------------------------------------Add to cart work---------------------------------------------------------*/
     private void addToCartData() {
         if(spinnerData.equals("0")){
-            cartCount.setVisibility(View.GONE);
+
         }else{
-            cartCount.setVisibility(View.VISIBLE);
-            cartCount.setText(spinnerData);
+            if(ProductId.equals("") ){
+                    boolean isInserted = dbHelper.insertData(strProductName,strImageUrl,spinnerData,strActualPrice,String.valueOf(PID));
+                    if (isInserted == true) {
+                        Toast.makeText(activity, "Data Inserted", Toast.LENGTH_SHORT).show();
+                        getSqliteData();
+                    } else {
+                        Toast.makeText(activity, "DATA NOT SUPPORTED", Toast.LENGTH_SHORT).show();
+                    }
+            }else
+            {
+                boolean isupdated=dbHelper.updateData(strProductName,strImageUrl,spinnerData,strActualPrice,String.valueOf(PID));
+                if(isupdated==true)
+                {
+                    Toast.makeText(activity,"Data updated", Toast.LENGTH_SHORT).show();
+                    getSqliteData();
+                }else
+                {
+                    Toast.makeText(activity,"data is not Updated", Toast.LENGTH_SHORT).show();
+                }
+            }
+
         }
 
     }
+   /* ------------------------------------------------- get particular data from sqlite ------------------------------------------------*/
+    private void getSqliteData() {
 
-    /* -------------------------------------------------Set up of Fragments-------------------------------------*/
+        Cursor cursor = dbHelper.getDataq(String.valueOf(PID));
+        if(cursor.getCount() == 0){
+            Log.e("Error","no Data");
+            return;
+        }
+        StringBuffer buffer = new StringBuffer();
+        while (cursor.moveToNext()){
+            buffer.append("Id:"+cursor.getString(0)+"\n");
+            Id = cursor.getString(0);
+            buffer.append("Name:"+cursor.getString(1)+"\n");
+            buffer.append("Image:"+cursor.getString(2)+"\n");
+            buffer.append("Quantity:"+cursor.getString(3)+"\n");
+            buffer.append("Price:"+cursor.getString(4)+"\n");
+            buffer.append("P_ID:"+cursor.getString(5)+"\n");
+            ProductId = cursor.getString(5);
+            Log.e("ProductId",ProductId);
+        }
+        Log.e("getDatasingle",buffer.toString());
+    }
+
+    /* ----------------------------------- get all table data from sqlite  and convert into json formet ----------------------------------*/
+
+    private void getSqliteData1() {
+
+        Cursor cursor = dbHelper.getData();
+        if(cursor.getCount() == 0){
+            Log.e("Error","no Data");
+            return;
+        }
+        JSONArray resultSet = new JSONArray();
+        JSONObject returnObj = new JSONObject();
+
+        cursor.moveToFirst();
+        while (cursor.isAfterLast() == false) {
+
+            int totalColumn = cursor.getColumnCount();
+            JSONObject rowObject = new JSONObject();
+
+            for (int i = 0; i < totalColumn; i++) {
+                if (cursor.getColumnName(i) != null) {
+                    try {
+                        if (cursor.getString(i) != null) {
+                            Log.d("TAG_NAME2", cursor.getString(i));
+                            rowObject.put(cursor.getColumnName(i), cursor.getString(i));
+                        } else {
+                            rowObject.put(cursor.getColumnName(i), "");
+                        }
+                    } catch (Exception e) {
+                        Log.d("TAG_NAME1", e.getMessage());
+                    }
+                }
+            }
+            resultSet.put(rowObject);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        String datajson = resultSet.toString();
+        datajson.replaceAll("\\\\", "");
+        Log.d("datajson",datajson);
+        Config.CartData = datajson;
+    }
+
+
+    /* -------------------------------------------------Set up of Fragments---------------------------------------------------------*/
 
     private void setUpFragment(ViewPager viewPager) {
         CheckoutAdapter checkoutAdapter= new CheckoutAdapter(getSupportFragmentManager());
@@ -328,8 +419,15 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         MenuItemCompat.setActionView(item, R.layout.carticon);
         MenuItemCompat.setActionView(item1, R.layout.cartlike);
         RelativeLayout notifCount = (RelativeLayout)   MenuItemCompat.getActionView(item);
-        TextView tv = (TextView) notifCount.findViewById(R.id.tv_cartcount);
-        tv.setText("12");
-        return super.onCreateOptionsMenu(menu);
+        tvCount = (TextView) notifCount.findViewById(R.id.tv_cartcount);
+        notifCount.setVisibility(View.VISIBLE);
+        tvCount.setText(spinnerData);
+         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        ProductId = "";
     }
 }

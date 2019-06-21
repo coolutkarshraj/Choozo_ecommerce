@@ -2,13 +2,14 @@ package com.io.choozo;
 
 import com.io.choozo.model.dataModel.ChildDataModel;
 import com.io.choozo.model.dataModel.SubChildDataModel;
+import com.io.choozo.model.dummydataModel.ShoppingBagModel;
 import com.io.choozo.model.responseModel.CategoryResponseModel;
 
 import java.util.List;
 
 public class Config {
 
-    public static String Base_url = "18.207.190.116";
+    public static String Base_url = "3.82.205.212";
     public static List<ChildDataModel> childDataModel;
     public static List<SubChildDataModel> subChildDataModels;
     public static String CartCount;
@@ -18,6 +19,7 @@ public class Config {
     public static String productId;
     public static String toolbarName;
     public static int subCategoryClickId;
+    public static String CartData ="";
 
     public static class Url{
         public final static String  categoryList = "list/category-list?limit=&offset=0&keyword=&sortOrder=";
