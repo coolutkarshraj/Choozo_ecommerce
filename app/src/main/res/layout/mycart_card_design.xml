@@ -32,7 +32,9 @@
          <ImageView
              android:layout_width="80dp"
              android:layout_height="90dp"
-             android:scaleType="centerCrop"
+             android:scaleType="fitCenter"
+             android:layout_marginLeft="2dp"
+             android:layout_marginRight="2dp"
              android:id="@+id/imageView"
              tools:layout_editor_absoluteX="0dp"
              tools:layout_editor_absoluteY="0dp"
@@ -52,13 +54,13 @@
               android:layout_height="wrap_content"
               android:layout_marginStart="5dp"
               android:layout_marginEnd="5dp"
-              android:textSize="@dimen/h1"
+              android:textSize="@dimen/h2"
               android:fontFamily="@font/seguisb"
               android:text="Blue Strip Topd"
-              android:maxLines="2"
+              android:maxLines="3"
               android:id="@+id/tv_itemname"
               android:textColor="@color/black"
-              android:layout_marginTop="15dp"/>
+              android:layout_marginTop="10dp"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -198,15 +200,17 @@
 
             </RelativeLayout>
 
-            <ImageView
+            <Button
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_above="@+id/rl_addremove"
+                android:id="@+id/iv_add"
                 android:background="@drawable/plus"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="10dp"
                 android:backgroundTint="@color/grey"/>
-            <ImageView
+            <Button
+                android:id="@+id/iv_minus"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_below="@+id/rl_addremove"

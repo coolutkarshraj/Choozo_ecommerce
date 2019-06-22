@@ -22,6 +22,8 @@ public class DbHelper extends SQLiteOpenHelper {
 
     private  SQLiteDatabase database;
 
+    /* ---------------------------------------------------------- create table for cart ----------------------------------------------*/
+
     String CREATE_TABLE = "create table "+TABLE_NAME+"("+ ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"+
             PRODUCT_NAME + " TEXT,"+ PRODUCT_IMAGE +" TEXT,"+ PRODUCT_QTY +" TEXT,"+ PRODUCT_PRICE +" TEXT,"+ PRODUCT_Id +" TEXT);";
 
@@ -35,12 +37,14 @@ public class DbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(CREATE_TABLE);
     }
 
+    /*---------------------------------------------  drop table if alerady exist -----------------------------------------------------*/
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
         onCreate(sqLiteDatabase);
-
     }
+
+    /* ----------------------------------------------------insert data in table -----------------------------------------------------*/
 
     public boolean insertData(String name, String image, String qty, String price,String pid){
         database = this.getWritableDatabase();
@@ -58,16 +62,15 @@ public class DbHelper extends SQLiteOpenHelper {
         }
     }
 
-
+    /* ---------------------------------------------- Get all data from data base ------------------------------------------------*/
 
     public Cursor getData(){
         database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery("select * from "+TABLE_NAME,null);
-       return cursor;
-
-
+        return cursor;
     }
 
+    /*------------------------------------- get partcular product data from table ------------------------------------------------*/
     public Cursor getDataq(String pid){
         database = this.getWritableDatabase();
         //Cursor cursor = database.rawQuery("select * from "+TABLE_NAME WHERE PRODUCT_Id ,null);
@@ -75,6 +78,7 @@ public class DbHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    /* ---------------------------------------------------- update data from table ----------------------------------------------*/
 
     public boolean updateData(String name, String image, String qty, String price,String pid)
     {

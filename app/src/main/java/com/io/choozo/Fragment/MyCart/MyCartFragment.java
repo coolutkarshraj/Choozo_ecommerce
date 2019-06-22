@@ -37,13 +37,17 @@ import java.util.Collections;
 import java.util.List;
 
 public class MyCartFragment extends Fragment implements View.OnClickListener{
-    RecyclerView rv_ShoppingBag;
-    ShopingBagAdapter adapter;
+    public static RecyclerView rv_ShoppingBag;
+    public static  ShopingBagAdapter adapter;
     List<ShoppingBagModel> list = new ArrayList<>();
     Activity activity;
     RelativeLayout btn_PlaceOrder;
     DbHelper dbHelper;
-    TextView tvTotalAmount;
+   public static TextView tvTotalAmount;
+    float strAmount;
+    int strQty;
+    float strTotalAmt;
+    double sum =0;
 
     @Nullable
     @Override
@@ -151,13 +155,20 @@ public class MyCartFragment extends Fragment implements View.OnClickListener{
                 shoppingBagModel.setImage(img);
                 shoppingBagModel.setQuantity(json_data.getString("Quantity"));
                 shoppingBagModel.setPrice(json_data.getString("Price"));
+                strAmount = Float.parseFloat(json_data.getString("Price"));
+                strQty = Integer.parseInt(json_data.getString("Quantity"));
+                strTotalAmt = strAmount * strQty; // total amount every product acoording to quantity
+                sum= strTotalAmt+sum; // sum of all products
                 shoppingBagModel.setPID(json_data.getString("P_ID"));
                 list.add(shoppingBagModel);
 
                 rv_ShoppingBag.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false));
                 adapter = new ShopingBagAdapter(activity,list);
                 rv_ShoppingBag.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }
+            Log.e("totalamt",""+sum);
+            tvTotalAmount.setText(String.valueOf(sum));
         } catch (JSONException e) {
             e.printStackTrace();
         }

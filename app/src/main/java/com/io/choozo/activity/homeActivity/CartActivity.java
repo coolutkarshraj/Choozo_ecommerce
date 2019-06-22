@@ -90,6 +90,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
     DbHelper dbHelper;
     TextView tvCount;
+    String price = "";
 
 
 
@@ -236,10 +237,12 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
             if(strCutPrice.equals("")){
                 rlCut.setVisibility(View.GONE);
                 tvActualPrice.setText(strActualPrice);
+                price = strActualPrice;
             }else {
                 rlCut.setVisibility(View.VISIBLE);
                 tvActualPrice.setText(strCutPrice);
                 tvCutPrice.setText(strActualPrice);
+                price = strCutPrice;
             }
               for (int i=0 ; i<result.getData().get(0).getProductImage().size();i++){
                   strImage = result.getData().get(0).getProductImage().get(i).getImage();
@@ -313,7 +316,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
         }else{
             if(ProductId.equals("") ){
-                    boolean isInserted = dbHelper.insertData(strProductName,strImageUrl,spinnerData,strActualPrice,String.valueOf(PID));
+                    boolean isInserted = dbHelper.insertData(strProductName,strImageUrl,spinnerData,price,String.valueOf(PID));
                     if (isInserted == true) {
                         Toast.makeText(activity, "Data Inserted", Toast.LENGTH_SHORT).show();
                         getSqliteData();

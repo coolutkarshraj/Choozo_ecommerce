@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Config {
 
-    public static String Base_url = "3.82.205.212";
+    public static String Base_url = "34.238.124.46";
     public static List<ChildDataModel> childDataModel;
     public static List<SubChildDataModel> subChildDataModels;
     public static String CartCount;
