@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Config {
 
-    public static String Base_url = "34.238.124.46";
+    public static String Base_url = "100.24.35.192";
     public static List<ChildDataModel> childDataModel;
     public static List<SubChildDataModel> subChildDataModels;
     public static String CartCount;
@@ -39,6 +39,9 @@ public class Config {
         public final static String productlist ="list/productlist?";
         public final static String imageResize ="media/image-resize?";
         public final static String productdetail ="product-store/productdetail/";
+        public final static String wishlistdata ="customer/add-product-to-wishlist";
+
+        public final static String getfeaturedProduct ="product-store/featureproduct-list?";
 
     }
 }

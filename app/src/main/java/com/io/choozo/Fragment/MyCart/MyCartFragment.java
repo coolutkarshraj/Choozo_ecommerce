@@ -155,10 +155,7 @@ public class MyCartFragment extends Fragment implements View.OnClickListener{
                 shoppingBagModel.setImage(img);
                 shoppingBagModel.setQuantity(json_data.getString("Quantity"));
                 shoppingBagModel.setPrice(json_data.getString("Price"));
-                strAmount = Float.parseFloat(json_data.getString("Price"));
-                strQty = Integer.parseInt(json_data.getString("Quantity"));
-                strTotalAmt = strAmount * strQty; // total amount every product acoording to quantity
-                sum= strTotalAmt+sum; // sum of all products
+
                 shoppingBagModel.setPID(json_data.getString("P_ID"));
                 list.add(shoppingBagModel);
 
@@ -166,7 +163,14 @@ public class MyCartFragment extends Fragment implements View.OnClickListener{
                 adapter = new ShopingBagAdapter(activity,list);
                 rv_ShoppingBag.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
+                strAmount = Float.parseFloat(json_data.getString("Price"));
+                strQty = Integer.parseInt(json_data.getString("Quantity"));
             }
+
+            Log.e("strAmount",""+strAmount);
+            Log.e("strQty",""+strQty);
+            strTotalAmt = strAmount * strQty; // total amount every product acoording to quantity
+            sum= strTotalAmt+sum; // sum of all products
             Log.e("totalamt",""+sum);
             tvTotalAmount.setText(String.valueOf(sum));
         } catch (JSONException e) {

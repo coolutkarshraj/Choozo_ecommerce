@@ -12,6 +12,7 @@ import com.io.choozo.model.responseModel.ChangePasswordResponseModel;
 import com.io.choozo.model.responseModel.ContactUsResponseModel;
 import com.io.choozo.model.responseModel.DeleteAddressResponseModel;
 import com.io.choozo.model.responseModel.EditProfileResponseModel;
+import com.io.choozo.model.responseModel.FeaturedProductResponseModel;
 import com.io.choozo.model.responseModel.ForgotPasswordResponseModel;
 import com.io.choozo.model.responseModel.GetAddressResponseModel;
 import com.io.choozo.model.responseModel.GetBannerListResponseModel;
@@ -21,6 +22,7 @@ import com.io.choozo.model.responseModel.GetProfileResponseModel;
 import com.io.choozo.model.responseModel.LoginResponseModel;
 import com.io.choozo.model.responseModel.ProductListResponseModel;
 import com.io.choozo.model.responseModel.UpdateAddResponseModel;
+import com.io.choozo.model.responseModel.WishlistResponseModel;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
@@ -378,6 +380,49 @@ public class ApiCaller {
                     }
                 });
     }
+
+    /*------------------------------------------------- wishlist Api -------------------------------------------------------------*/
+
+    public static  void wishlistadd(Context activity , String url, int productid, String token ,
+                                    final FutureCallback<WishlistResponseModel> apiCallBack){
+
+        final  JsonObject json =new JsonObject();
+        json.addProperty("productId",productid);
+
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load("POST" ,UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization","Bearer "+token)
+                .noCache().setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        WishlistResponseModel wishlistResponseModel = gson.fromJson(result,WishlistResponseModel.class);
+                        apiCallBack.onCompleted(e,wishlistResponseModel);
+                    }
+                });
+    }
+
+
+    /*--------------------------------------------------------- featured product list get -------------------------------------------*/
+
+    public static void getFeaturedProduct(Activity activity , String url,
+                                          final FutureCallback<FeaturedProductResponseModel> apiCallback){
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        FeaturedProductResponseModel featuredProductResponseModel = gson.fromJson(result,FeaturedProductResponseModel.class);
+                        apiCallback.onCompleted(e,featuredProductResponseModel);
+                    }
+                });
+    }
+
 
 
 

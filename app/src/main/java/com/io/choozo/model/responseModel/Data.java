@@ -1,10 +1,11 @@
 
 package com.io.choozo.model.responseModel;
 
-import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 import com.io.choozo.model.dataModel.productListDataModel.ProductList;
+
+import java.util.List;
 
 @SuppressWarnings("unused")
 public class Data {

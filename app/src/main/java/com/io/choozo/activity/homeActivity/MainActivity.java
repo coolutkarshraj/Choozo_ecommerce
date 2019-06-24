@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         myCartFragment = new MyCartFragment();
         profileFragment = new ProfileFragment();
         searchFragment = new Search();
+
         getDataFromLocalStorage();
 
     }
@@ -182,6 +183,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /* ---------------------------------------------login data get from local storgae---------------------------------------*/
 
     private void getDataFromLocalStorage() {
+
         Gson gson = new Gson();
         String getJson = preferenceManager.getString(PreferenceManager.loginData);
         LoginResponseModel obj = gson.fromJson(getJson, LoginResponseModel.class);
