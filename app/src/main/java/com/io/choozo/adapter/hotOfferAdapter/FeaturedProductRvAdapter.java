@@ -1,5 +1,6 @@
 package com.io.choozo.adapter.hotOfferAdapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -20,9 +21,11 @@ import com.io.choozo.Config;
 import com.io.choozo.R;
 import com.io.choozo.UrlLocator;
 import com.io.choozo.activity.homeActivity.CartActivity;
+import com.io.choozo.adapter.ItemCategoryAdapter;
 import com.io.choozo.localStorage.PreferenceManager;
 import com.io.choozo.model.dataModel.featuredProductModel.FeaturedProductDataModel;
 import com.io.choozo.model.dataModel.productListDataModel.ProductList;
+import com.io.choozo.model.responseModel.DeleteProductWishlistResponseModel;
 import com.io.choozo.model.responseModel.LoginResponseModel;
 import com.io.choozo.model.responseModel.WishlistResponseModel;
 import com.koushikdutta.async.future.FutureCallback;
@@ -36,7 +39,8 @@ public class FeaturedProductRvAdapter extends RecyclerView.Adapter<FeaturedProdu
     int productId;
     String image,imagePath ,endPoint,strCutPrice,strPreferPrice;
     PreferenceManager preferenceManager;
-    String token;
+    String token,endPointDeleteWishlist;
+    int wishlistid;
 
 
     public FeaturedProductRvAdapter(Context context, List<FeaturedProductDataModel> item) {
@@ -49,11 +53,19 @@ public class FeaturedProductRvAdapter extends RecyclerView.Adapter<FeaturedProdu
     public FeaturedProductRvAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
     View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.featured_product_card,viewGroup,false);
+    preferenceManager = new PreferenceManager(context);
+    getDataFromLocalStorage();
     return new ViewHolder(view);
     }
 
     /* ---------------------------------------------login data get from local storgae(for token get)---------------------------------------*/
 
+    private void getDataFromLocalStorage() {
+        Gson gson = new Gson();
+        String getJson = preferenceManager.getString(PreferenceManager.loginData);
+        LoginResponseModel obj = gson.fromJson(getJson, LoginResponseModel.class);
+        token = obj.getData().getToken();
+    }
 
 
     @Override
@@ -71,21 +83,17 @@ public class FeaturedProductRvAdapter extends RecyclerView.Adapter<FeaturedProdu
         viewHolder.Like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewHolder.Dislike.setVisibility(View.VISIBLE);
-                viewHolder.Like.setVisibility(View.GONE);
+                deleteProductfromWishList(viewHolder);
 
             }
         });
         viewHolder.Dislike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewHolder.Dislike.setVisibility(View.GONE);
-                viewHolder.Like.setVisibility(View.VISIBLE);
+                addToWishlist(model.getProductId(),viewHolder);
             }
         });
         viewHolder.data(item.get(i));
-
-
 
     }
 
@@ -122,7 +130,7 @@ public class FeaturedProductRvAdapter extends RecyclerView.Adapter<FeaturedProdu
                 public void onClick(View v) {
                     Intent i =new Intent(context, CartActivity.class);
                     i.putExtra("productId",model.getProductId());
-                    i.putExtra("toolbarName",Config.toolbarName);
+                    i.putExtra("toolbarName","Featured Product");
                     context.startActivity(i);
                 }
             });
@@ -132,6 +140,60 @@ public class FeaturedProductRvAdapter extends RecyclerView.Adapter<FeaturedProdu
     private void imageResizeApi(String image, String imagePath) {
      endPoint = Config.Url.imageResize +"width=260&height=360&name="+image+"&path="+imagePath+"";
     }
+
+    /*---------------------------------------------------------  Add Wishlist Api ---------------------------------------------------*/
+
+    private void addToWishlist(int productId, FeaturedProductRvAdapter.ViewHolder viewHolder) {
+        ApiCaller.wishlistadd(context, Config.Url.wishlistdata, productId, token, new FutureCallback<WishlistResponseModel>() {
+            @Override
+            public void onCompleted(Exception e, WishlistResponseModel result) {
+                if(e!=null){
+                    return;
+                }
+                if(result.getStatus() == 1){
+                    Toast.makeText(context, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+                    wishlistid = result.getData().getWishlistProductId();
+                    viewHolder.Dislike.setVisibility(View.GONE);
+                    viewHolder.Like.setVisibility(View.VISIBLE);
+                }
+                else {
+                    Toast.makeText(context, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+
+    private void apiurl(){
+        endPointDeleteWishlist = Config.Url.deleteproductfromWishList+"/"+wishlistid;
+    }
+
+    /*------------------------------------------------ delete product from wishlist --------------------------------------------------*/
+
+    private void deleteProductfromWishList(FeaturedProductRvAdapter.ViewHolder viewHolder) {
+
+        apiurl();
+        ApiCaller.wishlistDelete((Activity) context, endPointDeleteWishlist, token,
+                new FutureCallback<DeleteProductWishlistResponseModel>() {
+                    @Override
+                    public void onCompleted(Exception e, DeleteProductWishlistResponseModel result) {
+                        if(e!=null){
+                            return;
+                        }
+                        if(result.getStatus() == 1){
+                            Toast.makeText(context, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+                            viewHolder.Dislike.setVisibility(View.VISIBLE);
+                            viewHolder.Like.setVisibility(View.GONE);
+
+                        }else {
+                            Toast.makeText(context, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+    }
+
+
 
 
 

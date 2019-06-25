@@ -62,6 +62,7 @@
                     android:layout_height="wrap_content"
                     android:text="Out of stock"
                     android:textSize="@dimen/h3"
+                    android:visibility="gone"
                     android:fontFamily="@font/seguisb"
                     android:layout_centerVertical="true"
                     android:id="@+id/tv_stock"
@@ -102,46 +103,6 @@
                 android:textSize="@dimen/h2"
                 android:fontFamily="@font/seguisb"/>
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/tv_mrp"
-                android:gravity="bottom">
-
-                <View
-                    android:layout_width="40dp"
-                    android:layout_height="1dp"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true"
-                    android:background="@color/black"></View>
-
-                <ImageView
-                    android:id="@+id/iv_cutprice"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/rupeeindian"
-                    android:backgroundTint="@color/black" />
-
-                <TextView
-                    android:id="@+id/tv_cutprice"
-                    android:layout_width="35dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_toRightOf="@+id/iv_cutprice"
-                    android:baselineAligned="false"
-                    android:includeFontPadding="false"
-                    android:maxLength="25"
-                    android:maxLines="1"
-                    android:text="1400"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/h3"
-                    android:fontFamily="@font/seguisb"/>
-            </RelativeLayout>
 
 
         </RelativeLayout>

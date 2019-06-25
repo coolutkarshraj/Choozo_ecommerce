@@ -40,10 +40,10 @@ public class Wishlist extends Fragment {
     private void intializeView(View v) {
         activity = getActivity();
         rvWishList = (RecyclerView)v.findViewById(R.id.rv_wishlist);
-        setDataToRV();
+        //setDataToRV();
     }
 
-    private void setDataToRV() {
+ /*   private void setDataToRV() {
         rvWishList.setLayoutManager(new LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false));
         item.clear();
         item.add(new WishListDataModel(R.drawable.bluestriptop,"Blue Strip Top","1299","1500","In Stock",R.color.green));
@@ -52,7 +52,7 @@ public class Wishlist extends Fragment {
         adapter = new WishListRVAdapter(activity,item);
         rvWishList.setAdapter(adapter);
 
-    }
+    }*/
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {

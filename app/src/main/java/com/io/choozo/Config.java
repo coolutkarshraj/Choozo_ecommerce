@@ -40,8 +40,11 @@ public class Config {
         public final static String imageResize ="media/image-resize?";
         public final static String productdetail ="product-store/productdetail/";
         public final static String wishlistdata ="customer/add-product-to-wishlist";
+        public final static String deleteproductfromWishList ="customer/wishlist-product-delete";
 
         public final static String getfeaturedProduct ="product-store/featureproduct-list?";
+        public final static String getTodayDeals ="product-store/todayDeals-list?";
+        public final static String getbrandsDetail ="manufacturers/manufacturerlist?";
 
     }
 }

@@ -5,12 +5,15 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.io.choozo.adapter.hotOfferAdapter.Our_Brand_RvAdapter;
 import com.io.choozo.model.dataModel.CustomerRegisterResponseModel;
+import com.io.choozo.model.dataModel.ProductList;
 import com.io.choozo.model.responseModel.AddAddressResponseModel;
 import com.io.choozo.model.responseModel.CategoryResponseModel;
 import com.io.choozo.model.responseModel.ChangePasswordResponseModel;
 import com.io.choozo.model.responseModel.ContactUsResponseModel;
 import com.io.choozo.model.responseModel.DeleteAddressResponseModel;
+import com.io.choozo.model.responseModel.DeleteProductWishlistResponseModel;
 import com.io.choozo.model.responseModel.EditProfileResponseModel;
 import com.io.choozo.model.responseModel.FeaturedProductResponseModel;
 import com.io.choozo.model.responseModel.ForgotPasswordResponseModel;
@@ -20,11 +23,15 @@ import com.io.choozo.model.responseModel.GetPageListResponseModel;
 import com.io.choozo.model.responseModel.GetProductDataResponseModel;
 import com.io.choozo.model.responseModel.GetProfileResponseModel;
 import com.io.choozo.model.responseModel.LoginResponseModel;
+import com.io.choozo.model.responseModel.OurBrandsResponseModel;
 import com.io.choozo.model.responseModel.ProductListResponseModel;
+import com.io.choozo.model.responseModel.TodayDealsResponseModel;
 import com.io.choozo.model.responseModel.UpdateAddResponseModel;
 import com.io.choozo.model.responseModel.WishlistResponseModel;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
+
+import java.net.URL;
 
 public class ApiCaller {
 
@@ -381,7 +388,7 @@ public class ApiCaller {
                 });
     }
 
-    /*------------------------------------------------- wishlist Api -------------------------------------------------------------*/
+    /*----------------------------------------------------- wishlist Api -------------------------------------------------------------*/
 
     public static  void wishlistadd(Context activity , String url, int productid, String token ,
                                     final FutureCallback<WishlistResponseModel> apiCallBack){
@@ -400,6 +407,25 @@ public class ApiCaller {
                     public void onCompleted(Exception e, JsonObject result) {
                         WishlistResponseModel wishlistResponseModel = gson.fromJson(result,WishlistResponseModel.class);
                         apiCallBack.onCompleted(e,wishlistResponseModel);
+                    }
+                });
+    }
+
+    /*------------------------------------------------------- delete product from wishlist------------------------------------------*/
+
+    public static void wishlistDelete(Activity activity, String url , String token,
+                                      final FutureCallback<DeleteProductWishlistResponseModel> apiCallBack){
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load("DELETE",UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization","Bearer "+token)
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        DeleteProductWishlistResponseModel deleteProductWishlistResponseModel = gson.fromJson(result,DeleteProductWishlistResponseModel.class);
+                        apiCallBack.onCompleted(e,deleteProductWishlistResponseModel);
                     }
                 });
     }
@@ -423,7 +449,44 @@ public class ApiCaller {
                 });
     }
 
+    /* ------------------------------------------------------ Today Deals list get ------------------------------------------------------*/
 
+    public static void getTodayDeals(Activity activity, String url,
+                                     final FutureCallback<TodayDealsResponseModel> apiCallBack){
+
+
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        TodayDealsResponseModel todayDealsResponseModel = gson.fromJson(result,TodayDealsResponseModel.class);
+                        apiCallBack.onCompleted(e,todayDealsResponseModel);
+                    }
+                });
+    }
+
+    /*------------------------------------------------------- our brands Api------------------------------------------------------------*/
+
+    public static void getOurBarnds(Activity activity,String url,
+                                    final FutureCallback<OurBrandsResponseModel> apiCallBack){
+
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        OurBrandsResponseModel ourBrandsResponseModel = gson.fromJson(result,OurBrandsResponseModel.class);
+                        apiCallBack.onCompleted(e,ourBrandsResponseModel);
+                    }
+                });
+    }
 
 
 

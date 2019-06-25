@@ -12,7 +12,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.io.choozo.Config;
 import com.io.choozo.R;
+import com.io.choozo.UrlLocator;
+import com.io.choozo.model.dataModel.getWishlistDataModel.WishlistProductDataModel;
 import com.io.choozo.model.dummydataModel.WishListDataModel;
 
 import java.util.List;
@@ -20,10 +23,12 @@ import java.util.List;
 public class WishListRVAdapter extends RecyclerView.Adapter<WishListRVAdapter.ViewHolder> {
 
     Context context;
-    List<WishListDataModel> item;
-    int color;
+    List<WishlistProductDataModel> item;
+    int color,stock;
 
-    public WishListRVAdapter(Context context, List<WishListDataModel> item) {
+    String image,imagePath,endPoint;
+
+    public WishListRVAdapter(Context context, List<WishlistProductDataModel> item) {
         this.context = context;
         this.item = item;
     }
@@ -39,13 +44,15 @@ public class WishListRVAdapter extends RecyclerView.Adapter<WishListRVAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull WishListRVAdapter.ViewHolder viewHolder, int i) {
 
-        WishListDataModel model = item.get(i);
-        viewHolder.productName.setText(model.getD_name());
-        viewHolder.productPrice.setText(model.getD_amount());
-        viewHolder.productCutPrice.setText(model.getD_amt_cut());
-        Glide.with(context).load(model.getImage()).into(viewHolder.productImage);
-        viewHolder.inStock.setText(model.getD_in_stock());
-        color = model.getColor();
+        WishlistProductDataModel model = item.get(i);
+        viewHolder.productName.setText(model.getProduct().getName());
+        viewHolder.productPrice.setText(model.getProduct().getPrice());
+        image = model.getProductImage().getImage();
+        imagePath = model.getProductImage().getContainerName();
+        imageResizeApi(image,imagePath);
+        Glide.with(context).load(UrlLocator.getFinalUrl(endPoint)).into(viewHolder.productImage);
+        stock = model.getProduct().getStockStatusId();
+
         viewHolder.inStock.setTextColor(ContextCompat.getColor(context,color));
 
     }
@@ -71,4 +78,11 @@ public class WishListRVAdapter extends RecyclerView.Adapter<WishListRVAdapter.Vi
 
         }
     }
+
+    /* ----------------------------------------------Image Resize Api-----------------------------------------------------------*/
+
+    private void imageResizeApi(String image, String imagePath) {
+        endPoint = Config.Url.imageResize +"width=260&height=360&name="+image+"&path="+imagePath+"";
+    }
+
 }
