@@ -1,5 +1,7 @@
 package com.io.choozo;
 
+import android.support.v4.view.ViewPager;
+
 import com.io.choozo.model.dataModel.ChildDataModel;
 import com.io.choozo.model.dataModel.SubChildDataModel;
 import com.io.choozo.model.dummydataModel.ShoppingBagModel;
@@ -9,7 +11,7 @@ import java.util.List;
 
 public class Config {
 
-    public static String Base_url = "100.24.35.192";
+    public static String Base_url = "3.89.215.96";
     public static List<ChildDataModel> childDataModel;
     public static List<SubChildDataModel> subChildDataModels;
     public static String CartCount;
@@ -20,6 +22,7 @@ public class Config {
     public static String toolbarName;
     public static int subCategoryClickId;
     public static String CartData ="";
+    public static ViewPager viewPager;
 
     public static class Url{
         public final static String  categoryList = "list/category-list?limit=&offset=0&keyword=&sortOrder=";
@@ -41,6 +44,7 @@ public class Config {
         public final static String productdetail ="product-store/productdetail/";
         public final static String wishlistdata ="customer/add-product-to-wishlist";
         public final static String deleteproductfromWishList ="customer/wishlist-product-delete";
+        public final static String getWishlistProduct ="customer/wishlist-product-list";
 
         public final static String getfeaturedProduct ="product-store/featureproduct-list?";
         public final static String getTodayDeals ="product-store/todayDeals-list?";

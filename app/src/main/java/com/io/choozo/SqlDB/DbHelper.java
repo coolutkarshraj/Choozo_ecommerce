@@ -97,4 +97,29 @@ public class DbHelper extends SQLiteOpenHelper {
         }
     }
 
+    /* ---------------------------------------------------  Delete Data from table  -------------------------------------------------*/
+
+    public boolean deleteData(String pid)
+    {
+        database=this.getWritableDatabase();
+        ContentValues values=new ContentValues();
+        values.put("P_ID",pid);
+        long d=database.delete(TABLE_NAME,PRODUCT_Id+ "=?",new String[]{pid});
+        if(d==-1){
+            return false;
+        }else
+        {
+            return true;
+        }
+    }
+
+
+    /* ----------------------------------------------------delete all after logout--------------------------------------------------*/
+    public void deleteAll()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, null, null);
+        db.close();
+    }
+
 }

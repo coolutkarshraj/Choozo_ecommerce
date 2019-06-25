@@ -21,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.io.choozo.Config;
 import com.io.choozo.R;
 import com.io.choozo.adapter.profileadapter.SavedAdressRvAdapter;
 import com.io.choozo.model.dummydataModel.SavedAdressDataModel;
@@ -36,12 +37,17 @@ public class Shipping extends Fragment implements View.OnClickListener , Adapter
     ImageView rupeeIconsecond,rupeeIconThird;
     Activity activity;
     Spinner City,State,Country;
-    String[] item_country = {"Afghanistan","Albania", "Bahrain", "Bangladesh", "Cambodia", "Canada","Djibouti","Eritrea","Germany","Haiti","India"};
+    String[] item_country = {"Afghanistan","Albania","Algeria","American Samoa","Andorra","Angola","Anguilla","Anterctica","Antigua and Barbuda","Argentina",
+                               "Armenia","Arbua","Australia","Austria","Azerbaijan","Bahamas", "Bahrain", "Bangladesh","Barbados","Belarus","Belgium","Belize","Benin",
+                                "Bermuda","Bhutan","Bolivia","Bosnia and Herzegovina","Botswana","Bouvet Island","Brazil","British Indian Ocean Territory",
+                                "Burnei Darussalam","Bulgaria","Burkina Faso","Buruandi","Cambodia","Cameroon","Canada","Cape Verde","Cayman Islands",
+                                  "Center African Republic","Chad","Chile","China","Christmas Island","Cacos(Keeling Island","colom", "Djibouti","Eritrea","Germany","Haiti","India"};
     String[] item_state = {"Andhra Pradesh","Arunachal Pradesh", "Bihar", "Goa", "Haryana", "Karnataka","Manipur","Punjab","Telangana","Uttar Pradesh","West Bengal"};
     String[] item_city = {"Ludhiana","Amritsar", "Jalandhar", "Patiala", "Hoshiarpur", "Mohali","Batala","Khanna","Barnala","Rajpura","Pathankot"};
     RecyclerView rvSavedAdress;
     SavedAdressRvAdapter adapter;
     List<SavedAdressDataModel> item =new ArrayList<>();
+
     public Shipping(){
 
     }
@@ -86,6 +92,7 @@ public class Shipping extends Fragment implements View.OnClickListener , Adapter
         deliverFirstButton.setOnClickListener(this);
         deliverSecondButton.setOnClickListener(this);
         deliveryThirdButton.setOnClickListener(this);
+        paymentbtn.setOnClickListener(this);
     }
 
     @Override
@@ -143,6 +150,10 @@ public class Shipping extends Fragment implements View.OnClickListener , Adapter
                 freedeliveryThirdbtntext.setTextColor(ContextCompat.getColor(activity,R.color.red));
                 rupeeIconsecond.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#000000")));
                 rupeeIconThird.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#ff0000")));
+                return;
+
+            case R.id.rl_paymnet :
+                Config.viewPager.setCurrentItem(1);
                 return;
         }
 

@@ -1,18 +1,23 @@
 package com.io.choozo.adapter;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -42,20 +47,15 @@ public class ShopingBagAdapter extends RecyclerView.Adapter<ShopingBagAdapter.Vi
     Context context;
     List<ShoppingBagModel> item;
     int strQty;
-
     List<Integer> numbers = new ArrayList<Integer>();
-
     int count;
     DbHelper dbHelper;
-
     double sum =0;
-
     List<Double> doubles = new ArrayList<Double>();
     float strAmount;
     float strTotalAmt;
-
-
     String productid;
+    Dialog dialog;
 
     public ShopingBagAdapter(Context context, List<ShoppingBagModel> item) {
         this.context = context;
@@ -92,8 +92,8 @@ public class ShopingBagAdapter extends RecyclerView.Adapter<ShopingBagAdapter.Vi
         viewHolder.ivMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-               decreaseQuantity(model,viewHolder);
+                productid = model.getPID();
+               decreaseQuantity(model,viewHolder,productid,i);
 
             }
         });
@@ -141,11 +141,11 @@ public class ShopingBagAdapter extends RecyclerView.Adapter<ShopingBagAdapter.Vi
 
     /* ------------------------------------------------- product Quantity Decrease -----------------------------------------------*/
 
-    private void decreaseQuantity(ShoppingBagModel model, ViewHolder viewHolder){
+    private void decreaseQuantity(ShoppingBagModel model, ViewHolder viewHolder, String productid, int i){
         count = Integer.parseInt(model.getQuantity());
         count--;
         if(count <=0){
-            Toast.makeText(context, "Quantity no less than one", Toast.LENGTH_SHORT).show();
+            deleteProductFromCart(i,productid);
         }else {
             decreaseData(model.getName(), model.getImage(), String.valueOf(count), model.getPrice(), model.getPID());
         }
@@ -250,6 +250,60 @@ public class ShopingBagAdapter extends RecyclerView.Adapter<ShopingBagAdapter.Vi
     }
 
 
+    /*----------------------------------------------- delete Product Dialog -----------------------------------------------------*/
+
+    private void deleteProductFromCart(final int i, String productid) {
+
+        dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
+        dialog.getWindow().setLayout((6 * width) / 7, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setContentView(R.layout.delete_product_from_cart);
+        dialog.setTitle("");
+        final TextView Yes = (TextView) dialog.findViewById(R.id.yes);
+        final TextView No = (TextView) dialog.findViewById(R.id.no);
+        final ImageView Clear = (ImageView) dialog.findViewById(R.id.clear);
+        Yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteProductfromCartSqlite(productid);
+            }
+        });
+        No.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        Clear.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
+    }
+
+    /* ---------------------------------------------- delete particlaur product from cart list ----------------------------------------*/
+
+    private void deleteProductfromCartSqlite(String productid) {
+        boolean isdeleted = dbHelper.deleteData(productid);
+        if (isdeleted == true) {
+            dialog.dismiss();
+            getSqliteData();
+            Toast.makeText(context, "Data Deleted Sucessfully", Toast.LENGTH_SHORT).show();
+
+        } else {
+            dialog.dismiss();
+            Toast.makeText(context, "Data is not deleted", Toast.LENGTH_SHORT).show();
+        }
+    }
 
 
 }

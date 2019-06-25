@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.io.choozo.Config;
 import com.io.choozo.Fragment.checkout.Confirmation;
 import com.io.choozo.Fragment.checkout.Payment;
 import com.io.choozo.Fragment.checkout.Shipping;
@@ -27,7 +28,7 @@ import com.io.choozo.adapter.fragmentadapter.CheckoutAdapter;
 
 public class CheckOutActivity extends AppCompatActivity implements View.OnClickListener {
 
-    ViewPager viewPager;
+   ViewPager viewPager;
     CheckoutAdapter checkoutAdapter;
     TabLayout tabLayout;
     ImageView back;
@@ -46,6 +47,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     private void intializeView() {
         checkoutAdapter = new CheckoutAdapter(getSupportFragmentManager());
         viewPager =(ViewPager)findViewById(R.id.viewPager);
+        Config.viewPager = viewPager;
         tabLayout = (TabLayout)findViewById(R.id.tab);
         setUpFragment(viewPager);
         tabLayout.setupWithViewPager(viewPager);
@@ -75,6 +77,8 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         checkoutAdapter.addFragment(new Payment(),"Payment");
         checkoutAdapter.addFragment(new Confirmation(),"Confirmation");
         viewPager.setAdapter(checkoutAdapter);
+
+
     }
 
 

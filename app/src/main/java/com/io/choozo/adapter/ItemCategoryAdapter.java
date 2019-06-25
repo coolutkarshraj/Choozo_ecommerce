@@ -163,10 +163,14 @@ public class ItemCategoryAdapter extends RecyclerView.Adapter<ItemCategoryAdapte
                     return;
                 }
                 if(result.getStatus() == 1){
-                    Toast.makeText(context, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
-                    wishlistid = result.getData().getWishlistProductId();
-                    viewHolder.Dislike.setVisibility(View.GONE);
-                    viewHolder.Like.setVisibility(View.VISIBLE);
+                    if(result.getMessage().equals("Thank you product added to the wishlist successfully.")) {
+                        Toast.makeText(context, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+                        wishlistid = result.getData().getWishlistProductId();
+                        viewHolder.Dislike.setVisibility(View.GONE);
+                        viewHolder.Like.setVisibility(View.VISIBLE);
+                    }else {
+                        Toast.makeText(context, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
                 else {
                     Toast.makeText(context, ""+result.getMessage(), Toast.LENGTH_SHORT).show();

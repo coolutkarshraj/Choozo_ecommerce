@@ -22,6 +22,7 @@ import com.io.choozo.model.responseModel.GetBannerListResponseModel;
 import com.io.choozo.model.responseModel.GetPageListResponseModel;
 import com.io.choozo.model.responseModel.GetProductDataResponseModel;
 import com.io.choozo.model.responseModel.GetProfileResponseModel;
+import com.io.choozo.model.responseModel.GetWishlistResponseModel;
 import com.io.choozo.model.responseModel.LoginResponseModel;
 import com.io.choozo.model.responseModel.OurBrandsResponseModel;
 import com.io.choozo.model.responseModel.ProductListResponseModel;
@@ -411,7 +412,7 @@ public class ApiCaller {
                 });
     }
 
-    /*------------------------------------------------------- delete product from wishlist------------------------------------------*/
+    /*----------------------------------------------------- delete product from wishlist ------------------------------------------------*/
 
     public static void wishlistDelete(Activity activity, String url , String token,
                                       final FutureCallback<DeleteProductWishlistResponseModel> apiCallBack){
@@ -430,8 +431,28 @@ public class ApiCaller {
                 });
     }
 
+    /* ------------------------------------------------------- get wishlist product list ---------------------------------------------*/
 
-    /*--------------------------------------------------------- featured product list get -------------------------------------------*/
+    public static void getWishlistList(Activity activity, String url, String token,
+                                       final FutureCallback<GetWishlistResponseModel> apiCallBack){
+
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization","Bearer "+token)
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        GetWishlistResponseModel getWishlistResponseModel = gson.fromJson(result,GetWishlistResponseModel.class);
+                        apiCallBack.onCompleted(e,getWishlistResponseModel);
+                    }
+                });
+    }
+
+
+    /*------------------------------------------------------ featured product list get -------------------------------------------------*/
 
     public static void getFeaturedProduct(Activity activity , String url,
                                           final FutureCallback<FeaturedProductResponseModel> apiCallback){

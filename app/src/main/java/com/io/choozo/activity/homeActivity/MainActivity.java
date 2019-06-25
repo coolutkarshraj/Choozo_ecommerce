@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -15,8 +16,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,21 +32,31 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.io.choozo.Config;
 import com.io.choozo.Fragment.Home.HomeFragment;
 import com.io.choozo.Fragment.MyCart.MyCartFragment;
 import com.io.choozo.Fragment.Search.Search;
 import com.io.choozo.Fragment.hotOffer.HotOfferFragment;
 import com.io.choozo.Fragment.profile.ProfileFragment;
 import com.io.choozo.R;
+import com.io.choozo.SqlDB.DbHelper;
 import com.io.choozo.activity.About.AboutUsActivity;
 import com.io.choozo.activity.About.ContactUsActivity;
 import com.io.choozo.activity.loginRegistrationflow.LoginActivity;
+import com.io.choozo.adapter.ShopingBagAdapter;
 import com.io.choozo.localStorage.PreferenceManager;
+import com.io.choozo.model.dummydataModel.ShoppingBagModel;
 import com.io.choozo.model.responseModel.LoginResponseModel;
 import com.smarteist.autoimageslider.DefaultSliderView;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderLayout;
 import com.smarteist.autoimageslider.SliderView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         View.OnClickListener {
@@ -62,6 +75,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Search searchFragment;
     String localName,localEmail;
     private PreferenceManager preferenceManager;
+    DbHelper dbHelper;
+    List<ShoppingBagModel> item;
 
 
     @Override
@@ -78,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initView() {
         activity = MainActivity.this;
         preferenceManager = new PreferenceManager(this);
+        dbHelper = new DbHelper(activity);
         iv_menu_icon =  findViewById(R.id.iv_menu_icon);
         ll_lome =  findViewById(R.id.ll_lome);
         ll_hotoffer =  findViewById(R.id.ll_hotoffer);
@@ -291,6 +307,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /* ------------------------------------------------------- Logout Action ---------------------------------------------------------*/
     private void logout() {
         preferenceManager.putString(PreferenceManager.loginData,"");
+        dbHelper.deleteAll();
         Intent intent = new Intent(activity, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -311,4 +328,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         m.commit();
     }
+
+
 }

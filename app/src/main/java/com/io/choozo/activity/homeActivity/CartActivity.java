@@ -325,7 +325,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                     }
             }else
             {
-                boolean isupdated=dbHelper.updateData(strProductName,strImageUrl,spinnerData,strActualPrice,String.valueOf(PID));
+                boolean isupdated=dbHelper.updateData(strProductName,strImageUrl,spinnerData,price,String.valueOf(PID));
                 if(isupdated==true)
                 {
                     Toast.makeText(activity,"Data updated", Toast.LENGTH_SHORT).show();

@@ -27,6 +27,7 @@ import com.io.choozo.adapter.ShopingBagAdapter;
 import com.io.choozo.adapter.ShopingCategoryAdapter;
 import com.io.choozo.model.dataModel.CategoryDataModel;
 import com.io.choozo.model.dummydataModel.ShoppingBagModel;
+import com.io.choozo.util.NewProgressBar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,37 +37,38 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MyCartFragment extends Fragment implements View.OnClickListener{
+public class MyCartFragment extends Fragment implements View.OnClickListener {
     public static RecyclerView rv_ShoppingBag;
-    public static  ShopingBagAdapter adapter;
+    public static ShopingBagAdapter adapter;
     List<ShoppingBagModel> list = new ArrayList<>();
     Activity activity;
     RelativeLayout btn_PlaceOrder;
     DbHelper dbHelper;
-   public static TextView tvTotalAmount;
+    public static TextView tvTotalAmount;
     float strAmount;
     int strQty;
+    NewProgressBar dialog;
     float strTotalAmt;
-    double sum =0;
+    double sum = 0;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.carrt_fragment,container,false);
+        View view = inflater.inflate(R.layout.carrt_fragment, container, false);
         intializeView(view);
         bindListner();
         startWork();
-        return  view;
+        return view;
     }
     /* ------------------------------------- intialize all Views that are used in this activity --------------------------------------*/
 
     private void intializeView(View view) {
         activity = getActivity();
         dbHelper = new DbHelper(activity);
-        tvTotalAmount = (TextView)view.findViewById(R.id.tv_total_price);
-        rv_ShoppingBag = (RecyclerView)view.findViewById(R.id.rv_mycart);
-        btn_PlaceOrder = (RelativeLayout) view.findViewById(R.id.rl_button) ;
-
+        dialog = new NewProgressBar(activity);
+        tvTotalAmount = (TextView) view.findViewById(R.id.tv_total_price);
+        rv_ShoppingBag = (RecyclerView) view.findViewById(R.id.rv_mycart);
+        btn_PlaceOrder = (RelativeLayout) view.findViewById(R.id.rl_button);
     }
 
     /*--------------------------------------- bind all views that are used in this activity ------------------------------------------*/
@@ -79,21 +81,26 @@ public class MyCartFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.rl_button :
-                Intent i =new Intent(activity, CheckOutActivity.class);
+        switch (v.getId()) {
+            case R.id.rl_button:
+                Intent i = new Intent(activity, CheckOutActivity.class);
                 startActivity(i);
                 return;
         }
 
     }
+
     /* ----------------------------------------------------- start Working --------------------------------------------------------*/
+
     private void startWork() {
+        dialog.show();
         getSqliteData();
-        if(Config.CartData.equals("")){
+        if (Config.CartData.equals("")) {
+            dialog.dismiss();
             btn_PlaceOrder.setVisibility(View.GONE);
             Toast.makeText(activity, "Cart is Empty", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
+            dialog.dismiss();
             allShopingDataSetIntoRecyclerView();
             btn_PlaceOrder.setVisibility(View.VISIBLE);
         }
@@ -101,9 +108,10 @@ public class MyCartFragment extends Fragment implements View.OnClickListener{
     /* ----------------------------------------- get data from local storage and convert into json --------------------------------*/
 
     private void getSqliteData() {
+
         Cursor cursor = dbHelper.getData();
-        if(cursor.getCount() == 0){
-            Log.e("Error","no Data");
+        if (cursor.getCount() == 0) {
+            Log.e("Error", "no Data");
             return;
         }
         JSONArray resultSet = new JSONArray();
@@ -133,25 +141,24 @@ public class MyCartFragment extends Fragment implements View.OnClickListener{
         cursor.close();
         String datajson = resultSet.toString();
         datajson.replaceAll("\\\\", "");
-        Log.d("datajson","data"+datajson);
+        Log.d("datajson", "data" + datajson);
         Config.CartData = datajson;
     }
 
     /* --------------------------------------------- Recycler view set json data ------------------------------------------------------*/
 
     private void allShopingDataSetIntoRecyclerView() {
-
-        JSONArray jArray =null;
+        JSONArray jArray = null;
         try {
             jArray = new JSONArray(Config.CartData);
             list.clear();
-            for(int i=0;i<jArray.length();i++){
+            for (int i = 0; i < jArray.length(); i++) {
                 JSONObject json_data = jArray.getJSONObject(i);
                 ShoppingBagModel shoppingBagModel = new ShoppingBagModel();
                 shoppingBagModel.setId(json_data.getString("Id"));
                 shoppingBagModel.setName(json_data.getString("Name"));
-                String  img = json_data.getString("Image");
-                img.replaceAll("\\\\","");
+                String img = json_data.getString("Image");
+                img.replaceAll("\\\\", "");
                 shoppingBagModel.setImage(img);
                 shoppingBagModel.setQuantity(json_data.getString("Quantity"));
                 shoppingBagModel.setPrice(json_data.getString("Price"));
@@ -160,25 +167,31 @@ public class MyCartFragment extends Fragment implements View.OnClickListener{
                 list.add(shoppingBagModel);
 
                 rv_ShoppingBag.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false));
-                adapter = new ShopingBagAdapter(activity,list);
+                adapter = new ShopingBagAdapter(activity, list);
                 rv_ShoppingBag.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
                 strAmount = Float.parseFloat(json_data.getString("Price"));
                 strQty = Integer.parseInt(json_data.getString("Quantity"));
             }
 
-            Log.e("strAmount",""+strAmount);
-            Log.e("strQty",""+strQty);
+            Log.e("strAmount", "" + strAmount);
+            Log.e("strQty", "" + strQty);
             strTotalAmt = strAmount * strQty; // total amount every product acoording to quantity
-            sum= strTotalAmt+sum; // sum of all products
-            Log.e("totalamt",""+sum);
+            sum = strTotalAmt + sum; // sum of all products
+            Log.e("totalamt", "" + sum);
             tvTotalAmount.setText(String.valueOf(sum));
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+        }
+    }
 
 
 }
