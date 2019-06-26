@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Config {
 
-    public static String Base_url = "3.89.215.96";
+    public static String Base_url = "18.208.183.9";
     public static List<ChildDataModel> childDataModel;
     public static List<SubChildDataModel> subChildDataModels;
     public static String CartCount;
@@ -23,6 +23,17 @@ public class Config {
     public static int subCategoryClickId;
     public static String CartData ="";
     public static ViewPager viewPager;
+    public static String paymentAmount;
+    public static String shipFirstName;
+    public static String shipLastName;
+    public static String shipEmail;
+    public static String shipphone;
+    public static String shipAddress;
+    public static String shipCountry;
+    public static String shipCity;
+    public static String shipState;
+    public static String shipPinCode;
+    public static float shipdeleveryCharge;
 
     public static class Url{
         public final static String  categoryList = "list/category-list?limit=&offset=0&keyword=&sortOrder=";
@@ -49,6 +60,7 @@ public class Config {
         public final static String getfeaturedProduct ="product-store/featureproduct-list?";
         public final static String getTodayDeals ="product-store/todayDeals-list?";
         public final static String getbrandsDetail ="manufacturers/manufacturerlist?";
+        public final static String checkoutendPoint ="orders/customer-checkout";
 
     }
 }

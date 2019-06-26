@@ -25,6 +25,7 @@ import com.io.choozo.model.responseModel.GetProfileResponseModel;
 import com.io.choozo.model.responseModel.GetWishlistResponseModel;
 import com.io.choozo.model.responseModel.LoginResponseModel;
 import com.io.choozo.model.responseModel.OurBrandsResponseModel;
+import com.io.choozo.model.responseModel.PlaceOrderResponseModel;
 import com.io.choozo.model.responseModel.ProductListResponseModel;
 import com.io.choozo.model.responseModel.TodayDealsResponseModel;
 import com.io.choozo.model.responseModel.UpdateAddResponseModel;
@@ -509,6 +510,42 @@ public class ApiCaller {
                 });
     }
 
+    /*-------------------------------------------------- Checkout(Proced order --------------------------------------------------------)*/
+
+    public static void procedOrder(Activity activity,String url, String productDetails,String shippingFirstName, String shippingLastName,
+                                    String shippingCompany, String shippingAddress_1, String shippingAddress_2, String shippingCity,
+                                        String shippingPostCode ,String shippingCountry,String shippingZone , String shippingAddressFormat,
+                                            String phoneNumber ,String emailId, String token, final FutureCallback<PlaceOrderResponseModel> apiCallBack) {
+
+        final  JsonObject json =new JsonObject();
+        json.addProperty("productDetails",productDetails);
+        json.addProperty("shippingFirstName",shippingFirstName);
+        json.addProperty("shippingLastName",shippingLastName);
+        json.addProperty("shippingCompany",shippingCompany);
+        json.addProperty("shippingAddress_1",shippingAddress_1);
+        json.addProperty("shippingAddress_2",shippingAddress_2);
+        json.addProperty("shippingCity",shippingCity);
+        json.addProperty("shippingPostCode",shippingPostCode);
+        json.addProperty("shippingCountry",shippingCountry);
+        json.addProperty("shippingZone",shippingZone);
+        json.addProperty("shippingAddressFormat",shippingAddressFormat);
+        json.addProperty("phoneNumber",phoneNumber);
+        json.addProperty("emailId",emailId);
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization","Bearer "+token)
+                .noCache().setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        PlaceOrderResponseModel placeOrderResponseModel = gson.fromJson(result,PlaceOrderResponseModel.class);
+                        apiCallBack.onCompleted(e,placeOrderResponseModel);
+                    }
+                });
+
+    }
 
 
 }

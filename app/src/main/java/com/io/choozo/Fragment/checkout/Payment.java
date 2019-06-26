@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.io.choozo.Config;
 import com.io.choozo.R;
@@ -17,6 +18,7 @@ public class Payment extends Fragment implements View.OnClickListener {
 
     RelativeLayout rl_confirmation;
     Activity activity;
+    TextView tv_amount;
 
     public Payment(){
 
@@ -35,6 +37,8 @@ public class Payment extends Fragment implements View.OnClickListener {
     private void intializeViews(View view) {
         activity = getActivity();
         rl_confirmation = (RelativeLayout)view.findViewById(R.id.rl_confirmation);
+        tv_amount = (TextView)view.findViewById(R.id.amount);
+        tv_amount.setText(Config.paymentAmount);
     }
 
     /*--------------------------------------------- bind all views that are used in this activity ---------------------------------- */
@@ -50,5 +54,13 @@ public class Payment extends Fragment implements View.OnClickListener {
                 Config.viewPager.setCurrentItem(2);
         }
 
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+        }
     }
 }

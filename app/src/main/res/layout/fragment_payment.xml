@@ -89,6 +89,7 @@
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:layout_alignParentRight="true"/>
             </RelativeLayout>
 
@@ -110,6 +111,7 @@
                     android:layout_width="30dp"
                     android:layout_height="25dp"
                     android:id="@+id/ewalet"
+                    android:layout_centerVertical="true"
                     android:background="@drawable/wallet"
                     android:backgroundTint="@color/grey"/>
 
@@ -118,6 +120,7 @@
                     android:layout_height="wrap_content"
                     android:text="E-Wallet"
                     android:textSize="@dimen/h2"
+                    android:layout_centerVertical="true"
                     android:fontFamily="@font/seguisb"
                     android:layout_toRightOf="@id/ewalet"
                     android:layout_marginLeft="20dp"/>
@@ -125,6 +128,17 @@
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_alignParentRight="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Comming Soon"
+                    android:textSize="@dimen/h3"
+
+                    android:fontFamily="@font/seguisb"
+                    android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"/>
             </RelativeLayout>
             <View
@@ -145,6 +159,7 @@
                     android:id="@+id/card"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:layout_centerVertical="true"
                     android:background="@drawable/creditcard"
                     android:backgroundTint="@color/grey" />
 
@@ -153,6 +168,7 @@
                     android:layout_height="wrap_content"
                     android:text="Credit Card"
                     android:textSize="@dimen/h2"
+                    android:layout_centerVertical="true"
                     android:fontFamily="@font/seguisb"
                      android:layout_toRightOf="@+id/card"
                     android:layout_marginLeft="20dp"/>
@@ -160,6 +176,15 @@
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_alignParentRight="true"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Comming Soon"
+                    android:textSize="@dimen/h3"
+                    android:fontFamily="@font/seguisb"
+                    android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"/>
             </RelativeLayout>
         </LinearLayout>

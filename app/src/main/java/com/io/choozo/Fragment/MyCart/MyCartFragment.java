@@ -177,8 +177,10 @@ public class MyCartFragment extends Fragment implements View.OnClickListener {
             Log.e("strAmount", "" + strAmount);
             Log.e("strQty", "" + strQty);
             strTotalAmt = strAmount * strQty; // total amount every product acoording to quantity
+            Log.e("strTotalAmt", "" + strTotalAmt);
             sum = strTotalAmt + sum; // sum of all products
             Log.e("totalamt", "" + sum);
+            Config.paymentAmount = String.valueOf(sum);
             tvTotalAmount.setText(String.valueOf(sum));
         } catch (JSONException e) {
             e.printStackTrace();
