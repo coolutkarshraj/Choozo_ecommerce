@@ -6,6 +6,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.io.choozo.adapter.hotOfferAdapter.Our_Brand_RvAdapter;
+import com.io.choozo.model.ProductDetail;
 import com.io.choozo.model.dataModel.CustomerRegisterResponseModel;
 import com.io.choozo.model.dataModel.ProductList;
 import com.io.choozo.model.responseModel.AddAddressResponseModel;
@@ -545,6 +546,30 @@ public class ApiCaller {
                     }
                 });
 
+    }
+
+
+    public static void registerUser(final ProductDetail registrationModel,
+                                    final Activity activity,String url,String token,
+                                    final FutureCallback<PlaceOrderResponseModel> apiCallBack) {
+
+        final Gson gson = new Gson();
+        String requestString = gson.toJson(registrationModel);
+        JsonObject json = gson.fromJson(requestString, JsonObject.class);
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization","Bearer "+token)
+                .noCache()
+                .setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+
+                        PlaceOrderResponseModel registrationModel = gson.fromJson(result, PlaceOrderResponseModel.class);
+                        apiCallBack.onCompleted(e, registrationModel);
+                    }
+                });
     }
 
 
