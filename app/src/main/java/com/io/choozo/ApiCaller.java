@@ -578,7 +578,7 @@ public class ApiCaller {
 
         final Gson gson = new Gson();
         Ion.with(activity)
-                .load(UrlLocator.getFinalUrl(url))
+                .load("POST",UrlLocator.getFinalUrl(url))
                 .setHeader("Content-Type","application/json")
                 .setHeader("Authorization","Bearer "+token)
                 .noCache()

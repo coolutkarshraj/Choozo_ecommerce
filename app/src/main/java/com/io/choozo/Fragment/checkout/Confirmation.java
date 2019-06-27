@@ -19,9 +19,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.io.choozo.ApiCaller;
 import com.io.choozo.Config;
 import com.io.choozo.R;
+import com.io.choozo.UrlLocator;
 import com.io.choozo.activity.ordersucessfull.OrderSucessfullyPlacedActivity;
 import com.io.choozo.adapter.ConfirmationAdapter;
 import com.io.choozo.adapter.ShopingBagAdapter;
@@ -32,6 +35,8 @@ import com.io.choozo.model.dummydataModel.ConfirmationModel;
 import com.io.choozo.model.dummydataModel.ShoppingBagModel;
 import com.io.choozo.model.responseModel.LoginResponseModel;
 import com.io.choozo.model.responseModel.PlaceOrderResponseModel;
+import com.io.choozo.util.ApiInterface;
+import com.io.choozo.util.ServiceGenerator;
 import com.koushikdutta.async.future.FutureCallback;
 
 import org.json.JSONArray;
@@ -39,7 +44,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Confirmation extends Fragment implements View.OnClickListener {
     RelativeLayout orderNow;
@@ -53,6 +64,7 @@ public class Confirmation extends Fragment implements View.OnClickListener {
     ProductDetail productDetail;
     PreferenceManager preferenceManager;
     ArrayList<ProductDetailData> list1;
+    Map<String, String> jsonObj;
 
     private static String strData;
 
@@ -237,10 +249,11 @@ public class Confirmation extends Fragment implements View.OnClickListener {
 
   /*-------------------------------------------------- java data convert into json Forment------------------------------------------*/
 
-    private static String toJSon(ProductDetail productDetail) {
+    private  String toJSon(ProductDetail productDetail) {
         try {
 
-            JSONObject jsonObj = new JSONObject();
+            //jsonObj = new JsonObject();
+            jsonObj = new HashMap<>();
             jsonObj.put("shippingFirstName", productDetail.getShippingFirstName());
             jsonObj.put("shippingLastName", productDetail.getShippingLastName());
             jsonObj.put("shippingCompany", productDetail.getShippingCompany());
@@ -254,24 +267,26 @@ public class Confirmation extends Fragment implements View.OnClickListener {
             jsonObj.put("shippingAddressFormat", productDetail.getShippingAddressFormat());
             jsonObj.put("emailId", productDetail.getEmailId());
 
-            JSONArray jsonArr = new JSONArray();
+            JsonArray jsonArr = new JsonArray();
 
             for (int i = 0; i < productDetail.getProductDetails().size(); i++) {
-                JSONObject pnObj = new JSONObject();
-                pnObj.put("productId", productDetail.getProductDetails().get(i).getProductId());
-                pnObj.put("quantity", productDetail.getProductDetails().get(i).getQuantity());
+               // JsonObject pnObj = new JsonObject();
+                Map<String, String> pnObj = new HashMap<>();
+                pnObj.put("productId", String.valueOf(productDetail.getProductDetails().get(i).getProductId()));
+                pnObj.put("quantity", String.valueOf(productDetail.getProductDetails().get(i).getQuantity()));
                 pnObj.put("price", productDetail.getProductDetails().get(i).getPrice());
                 pnObj.put("model", "");
                 pnObj.put("name", productDetail.getProductDetails().get(i).getName());
-                jsonArr.put(pnObj);
+                jsonArr.add(String.valueOf(pnObj));
             }
-            jsonObj.put("productDetails", jsonArr);
-            strData = jsonObj.toString();
+            jsonObj.put("productDetails", String.valueOf(jsonArr));
+            //strData = jsonObj.toString();
+
             Log.e("result", jsonObj.toString());
 
             return jsonObj.toString();
 
-        } catch (JSONException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
@@ -280,7 +295,7 @@ public class Confirmation extends Fragment implements View.OnClickListener {
     }
 
     private void apiProceedOrder(){
-        apiUrl();
+       /* apiUrl();
         ApiCaller.proccedOrder(activity, endPoint, token, strData, new FutureCallback<PlaceOrderResponseModel>() {
             @Override
             public void onCompleted(Exception e, PlaceOrderResponseModel result) {
@@ -290,6 +305,26 @@ public class Confirmation extends Fragment implements View.OnClickListener {
                 else {
                     Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
                 }
+            }
+        });*/
+        apiUrl();
+        ApiInterface jsonPostService = ServiceGenerator.createService(ApiInterface.class,"http://18.208.183.9:8000/api/");
+        Call<String> call = jsonPostService.getUser(jsonObj,"Bearer "+ token);
+        call.enqueue(new Callback<String>() {
+
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                try{
+                    Log.e("response-success", response.body().toString());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.e("response-failure", call.toString());
             }
         });
     }
