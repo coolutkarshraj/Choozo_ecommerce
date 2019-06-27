@@ -44,6 +44,11 @@
             app:itemTextAppearance="@style/MenuItems"
             android:title="About" />
         <item
+            android:id="@+id/contactus"
+            android:icon="@drawable/ic_import_contacts_black_24dp"
+            app:itemTextAppearance="@style/MenuItems"
+            android:title="Contact Us" />
+        <item
             android:id="@+id/logout"
             android:icon="@drawable/logout"
             app:itemTextAppearance="@style/MenuItems"

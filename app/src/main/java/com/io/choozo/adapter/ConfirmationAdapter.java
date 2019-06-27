@@ -21,6 +21,7 @@ public class ConfirmationAdapter extends RecyclerView.Adapter<ConfirmationAdapte
 
     Context context;
     List<ConfirmationModel> item;
+    String image,imageurl;
 
     public ConfirmationAdapter(Context context, List<ConfirmationModel> item) {
         this.context = context;
@@ -39,11 +40,8 @@ public class ConfirmationAdapter extends RecyclerView.Adapter<ConfirmationAdapte
     public void onBindViewHolder(@NonNull ConfirmationAdapter.ViewHolder viewHolder, int i) {
 
         ConfirmationModel model = item.get(i);
-        viewHolder.dressName.setText(model.getDressName());
-        viewHolder.dressSize.setText(model.getSize());
-        viewHolder.dressColor.setText(model.getColor());
-        viewHolder.dressPrice.setText(model.getMrp());
-        viewHolder.dressPriceCut.setText(model.getCutMrp());
+        viewHolder.dressName.setText(model.getName());
+        viewHolder.dressPrice.setText(model.getPrice());
         Glide.with(context).load(model.getImage()).into(viewHolder.imageView);
 
     }

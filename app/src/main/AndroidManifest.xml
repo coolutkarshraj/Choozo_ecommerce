@@ -6,19 +6,28 @@
     <dist:module dist:instant="true" />
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo"
+
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".activity.Profile.EditProfileActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.loginRegistrationflow.OtpForgotPasswordActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.loginRegistrationflow.ForgotPasswodActivity"
-            android:screenOrientation="portrait"/>
+        android:theme="@style/AppTheme.NoActionBar"
+        android:usesCleartextTraffic="true"
+        >
+        <activity android:name=".activity.About.AboutUsActivity"></activity>
+        <activity android:name=".activity.About.ContactUsActivity" />
+        <activity
+            android:name=".activity.Profile.EditProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.loginRegistrationflow.OtpForgotPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.loginRegistrationflow.ForgotPasswodActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ordersucessfull.OrderSucessfullyPlacedActivity"
             android:screenOrientation="portrait" />

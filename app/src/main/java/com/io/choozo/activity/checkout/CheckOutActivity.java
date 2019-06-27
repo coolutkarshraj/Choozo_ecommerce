@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.io.choozo.Config;
 import com.io.choozo.Fragment.checkout.Confirmation;
 import com.io.choozo.Fragment.checkout.Payment;
 import com.io.choozo.Fragment.checkout.Shipping;
@@ -45,11 +46,12 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 
     private void intializeView() {
         checkoutAdapter = new CheckoutAdapter(getSupportFragmentManager());
-        viewPager =(ViewPager)findViewById(R.id.viewPager);
-        tabLayout = (TabLayout)findViewById(R.id.tab);
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        Config.viewPager = viewPager;
+        tabLayout = (TabLayout) findViewById(R.id.tab);
         setUpFragment(viewPager);
         tabLayout.setupWithViewPager(viewPager);
-        back = (ImageView)findViewById(R.id.back);
+        back = (ImageView) findViewById(R.id.back);
 
     }
 
@@ -59,22 +61,23 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.back :
+        switch (v.getId()) {
+            case R.id.back:
                 onBackPressed();
                 return;
         }
-
     }
 
     /* -------------------------------------------------Set up of Fragments-------------------------------------*/
 
     private void setUpFragment(ViewPager viewPager) {
-        CheckoutAdapter checkoutAdapter= new CheckoutAdapter(getSupportFragmentManager());
-        checkoutAdapter.addFragment(new Shipping(),"Shipping");
-        checkoutAdapter.addFragment(new Payment(),"Payment");
-        checkoutAdapter.addFragment(new Confirmation(),"Confirmation");
+        CheckoutAdapter checkoutAdapter = new CheckoutAdapter(getSupportFragmentManager());
+        checkoutAdapter.addFragment(new Shipping(), "Shipping");
+        checkoutAdapter.addFragment(new Payment(), "Payment");
+        checkoutAdapter.addFragment(new Confirmation(), "Confirmation");
         viewPager.setAdapter(checkoutAdapter);
+
+
     }
 
 

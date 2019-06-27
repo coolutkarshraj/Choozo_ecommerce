@@ -15,13 +15,14 @@
        android:layout_height="wrap_content"
        android:layout_marginBottom="5dp"
        android:id="@+id/rl_button"
+
        android:layout_alignParentBottom="true"
        android:layout_marginStart="@dimen/startmargin"
        android:layout_marginEnd="@dimen/endmargin"
        android:background="@drawable/button_shape_red">
 
       <RelativeLayout
-          android:layout_width="match_parent"
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginStart="30dp"
           android:layout_marginEnd="30dp"
@@ -33,19 +34,19 @@
           android:text="place this order"
           android:textAllCaps="true"
           android:textColor="@color/white"
-          android:textSize="@dimen/h1"
+          android:textSize="@dimen/h2"
           android:fontFamily="@font/seguisb"
           android:textStyle="bold"
           android:id="@+id/tv_order"
           android:layout_centerVertical="true"
          />
       <RelativeLayout
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_centerVertical="true"
-          android:id="@+id/round"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_centerVertical="true"
+         android:id="@+id/round"
          android:layout_toRightOf="@+id/tv_order"
-         android:layout_marginLeft="20dp">
+         android:layout_marginLeft="10dp">
 
          <ImageView
              android:layout_width="2dp"
@@ -79,25 +80,27 @@
       </RelativeLayout>
 
       <ImageView
-          android:layout_width="14dp"
-          android:layout_height="14dp"
+          android:layout_width="12dp"
+          android:layout_height="12dp"
           android:layout_toRightOf="@+id/round"
           android:layout_centerVertical="true"
-          android:layout_marginLeft="20dp"
+
+          android:layout_marginLeft="10dp"
           android:id="@+id/rupeeicon"
           android:background="@drawable/rupeeindian"
           android:backgroundTint="@color/white"/>
       <TextView
-          android:layout_width="match_parent"
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="12,548"
+          android:text="12"
           android:layout_marginLeft="5dp"
           android:maxLines="1"
           android:maxLength="10"
           android:layout_marginRight="10dp"
           android:textAllCaps="true"
+          android:id="@+id/tv_total_price"
           android:textColor="@color/white"
-          android:textSize="@dimen/h1"
+          android:textSize="@dimen/h2"
           android:fontFamily="@font/seguisb"
           android:layout_toRightOf="@+id/rupeeicon"
           android:layout_centerVertical="true"

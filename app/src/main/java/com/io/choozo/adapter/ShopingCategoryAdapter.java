@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.io.choozo.Config;
 import com.io.choozo.R;
+import com.io.choozo.UrlLocator;
 import com.io.choozo.activity.homeActivity.CategorySubCategory;
 import com.io.choozo.model.dataModel.CategoryDataModel;
 import com.io.choozo.model.dummydataModel.ShoppingBagModel;
@@ -27,8 +29,8 @@ public class ShopingCategoryAdapter extends RecyclerView.Adapter<ShopingCategory
     Context context;
     List<CategoryDataModel> item;
     CategorySubCatChildCat ad_interface;
-    public static int cateId;
-
+    public static Integer cateId;
+    String image ,imagePath,endPoint;
     public ShopingCategoryAdapter(Context context, CategorySubCatChildCat ad_interface, List<CategoryDataModel> item) {
         this.context = context;
         this.item = item;
@@ -48,7 +50,10 @@ public class ShopingCategoryAdapter extends RecyclerView.Adapter<ShopingCategory
 
         final CategoryDataModel model = item.get(i);
         viewHolder.name.setText(model.getName());
-        Glide.with(context).load(model.getImagePath()).into(viewHolder.imageView);
+        image = model.getImage();
+        imagePath = model.getImagePath();
+        imageResizeApi(image,imagePath);
+        Glide.with(context).load(UrlLocator.getFinalUrl(endPoint)).into(viewHolder.imageView);
         viewHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,6 +61,7 @@ public class ShopingCategoryAdapter extends RecyclerView.Adapter<ShopingCategory
 
                 Intent i =new Intent(context, CategorySubCategory.class);
                 i.putExtra("name",model.getName());
+                i.putExtra("categoryId",model.getCategoryId());
                 context.startActivity(i);
                 cateId = model.getCategoryId();
                 ad_interface.catId(cateId);
@@ -63,6 +69,7 @@ public class ShopingCategoryAdapter extends RecyclerView.Adapter<ShopingCategory
             }
         });
     }
+
 
     @Override
     public int getItemCount() {
@@ -82,4 +89,13 @@ public class ShopingCategoryAdapter extends RecyclerView.Adapter<ShopingCategory
 
         }
     }
+
+    /*------------------------------------------------------ image Resize api path----------------------------------------------*/
+
+    private void imageResizeApi(String image, String imagePath) {
+        endPoint = Config.Url.imageResize +"width=200&height=250&name="+image+"&path="+imagePath+"";
+    }
+
+
+
 }

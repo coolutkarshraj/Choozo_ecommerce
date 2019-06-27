@@ -84,7 +84,7 @@
                         android:id="@+id/et_firstName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/grey"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/h3"
                         android:fontFamily="@font/segoeui"
                         android:hint="First Name"
@@ -112,7 +112,7 @@
                         android:id="@+id/et_lastName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/grey"
+                        android:textColor="@color/black"
                         android:maxLines="1"
                         android:maxLength="15"
                         android:hint="Last Name"
@@ -208,15 +208,16 @@
                         android:textSize="@dimen/h2"
                         android:fontFamily="@font/seguisb"/>
 
-                    <Spinner
-                        android:id="@+id/spinner_city"
+                    <EditText
+                        android:id="@+id/et_city1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
                         android:textColor="@color/black"
-                        android:hint="First Name"
-                        style="@style/spinner"/>
+                        android:maxLines="1"
+
+                        android:textSize="@dimen/h3"
+                        android:fontFamily="@font/segoeui"
+                        />
                 </LinearLayout>
 
                 <!--state-->
@@ -237,15 +238,15 @@
                         android:textSize="@dimen/h2"
                         android:fontFamily="@font/seguisb"/>
 
-                    <Spinner
-                        android:id="@+id/spinner_state"
+                    <EditText
+                        android:id="@+id/et_state"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
                         android:textColor="@color/black"
-                        android:hint="Last Name"
-                        style="@style/spinner"/>
+                        android:maxLines="1"
+                        android:textSize="@dimen/h3"
+                        android:fontFamily="@font/segoeui"
+                        />
                 </LinearLayout>
             </LinearLayout>
 
@@ -324,6 +325,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:background="#EEEBEB"
+                android:visibility="gone"
                 android:orientation="vertical"
                 android:layout_marginEnd="10dp">
 

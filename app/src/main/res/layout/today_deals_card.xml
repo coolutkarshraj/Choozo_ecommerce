@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="3dp"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="160dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:id="@+id/rl_click">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:scaleType="fitCenter"
+            android:layout_marginTop="5dp"
+            android:id="@+id/imageview"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageview"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:text="Round Neck Dress"
+            android:textColor="@color/black"
+            android:maxLines="2"
+            android:id="@+id/tv_dress"
+            android:maxLength="50"
+            android:textSize="@dimen/h3"
+            android:fontFamily="@font/segoeui"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_dress"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            >
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:id="@+id/rupee"
+                android:layout_centerVertical="true"
+                android:background="@drawable/rupeeindian"
+                android:backgroundTint="@color/red" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/rupee"
+                android:text="1200"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/red"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:id="@+id/tv_mrp"
+                android:maxLength="25"
+                android:layout_centerVertical="true"
+                android:textSize="@dimen/h2"
+                android:fontFamily="@font/segoeui"/>
+
+            <ImageView
+                android:id="@+id/heart"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/heart"
+                android:backgroundTint="@color/black" />
+            <ImageView
+                android:id="@+id/like"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:visibility="gone"
+                android:background="@drawable/like"
+                android:backgroundTint="@color/red" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+
+</android.support.v7.widget.CardView>
+

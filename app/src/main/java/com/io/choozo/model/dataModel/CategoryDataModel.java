@@ -13,7 +13,7 @@ public class CategoryDataModel {
 
     private String image;
 
-    private Object imagePath;
+    private String imagePath;
 
     private Integer parentInt;
 
@@ -53,11 +53,11 @@ public class CategoryDataModel {
         this.image = image;
     }
 
-    public Object getImagePath() {
+    public String getImagePath() {
         return imagePath;
     }
 
-    public void setImagePath(Object imagePath) {
+    public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
 

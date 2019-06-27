@@ -1,80 +1,73 @@
 package com.io.choozo.model.dummydataModel;
 
-public class ShoppingBagModel {
-    Integer image;
-    String dressName;
-    String size;
-    String color;
-    String Mrp;
-    String CutMrp;
-    String Quantity;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-    public ShoppingBagModel(Integer image, String dressName, String size, String color, String mrp, String cutMrp, String quantity) {
-        this.image = image;
-        this.dressName = dressName;
-        this.size = size;
-        this.color = color;
-        Mrp = mrp;
-        CutMrp = cutMrp;
-        Quantity = quantity;
+public class ShoppingBagModel {
+    @SerializedName("Id")
+    @Expose
+    private String id;
+    @SerializedName("Name")
+    @Expose
+    private String name;
+    @SerializedName("Image")
+    @Expose
+    private String image;
+    @SerializedName("Quantity")
+    @Expose
+    private String quantity;
+    @SerializedName("Price")
+    @Expose
+    private String price;
+    @SerializedName("P_ID")
+    @Expose
+    private String pID;
+
+    public String getId() {
+        return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public Integer getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Integer image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
-    public String getDressName() {
-        return dressName;
-    }
-
-    public void setDressName(String dressName) {
-        this.dressName = dressName;
-    }
-
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getMrp() {
-        return Mrp;
-    }
-
-    public void setMrp(String mrp) {
-        Mrp = mrp;
-    }
-
-    public String getCutMrp() {
-        return CutMrp;
-    }
-
-    public void setCutMrp(String cutMrp) {
-        CutMrp = cutMrp;
-    }
-
     public String getQuantity() {
-        return Quantity;
+        return quantity;
     }
 
     public void setQuantity(String quantity) {
-        Quantity = quantity;
+        this.quantity = quantity;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getPID() {
+        return pID;
+    }
+
+    public void setPID(String pID) {
+        this.pID = pID;
     }
 }

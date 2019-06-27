@@ -11,7 +11,9 @@ public class PreferenceManager {
     private SharedPreferences.Editor ed;
     public static final String loginData = "loginData";
     public static final String token = "token";
+    public static String email = "email";
     public static final String profileData = "profileData";
+    public static String isFirstLaunch = "isFirstLanunch";
 
 
     public PreferenceManager(Context context) {
