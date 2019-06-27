@@ -9,12 +9,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.io.choozo.ApiCaller;
@@ -32,6 +34,10 @@ import com.io.choozo.model.responseModel.LoginResponseModel;
 import com.io.choozo.model.responseModel.PlaceOrderResponseModel;
 import com.koushikdutta.async.future.FutureCallback;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,14 +45,16 @@ public class Confirmation extends Fragment implements View.OnClickListener {
     RelativeLayout orderNow;
     RecyclerView rv_Confirmation;
     ConfirmationAdapter adapter;
-    String endPoint,token;
+    String endPoint, token;
+    String strP_Qty, strP_Price, strP_Name, strP_Id;
     TextView tvName, tvAddress, tvCity, tvOrderAmt, tvDelivery, tvTotalAmount;
     List<ConfirmationModel> list = new ArrayList<>();
     Activity activity;
     ProductDetail productDetail;
     PreferenceManager preferenceManager;
-
     ArrayList<ProductDetailData> list1;
+
+    private static String strData;
 
 
     public Confirmation() {
@@ -104,8 +112,8 @@ public class Confirmation extends Fragment implements View.OnClickListener {
             case R.id.rl_ordernow:
 
                 apiPlaceOrder();
-                /*Intent i =new Intent(activity, OrderSucessfullyPlacedActivity.class);
-                startActivity(i);*/
+                apiProceedOrder();
+                return;
         }
 
     }
@@ -118,6 +126,8 @@ public class Confirmation extends Fragment implements View.OnClickListener {
         shippingAddress();
         allConfirmationDatasetToRV();
         billingAmount();
+
+
     }
 
 
@@ -131,28 +141,56 @@ public class Confirmation extends Fragment implements View.OnClickListener {
 
 
     private void allConfirmationDatasetToRV() {
-        rv_Confirmation.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false));
+
         list.clear();
-        list.add(new ConfirmationModel(R.drawable.bluestriptop, "Blue Strip Top", "Size: S", "Color: Red", "3299", "4999", "3"));
-        list.add(new ConfirmationModel(R.drawable.roundneckdree, "Round Neck Dress", "Size: S", "Color: Black", "1299", "2000", "1"));
-        list.add(new ConfirmationModel(R.drawable.green, "Green Crop T- Shirt", "Size: M", "Color: Green", "900", "20000", "5"));
-        list.add(new ConfirmationModel(R.drawable.green, "Green Crop T- Shirt", "Size: M", "Color: Green", "900", "20000", "5"));
-        list.add(new ConfirmationModel(R.drawable.green, "Green Crop T- Shirt", "Size: M", "Color: Green", "900", "20000", "5"));
-        list.add(new ConfirmationModel(R.drawable.green, "Green Crop T- Shirt", "Size: M", "Color: Green", "900", "20000", "5"));
-        adapter = new ConfirmationAdapter(activity, list);
-        rv_Confirmation.setAdapter(adapter);
+
+        JSONArray jArray = null;
+        try {
+            jArray = new JSONArray(Config.CartData);
+            list.clear();
+            for (int i = 0; i < jArray.length(); i++) {
+                JSONObject json_data = jArray.getJSONObject(i);
+                ConfirmationModel confirmationModel = new ConfirmationModel();
+                confirmationModel.setId(json_data.getString("Id"));
+                confirmationModel.setName(json_data.getString("Name"));
+                strP_Name = json_data.getString("Name");
+                String img = json_data.getString("Image");
+                img.replaceAll("\\\\", "");
+                confirmationModel.setImage(img);
+                confirmationModel.setQuantity(json_data.getString("Quantity"));
+                strP_Qty = json_data.getString("Quantity");
+                confirmationModel.setPrice(json_data.getString("Price"));
+
+                strP_Price = json_data.getString("Price");
+                confirmationModel.setPID(json_data.getString("P_ID"));
+                strP_Id = json_data.getString("P_ID");
+                list.add(confirmationModel);
+
+                rv_Confirmation.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false));
+                adapter = new ConfirmationAdapter(activity, list);
+                rv_Confirmation.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void billingAmount() {
 
     }
 
+    /*--------------------------------------------------------- Api url ----------------------------------------------------------------*/
 
     private void apiUrl() {
         endPoint = Config.Url.checkoutendPoint;
     }
 
+
+    /* ----------------------------------------------------- Data Store into Model Class ----------------------------------------------*/
     private void apiPlaceOrder() {
+
         productDetail.setEmailId(Config.shipEmail);
         productDetail.setPhoneNumber(Config.shipphone);
         productDetail.setShippingAddress1(Config.shipAddress);
@@ -165,42 +203,96 @@ public class Confirmation extends Fragment implements View.OnClickListener {
         productDetail.setShippingZone("xzc");
         productDetail.setShippingAddressFormat("");
 
+        list1.clear();
+        JSONArray jArray = null;
         try {
+            jArray = new JSONArray(Config.CartData);
 
-            ProductDetailData productDetailData = new ProductDetailData();
-            productDetailData.setName("Apple iPhone X");
-            productDetailData.setModel("");
-            productDetailData.setPrice(91900);
-            productDetailData.setProductId(287);
-            productDetailData.setQuantity(2);
-            list1.add(productDetailData);
-            productDetail.setProductDetails(list1);
+            for (int i = 0; i < jArray.length(); i++) {
+                JSONObject json_data = jArray.getJSONObject(i);
+                ConfirmationModel confirmationModel = new ConfirmationModel();
+                strP_Name = json_data.getString("Name");
+                strP_Qty = json_data.getString("Quantity");
+                strP_Price = json_data.getString("Price");
+                strP_Id = json_data.getString("P_ID");
+                ProductDetailData productDetailData = new ProductDetailData();
+                productDetailData.setName(strP_Name);
+                productDetailData.setModel("");
+                productDetailData.setPrice(strP_Price);
+                productDetailData.setProductId(Integer.valueOf(strP_Id));
+                productDetailData.setQuantity(Integer.valueOf(strP_Qty));
+                list1.add(productDetailData);
+                productDetail.setProductDetails(list1);
 
-            System.out.println(productDetail);
-
-            apiUrl();
-            ApiCaller.registerUser(productDetail, activity,endPoint,token,
-                    new FutureCallback<PlaceOrderResponseModel>() {
-                        @Override
-                        public void onCompleted(Exception e, PlaceOrderResponseModel result) {
-                            if (e != null) {
-                             System.out.println(e);
-                            } else {
-                              System.out.println(result);
-                            }
-                        }
-                    });
-        } catch (Exception e) {
-            System.out.println(e);
+                Log.e("productDetail", "" + productDetail);
+                System.out.println(productDetail);
+                toJSon(productDetail);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
 
     }
 
+  /*-------------------------------------------------- java data convert into json Forment------------------------------------------*/
 
+    private static String toJSon(ProductDetail productDetail) {
+        try {
 
+            JSONObject jsonObj = new JSONObject();
+            jsonObj.put("shippingFirstName", productDetail.getShippingFirstName());
+            jsonObj.put("shippingLastName", productDetail.getShippingLastName());
+            jsonObj.put("shippingCompany", productDetail.getShippingCompany());
+            jsonObj.put("shippingAddress_1", productDetail.getShippingAddress1());
+            jsonObj.put("shippingAddress_2", productDetail.getShippingAddress2());
+            jsonObj.put("shippingCity", productDetail.getShippingCity());
+            jsonObj.put("shippingPostCode", productDetail.getShippingPostCode());
+            jsonObj.put("shippingCountry", productDetail.getShippingCountry());
+            jsonObj.put("shippingZone", productDetail.getShippingZone());
+            jsonObj.put("phoneNumber", productDetail.getPhoneNumber());
+            jsonObj.put("shippingAddressFormat", productDetail.getShippingAddressFormat());
+            jsonObj.put("emailId", productDetail.getEmailId());
 
+            JSONArray jsonArr = new JSONArray();
 
+            for (int i = 0; i < productDetail.getProductDetails().size(); i++) {
+                JSONObject pnObj = new JSONObject();
+                pnObj.put("productId", productDetail.getProductDetails().get(i).getProductId());
+                pnObj.put("quantity", productDetail.getProductDetails().get(i).getQuantity());
+                pnObj.put("price", productDetail.getProductDetails().get(i).getPrice());
+                pnObj.put("model", "");
+                pnObj.put("name", productDetail.getProductDetails().get(i).getName());
+                jsonArr.put(pnObj);
+            }
+            jsonObj.put("productDetails", jsonArr);
+            strData = jsonObj.toString();
+            Log.e("result", jsonObj.toString());
 
+            return jsonObj.toString();
+
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
+
+    }
+
+    private void apiProceedOrder(){
+        apiUrl();
+        ApiCaller.proccedOrder(activity, endPoint, token, strData, new FutureCallback<PlaceOrderResponseModel>() {
+            @Override
+            public void onCompleted(Exception e, PlaceOrderResponseModel result) {
+                if(e!=null){
+                    return;
+                }
+                else {
+                    Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -209,6 +301,7 @@ public class Confirmation extends Fragment implements View.OnClickListener {
             getFragmentManager().beginTransaction().detach(this).attach(this).commit();
         }
     }
+
 
 
 }

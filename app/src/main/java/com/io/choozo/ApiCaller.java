@@ -513,7 +513,7 @@ public class ApiCaller {
 
     /*-------------------------------------------------- Checkout(Proced order --------------------------------------------------------)*/
 
-    public static void procedOrder(Activity activity,String url, String productDetails,String shippingFirstName, String shippingLastName,
+    public static void procedorder(Activity activity,String url, String productDetails,String shippingFirstName, String shippingLastName,
                                     String shippingCompany, String shippingAddress_1, String shippingAddress_2, String shippingCity,
                                         String shippingPostCode ,String shippingCountry,String shippingZone , String shippingAddressFormat,
                                             String phoneNumber ,String emailId, String token, final FutureCallback<PlaceOrderResponseModel> apiCallBack) {
@@ -571,6 +571,28 @@ public class ApiCaller {
                     }
                 });
     }
+
+    public static void  proccedOrder(Activity activity,String url,String token ,String Data,
+                               final FutureCallback<PlaceOrderResponseModel> apiCallBack){
+
+
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .setHeader("Content-Type","application/json")
+                .setHeader("Authorization","Bearer "+token)
+                .noCache()
+                .setStringBody(Data)
+                .asString()
+                .setCallback(new FutureCallback<String>() {
+                    @Override
+                    public void onCompleted(Exception e, String result) {
+                        PlaceOrderResponseModel placeOrderResponseModel = gson.fromJson(result,PlaceOrderResponseModel.class);
+                        apiCallBack.onCompleted(e,placeOrderResponseModel);
+                    }
+                });
+    }
+
 
 
 }

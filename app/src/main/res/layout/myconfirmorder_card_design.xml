@@ -14,21 +14,22 @@
          android:layout_height="wrap_content"
          android:id="@+id/rl_first">
 
-         <LinearLayout
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
+         <RelativeLayout
+             android:layout_width="80dp"
+             android:layout_height="90dp"
              android:background="@drawable/grey_outline_rectangle"
              android:layout_margin="15dp">
 
          <ImageView
-             android:layout_width="80dp"
-             android:layout_height="90dp"
-             android:scaleType="centerCrop"
+             android:layout_width="75dp"
+             android:layout_height="85dp"
+             android:scaleType="fitCenter"
              android:id="@+id/imageView"
+             android:layout_centerInParent="true"
              tools:layout_editor_absoluteX="0dp"
              tools:layout_editor_absoluteY="0dp"
            />
-         </LinearLayout>
+         </RelativeLayout>
      </RelativeLayout>
 
         <RelativeLayout
@@ -43,10 +44,10 @@
               android:layout_height="wrap_content"
               android:layout_marginStart="5dp"
               android:layout_marginEnd="5dp"
-              android:textSize="@dimen/h1"
-              android:fontFamily="@font/segoeuib"
+              android:textSize="@dimen/h2"
+              android:maxLines="3"
+              android:fontFamily="@font/seguisb"
               android:text="Blue Strip Topd"
-              android:maxLines="1"
               android:id="@+id/tv_itemname"
               android:textColor="@color/black"
               android:layout_marginTop="@dimen/startmargin"/>
@@ -66,6 +67,7 @@
                    android:text="Size: S"
                    android:maxLength="12"
                    android:maxLines="1"
+                   android:visibility="gone"
                    android:id="@+id/tv_size"
                    android:textColor="@color/black"
                    android:textSize="@dimen/h3"
@@ -77,6 +79,7 @@
                     android:layout_marginLeft="15dp"
                     android:maxLength="12"
                     android:maxLines="1"
+                    android:visibility="gone"
                     android:id="@+id/tv_color"
                     android:layout_toRightOf="@+id/tv_size"
                     android:textColor="@color/black"
@@ -86,7 +89,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Qty:3"
-                    android:layout_marginLeft="15dp"
                     android:maxLength="12"
                     android:maxLines="1"
                     android:layout_toRightOf="@+id/tv_color"
@@ -104,8 +106,8 @@
             android:layout_marginBottom="5dp">
 
             <ImageView
-                android:layout_width="14dp"
-                android:layout_height="14dp"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
                 android:id="@+id/rupee"
                 android:background="@drawable/rupeeindian"
                 android:backgroundTint="@color/red"
@@ -122,13 +124,14 @@
                 android:maxLines="1"
                 android:id="@+id/tv_mrp"
                 android:maxLength="25"
-                android:textSize="@dimen/h1"
+                android:textSize="@dimen/h2"
                 android:fontFamily="@font/seguisb"/>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
+                android:visibility="gone"
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@+id/tv_mrp"
                 android:gravity="bottom">
