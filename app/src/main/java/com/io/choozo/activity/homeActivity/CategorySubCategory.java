@@ -43,31 +43,31 @@ import java.util.List;
 
 public class CategorySubCategory extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-    public static RecyclerView catRecyclerView,subcategoryrecyclerview,itemsRecyclerView;
+    public static RecyclerView catRecyclerView, subcategoryrecyclerview, itemsRecyclerView;
     Activity activity;
     ImageView back;
     RelativeLayout rlFilter;
-    ImageView Cancel ,filterbtn;
+    ImageView Cancel, filterbtn;
     public static CategoryAdapter categoryAdapter;
     public static SubCategoryAdapter subCategoryAdapter;
     public static ItemCategoryAdapter itemCategoryAdapter;
     List<ItemCatModel> item = new ArrayList<>();
-    CrystalRangeSeekbar  rangeSeekbar;
-    public static TextView tvMin,tvMax,toolbarName,tvDataNotFound;
-    String[] country = {"- Nothing Selected -","Prada", "Gucci", "Louis Vuittion", "Hermes","Tommy Hilfiger","Nike","Ralph Lauren","Levi Strauss & Co.",
-    "Burberry","Adidas","Versace","Diesel","Calvin Klein"};
-    String[] Category = {"- Nothing Selected -","Mens Fashion", "Womens Fashion", "Electronics", "Laptops","Provisional & Utensils","Baby & Kids"};
-    String[] discount = {"- Nothing Selected -","20 %", "30 % ", "40 %", "50%"};
-    Spinner spin,spinCategory,discountSpin;
-    RecyclerView rv_color,rv_producrtsize;
+    CrystalRangeSeekbar rangeSeekbar;
+    public static TextView tvMin, tvMax, toolbarName, tvDataNotFound;
+    String[] country = {"- Nothing Selected -", "Prada", "Gucci", "Louis Vuittion", "Hermes", "Tommy Hilfiger", "Nike", "Ralph Lauren", "Levi Strauss & Co.",
+            "Burberry", "Adidas", "Versace", "Diesel", "Calvin Klein"};
+    String[] Category = {"- Nothing Selected -", "Mens Fashion", "Womens Fashion", "Electronics", "Laptops", "Provisional & Utensils", "Baby & Kids"};
+    String[] discount = {"- Nothing Selected -", "20 %", "30 % ", "40 %", "50%"};
+    Spinner spin, spinCategory, discountSpin;
+    RecyclerView rv_color, rv_producrtsize;
     ChooseColorForFilterAdapter adapter;
     SelectFilterSizeAdapter selectSizeAdapter;
     List<SelectSizeDataMode> itemslectsize = new ArrayList<>();
     List<ChooseColorModel> item1 = new ArrayList<>();
-    String intentName,endPoint;
-    String intentCategoryId ="";
-    String child ="";
-    String subchild ="";
+    String intentName, endPoint;
+    String intentCategoryId = "";
+    String child = "";
+    String subchild = "";
     NewProgressBar dialog;
 
 
@@ -86,22 +86,22 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
 
     private void intilaizeviews() {
         activity = CategorySubCategory.this;
-        back = (ImageView)findViewById(R.id.back);
+        back = (ImageView) findViewById(R.id.back);
         dialog = new NewProgressBar(activity);
-        catRecyclerView = (RecyclerView)findViewById(R.id.rv_category);
-        subcategoryrecyclerview = (RecyclerView)findViewById(R.id.rv_subcategory);
-        itemsRecyclerView = (RecyclerView)findViewById(R.id.rv_items_catsub);
-        filterbtn = (ImageView)findViewById(R.id.filterbtn);
+        catRecyclerView = (RecyclerView) findViewById(R.id.rv_category);
+        subcategoryrecyclerview = (RecyclerView) findViewById(R.id.rv_subcategory);
+        itemsRecyclerView = (RecyclerView) findViewById(R.id.rv_items_catsub);
+        filterbtn = (ImageView) findViewById(R.id.filterbtn);
         rlFilter = (RelativeLayout) findViewById(R.id.rl_filter);
-        Cancel = (ImageView)findViewById(R.id.im_cancel);
-        rangeSeekbar = (CrystalRangeSeekbar )findViewById(R.id.rangeSeekbar1);
-        tvMin = (TextView)findViewById(R.id.textMin1);
-        tvMax = (TextView)findViewById(R.id.textMax1);
+        Cancel = (ImageView) findViewById(R.id.im_cancel);
+        rangeSeekbar = (CrystalRangeSeekbar) findViewById(R.id.rangeSeekbar1);
+        tvMin = (TextView) findViewById(R.id.textMin1);
+        tvMax = (TextView) findViewById(R.id.textMax1);
         spin = (Spinner) findViewById(R.id.spinner);
         spinCategory = (Spinner) findViewById(R.id.spinner1);
         discountSpin = (Spinner) findViewById(R.id.spinner2);
-        rv_producrtsize = (RecyclerView)findViewById(R.id.rv_productsize);
-        rv_color = (RecyclerView)findViewById(R.id.rv_choosecolor);
+        rv_producrtsize = (RecyclerView) findViewById(R.id.rv_productsize);
+        rv_color = (RecyclerView) findViewById(R.id.rv_choosecolor);
         toolbarName = (TextView) findViewById(R.id.tv_name);
         tvDataNotFound = (TextView) findViewById(R.id.tv_data_notFound);
         getDataFrimIntent();
@@ -113,7 +113,7 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
         intentName = intent.getStringExtra("name");
         Config.toolbarName = intentName;
         intentCategoryId = String.valueOf(ShopingCategoryAdapter.cateId);
-        Log.e("category",""+intentCategoryId);
+        Log.e("category", "" + intentCategoryId);
         toolbarName.setText(intentName);
     }
 
@@ -129,16 +129,16 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.back :
+        switch (v.getId()) {
+            case R.id.back:
                 onBackPressed();
                 return;
-            case  R.id.filterbtn :
+            case R.id.filterbtn:
                 rlFilter.setVisibility(View.VISIBLE);
                 return;
-            case R.id.im_cancel :
-                 rlFilter.setVisibility(View.GONE);
-                 return;
+            case R.id.im_cancel:
+                rlFilter.setVisibility(View.GONE);
+                return;
         }
     }
 
@@ -161,7 +161,7 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
 
     private void categoryRecyclerViewData() {
         catRecyclerView.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
-        categoryAdapter = new CategoryAdapter(activity, HomeFragment.ad_interface,Config.childDataModel);
+        categoryAdapter = new CategoryAdapter(activity, HomeFragment.ad_interface, Config.childDataModel);
         catRecyclerView.setAdapter(categoryAdapter);
         categoryAdapter.notifyDataSetChanged();
     }
@@ -170,30 +170,29 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
 
     private void subCategoryRecyclerViewData() {
         subcategoryrecyclerview.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
-        subCategoryAdapter = new SubCategoryAdapter(activity,Config.subChildDataModels);
+        subCategoryAdapter = new SubCategoryAdapter(activity, Config.subChildDataModels);
         subcategoryrecyclerview.setAdapter(subCategoryAdapter);
 
     }
 
 
-
     /* ----------------------------------------------------------- Api url of product List ----------------------------------------------------*/
-    private void apiUrl(){
-            endPoint = Config.Url.productlist+"limit=10&offset=0&manufacturerId=&categoryId="+intentCategoryId+"&keyword=&price=1&priceFrom=&priceT";
+    private void apiUrl() {
+        endPoint = Config.Url.productlist + "limit=10&offset=0&manufacturerId=&categoryId=" + intentCategoryId + "&keyword=&price=1&priceFrom=&priceT";
 
-       // endPoint = Config.Url.productlist;
+        // endPoint = Config.Url.productlist;
     }
 
 
     /*----------------------------------------------------------- Product list Api ----------------------------------------------------------*/
 
-    private void ProductListApi(){
+    private void ProductListApi() {
         dialog.show();
         apiUrl();
         ApiCaller.productList(activity, endPoint, new FutureCallback<ProductListResponseModel>() {
             @Override
             public void onCompleted(Exception e, ProductListResponseModel result) {
-                if(e!=null){
+                if (e != null) {
                     return;
                 }
                 CategorySubCategoryDataSetToRv(result);
@@ -206,12 +205,12 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
 
     private void CategorySubCategoryDataSetToRv(ProductListResponseModel result) {
 
-        if(result.getStatus() == 1){
+        if (result.getStatus() == 1) {
             dialog.dismiss();
-            if(result.getData().getProductList().isEmpty()){
+            if (result.getData().getProductList().isEmpty()) {
                 tvDataNotFound.setVisibility(View.VISIBLE);
                 itemsRecyclerView.setVisibility(View.GONE);
-            }else {
+            } else {
                 tvDataNotFound.setVisibility(View.GONE);
                 itemsRecyclerView.setVisibility(View.VISIBLE);
                 itemsRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
@@ -219,15 +218,13 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
                 itemsRecyclerView.setAdapter(itemCategoryAdapter);
                 itemCategoryAdapter.notifyDataSetChanged();
             }
-        }
-        else{
-            Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
             dialog.dismiss();
 
         }
 
     }
-
 
 
     private void seekBarSet() {
@@ -252,28 +249,28 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
     /*--------------------------------------------------- list of brands--------------------------------------------------------------*/
 
     private void adapterSetToSpinner() {
-        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,country);
+        ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, country);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin.setAdapter(aa);
     }
     /*--------------------------------------------------- list of brands--------------------------------------------------------------*/
 
     private void adapterSetToSpinnerforCategory() {
-        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,Category);
+        ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Category);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinCategory.setAdapter(aa);
     }
     /*--------------------------------------------------- discount--------------------------------------------------------------*/
 
     private void adapterSetToSpinnerfordiscount() {
-        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,discount);
+        ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, discount);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         discountSpin.setAdapter(aa);
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-      //  Toast.makeText(getApplicationContext(),country[position] , Toast.LENGTH_LONG).show();
+        //  Toast.makeText(getApplicationContext(),country[position] , Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -293,7 +290,7 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
         itemslectsize.add(new SelectSizeDataMode("XL"));
         itemslectsize.add(new SelectSizeDataMode("XXL"));
         itemslectsize.add(new SelectSizeDataMode("XXXL"));
-        selectSizeAdapter = new SelectFilterSizeAdapter(activity,itemslectsize);
+        selectSizeAdapter = new SelectFilterSizeAdapter(activity, itemslectsize);
         rv_producrtsize.setAdapter(selectSizeAdapter);
 
     }

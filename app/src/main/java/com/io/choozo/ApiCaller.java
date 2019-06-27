@@ -511,7 +511,10 @@ public class ApiCaller {
                 });
     }
 
-    /*-------------------------------------------------- Checkout(Proced order --------------------------------------------------------)*/
+
+    /* ----------------------------------------------------this work is for just test --------------------------------------------------*/
+
+    /*-------------------------------------------------- Checkout(Proced order) --------------------------------------------------------)*/
 
     public static void procedorder(Activity activity,String url, String productDetails,String shippingFirstName, String shippingLastName,
                                     String shippingCompany, String shippingAddress_1, String shippingAddress_2, String shippingCity,
