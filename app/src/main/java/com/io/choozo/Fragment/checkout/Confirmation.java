@@ -270,7 +270,7 @@ public class Confirmation extends Fragment implements View.OnClickListener {
             jsonObj.put("shippingAddress_2", productDetail.getShippingAddress2());
             jsonObj.put("shippingCity", productDetail.getShippingCity());
             jsonObj.put("shippingPostCode", productDetail.getShippingPostCode());
-            getCountryCode(productDetail.getShippingCountry());
+
 
             jsonObj.put("shippingCountry", "12");
             jsonObj.put("shippingZone", productDetail.getShippingZone());
@@ -347,30 +347,7 @@ public class Confirmation extends Fragment implements View.OnClickListener {
 
 
 
-    public String getCountryCode(String countryName) {
 
-        // Get all country codes in a string array.
-        String[] isoCountryCodes = Locale.getISOCountries();
-        Map<String, String> countryMap = new HashMap<>();
-        Locale locale;
-        String name;
-
-        // Iterate through all country codes:
-        for (String code : isoCountryCodes) {
-            // Create a locale using each country code
-            locale = new Locale("", code);
-            // Get country name for each code.
-            name = locale.getDisplayCountry();
-            // Map all country names and codes in key - value pairs.
-            countryMap.put(name, code);
-        }
-
-        // Return the country code for the given country name using the map.
-        // Here you will need some validation or better yet
-        // a list of countries to give to user to choose from.
-        Log.e("countrycode",countryMap.get(countryName));
-        return countryMap.get(countryName); // "NL" for Netherlands.
-    }
 
 
     @Override

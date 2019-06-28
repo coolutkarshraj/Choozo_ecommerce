@@ -42,6 +42,7 @@ public class ConfirmationAdapter extends RecyclerView.Adapter<ConfirmationAdapte
         ConfirmationModel model = item.get(i);
         viewHolder.dressName.setText(model.getName());
         viewHolder.dressPrice.setText(model.getPrice());
+        viewHolder.tv_qty.setText("Qty : "+model.getQuantity());
         Glide.with(context).load(model.getImage()).into(viewHolder.imageView);
 
     }
@@ -53,7 +54,7 @@ public class ConfirmationAdapter extends RecyclerView.Adapter<ConfirmationAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView dressName,dressSize,dressColor,dressPrice,dressPriceCut;
+        TextView dressName,dressSize,dressColor,dressPrice,tv_qty;
         ImageView imageView;
         RelativeLayout relativeLayout;
         public ViewHolder(@NonNull View itemView) {
@@ -62,7 +63,7 @@ public class ConfirmationAdapter extends RecyclerView.Adapter<ConfirmationAdapte
             dressSize = (TextView)itemView.findViewById(R.id.tv_size);
             dressColor = (TextView)itemView.findViewById(R.id.tv_color);
             dressPrice = (TextView)itemView.findViewById(R.id.tv_mrp);
-            dressPriceCut = (TextView)itemView.findViewById(R.id.tv_cutprice);
+            tv_qty = (TextView)itemView.findViewById(R.id.tv_qty);
             imageView = (ImageView)itemView.findViewById(R.id.imageView);
 
 

@@ -69,6 +69,23 @@ public class Shipping extends Fragment implements View.OnClickListener , Adapter
                                                         "Western Sahara","Yemen","Democratic Republic of Cango","Zambia","Zimbabwe","Montengro","Serbia","Aland Islands","Bonaire, Sint Eustatius and Saba","Curacao","Palestinian Territory, Occupied","South Sudan","St.Barthelemy","St.Martin(French part)","Canary Islands","Ascension Island(British)","Kosovo, Republic of","Isle of Man","Tristan da Cunha","Guerynsey","Jersey"
                                         };
 
+    String [] code ={"0","1","2","3","4 5","6","7","8","9","10","11",
+            "12","13","14","15","16","17", "18", "19","20","21","22","23","24",
+            "25","26","27","28","29","30","31","32",
+            "33","34","35","36","37","38","39","40 41","42",
+            "43","44","45","46","47","48","49","50","51","52",
+            "53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68",
+            "69","70","71","72","73","74","75, 76","77","78 79","80","81","82","83","84",
+            "85","86","87","88","89","90","91","92","93","Guinea-Bissau","Guyana","Haiti","Heard and Mc Donald Island","Honduras","Hong kong","Hungary","Iceland","India","Indonesia",
+            "Iran (Islamic Republic of)","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati","North Korea","South Korea","Kuwait","Kyrgyzstan","Lao People's Democratic Republic","Latvia","Lebanon","Lesotho","Liberia","Libyan Arab Jamahiriya",
+            "Liechtenstein","Lithuania","Luxembourg","Macau","FYROM","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Martinique","Mauritania","Maritius","Mayotte","Mexico","Micronesia,Federated States of","Moldova, Republic of","Monaco","Mangolia","Montserrat",
+            "Morocco","Mozambique","Myanmar","Namibia","Naru","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","Niue","Norfolk Island","Northern Mariana Island","Norway","Oman","Pakistan","Palau","Panama","Papua New Guinea","Paraguay",
+            "Peru","Philippines","Pitcairn","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia Federation","Rwanda","Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadies","Samoa","San Marino","Soa Tome and Prinicple","Saudi Arabia","Senegal","Seychelles","Sierra Leone",
+            "Singapore","Slovak Republic","Solvenia","Solomon Island","Somalia","South Africa","South Georgia & South Sandwich Island","Spain","Sri Lanka","St. Helena","St.Pierre and Miquelon","Sudan","Suriname","Svalbard and Jan Mayen Island","Swaziland","Sweden","Switzerland","Syrian Arab Republic","Taiwan","Tajikistan","Tanzania,United Republic of",
+            "Thailand","Togo","Tokelau","Tango","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Turks and Caicos Island","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","United States Minor Outlying Island","Urugay","Uzbekistan","Vanuatu","Vatican City State","Venezuela","Viet Nam","Virgin Island(British)","Virgin Island(U.S.)","Wallis and Futuna Island",
+            "Western Sahara","Yemen","Democratic Republic of Cango","Zambia","Zimbabwe","Montengro","Serbia","Aland Islands","Bonaire, Sint Eustatius and Saba","Curacao","Palestinian Territory, Occupied","South Sudan","St.Barthelemy","St.Martin(French part)","Canary Islands","Ascension Island(British)","Kosovo, Republic of","Isle of Man","Tristan da Cunha","Guerynsey","Jersey"
+    };
+
     RecyclerView rvSavedAdress;
     SavedAdressRvAdapter adapter;
     float dileveryFee = (float) 0.0;
