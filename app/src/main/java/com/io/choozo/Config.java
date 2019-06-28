@@ -35,6 +35,8 @@ public class Config {
     public static String shipPinCode;
     public static float shipdeleveryCharge;
 
+    public static String C_Name;
+
     public static String productdescription;
 
     public static class Url{
@@ -63,6 +65,10 @@ public class Config {
         public final static String getTodayDeals ="product-store/todayDeals-list?";
         public final static String getbrandsDetail ="manufacturers/manufacturerlist?";
         public final static String checkoutendPoint ="orders/customer-checkout";
+
+        public final static String countryList ="list/country-list?limit=&offset=0&keyword=";
+
+
 
     }
 }

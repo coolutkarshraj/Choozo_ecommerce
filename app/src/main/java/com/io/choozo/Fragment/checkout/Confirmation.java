@@ -97,7 +97,7 @@ public class Confirmation extends Fragment implements View.OnClickListener {
     private void intializeView(View view) {
         activity = getActivity();
         preferenceManager = new PreferenceManager(activity);
-        teleMgr = (TelephonyManager)activity.getSystemService(Context.TELEPHONY_SERVICE);
+        teleMgr = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE);
         rv_Confirmation = (RecyclerView) view.findViewById(R.id.rv_items);
         orderNow = (RelativeLayout) view.findViewById(R.id.rl_ordernow);
         tvName = (TextView) view.findViewById(R.id.tv_name);
@@ -148,16 +148,14 @@ public class Confirmation extends Fragment implements View.OnClickListener {
         allConfirmationDatasetToRV();
         billingAmount();
 
-
     }
-
 
     /*---------------------------------------------------- Shipping Address work -------------------------------------------------*/
 
     private void shippingAddress() {
         tvName.setText(Config.shipFirstName + " " + Config.shipLastName);
         tvAddress.setText(Config.shipAddress);
-        tvCity.setText(Config.shipCity + " -" + Config.shipPinCode + ", " + Config.shipState + ", " + Config.shipCountry + " " + Config.shipphone);
+        tvCity.setText(Config.shipCity + " -" + Config.shipPinCode + ", " + Config.shipState + ", " + Config.C_Name + " " + Config.shipphone);
     }
 
 
@@ -181,12 +179,11 @@ public class Confirmation extends Fragment implements View.OnClickListener {
                 confirmationModel.setQuantity(json_data.getString("Quantity"));
                 strP_Qty = json_data.getString("Quantity");
                 confirmationModel.setPrice(json_data.getString("Price"));
-
                 strP_Price = json_data.getString("Price");
                 confirmationModel.setPID(json_data.getString("P_ID"));
                 strP_Id = json_data.getString("P_ID");
                 list.add(confirmationModel);
-
+                // Recycler view setup
                 rv_Confirmation.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false));
                 adapter = new ConfirmationAdapter(activity, list);
                 rv_Confirmation.setAdapter(adapter);
@@ -198,8 +195,12 @@ public class Confirmation extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void billingAmount() {
 
+    /*------------------------------------------------------- Amount calculate ---------------------------------------------------------*/
+
+    private void billingAmount() {
+        tvOrderAmt.setText(Config.paymentAmount);
+        tvTotalAmount.setText(Config.paymentAmount);
     }
 
     /*--------------------------------------------------------- Api url ----------------------------------------------------------------*/
@@ -256,12 +257,12 @@ public class Confirmation extends Fragment implements View.OnClickListener {
 
     }
 
-  /*-------------------------------------------------- java data convert into json Forment------------------------------------------*/
+    /*-------------------------------------------------- java data convert into json Forment------------------------------------------*/
 
-    private  String toJSon(ProductDetail productDetail) {
+    private String toJSon(ProductDetail productDetail) {
         try {
 
-             jsonObj = new JSONObject();
+            jsonObj = new JSONObject();
             //jsonObj = new HashMap<>();
             jsonObj.put("shippingFirstName", productDetail.getShippingFirstName());
             jsonObj.put("shippingLastName", productDetail.getShippingLastName());
@@ -270,9 +271,7 @@ public class Confirmation extends Fragment implements View.OnClickListener {
             jsonObj.put("shippingAddress_2", productDetail.getShippingAddress2());
             jsonObj.put("shippingCity", productDetail.getShippingCity());
             jsonObj.put("shippingPostCode", productDetail.getShippingPostCode());
-
-
-            jsonObj.put("shippingCountry", "12");
+            jsonObj.put("shippingCountry", productDetail.getShippingCountry());
             jsonObj.put("shippingZone", productDetail.getShippingZone());
             jsonObj.put("phoneNumber", productDetail.getPhoneNumber());
             jsonObj.put("shippingAddressFormat", productDetail.getShippingAddressFormat());
@@ -281,8 +280,7 @@ public class Confirmation extends Fragment implements View.OnClickListener {
             JSONArray jsonArr = new JSONArray();
 
             for (int i = 0; i < productDetail.getProductDetails().size(); i++) {
-               JSONObject pnObj = new JSONObject();
-               // Map<String, String> pnObj = new HashMap<>();
+                JSONObject pnObj = new JSONObject();
                 pnObj.put("productId", String.valueOf(productDetail.getProductDetails().get(i).getProductId()));
                 pnObj.put("quantity", String.valueOf(productDetail.getProductDetails().get(i).getQuantity()));
                 pnObj.put("price", productDetail.getProductDetails().get(i).getPrice());
@@ -290,11 +288,9 @@ public class Confirmation extends Fragment implements View.OnClickListener {
                 pnObj.put("name", productDetail.getProductDetails().get(i).getName());
                 jsonArr.put(pnObj);
             }
-            jsonObj.put("productDetails",jsonArr);
+            jsonObj.put("productDetails", jsonArr);
             strData = jsonObj.toString();
-            replace = strData.replaceAll("\\\\","");
-            Log.e("result", replace);
-
+            replace = strData.replaceAll("\\\\", "");
             return jsonObj.toString();
 
         } catch (Exception ex) {
@@ -305,49 +301,34 @@ public class Confirmation extends Fragment implements View.OnClickListener {
 
     }
 
-    private void apiProceedOrder(){
-       /* apiUrl();
-        ApiCaller.proccedOrder(activity, endPoint, token, strData, new FutureCallback<PlaceOrderResponseModel>() {
-            @Override
-            public void onCompleted(Exception e, PlaceOrderResponseModel result) {
-                if(e!=null){
-                    return;
-                }
-                else {
-                    Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });*/
-        apiUrl();
-        ApiInterface jsonPostService = ServiceGenerator.createService(ApiInterface.class,"http://18.208.183.9:8000/api/");
 
+    /*----------------------------------------------- Place order Api Work using Retrofit ------------------------------------------*/
 
-        RequestBody data = RequestBody.create(MediaType.parse("application/json"),replace);
-        Call<PlaceOrderResponseModel> call1 =  jsonPostService.postSomething("Bearer "+ token,data);
-
+    private void apiProceedOrder() {
+        ApiInterface jsonPostService = ServiceGenerator.createService(ApiInterface.class, "http://18.208.183.9:8000/api/");
+        RequestBody data = RequestBody.create(MediaType.parse("application/json"), replace);
+        Call<PlaceOrderResponseModel> call1 = jsonPostService.postSomething("Bearer " + token, data);
         call1.enqueue(new Callback<PlaceOrderResponseModel>() {
-
             @Override
             public void onResponse(Call<PlaceOrderResponseModel> call, Response<PlaceOrderResponseModel> response) {
-                try{
-                    Log.e("response-success", response.body().toString());
-                    Toast.makeText(activity, " done "+response.body().getMessage().toString(), Toast.LENGTH_SHORT).show();
+                try {
+                    Toast.makeText(activity, " done " + response.body().getMessage().toString(), Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(activity,OrderSucessfullyPlacedActivity.class);
+                    i.putExtra("orderid",response.body().getData().getOrderPrefixId());
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(i);
 
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
             @Override
             public void onFailure(Call<PlaceOrderResponseModel> call, Throwable t) {
-                Log.e("response-failure", call.toString());
-                Toast.makeText(activity, "error"+call.toString(), Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(activity, "error" + call.toString(), Toast.LENGTH_SHORT).show();
             }
         });
     }
-
-
-
-
 
 
     @Override
@@ -357,7 +338,6 @@ public class Confirmation extends Fragment implements View.OnClickListener {
             getFragmentManager().beginTransaction().detach(this).attach(this).commit();
         }
     }
-
 
 
 }

@@ -13,6 +13,7 @@ import com.io.choozo.model.responseModel.AddAddressResponseModel;
 import com.io.choozo.model.responseModel.CategoryResponseModel;
 import com.io.choozo.model.responseModel.ChangePasswordResponseModel;
 import com.io.choozo.model.responseModel.ContactUsResponseModel;
+import com.io.choozo.model.responseModel.CountryListResponseModel;
 import com.io.choozo.model.responseModel.DeleteAddressResponseModel;
 import com.io.choozo.model.responseModel.DeleteProductWishlistResponseModel;
 import com.io.choozo.model.responseModel.EditProfileResponseModel;
@@ -592,6 +593,27 @@ public class ApiCaller {
                     public void onCompleted(Exception e, String result) {
                         PlaceOrderResponseModel placeOrderResponseModel = gson.fromJson(result,PlaceOrderResponseModel.class);
                         apiCallBack.onCompleted(e,placeOrderResponseModel);
+                    }
+                });
+    }
+
+
+
+    /*------------------------------------------------------- Country List Api-------------------------------------------------------*/
+
+    public static void getcountryList(Activity activity , String url,
+                                      final FutureCallback<CountryListResponseModel> apiCallBack)
+    {
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        CountryListResponseModel countryListResponseModel = gson.fromJson(result,CountryListResponseModel.class);
+                        apiCallBack.onCompleted(e,countryListResponseModel);
                     }
                 });
     }

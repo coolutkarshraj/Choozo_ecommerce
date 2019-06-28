@@ -50,10 +50,13 @@ public class ShopingCategoryAdapter extends RecyclerView.Adapter<ShopingCategory
 
         final CategoryDataModel model = item.get(i);
         viewHolder.name.setText(model.getName());
+
         image = model.getImage();
         imagePath = model.getImagePath();
         imageResizeApi(image,imagePath);
+
         Glide.with(context).load(UrlLocator.getFinalUrl(endPoint)).into(viewHolder.imageView);
+
         viewHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
