@@ -1,4 +1,4 @@
-package com.io.choozo.adapter;
+package com.io.choozo.adapter.BasicAdapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

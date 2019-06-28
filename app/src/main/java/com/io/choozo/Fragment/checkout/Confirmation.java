@@ -1,7 +1,6 @@
 package com.io.choozo.Fragment.checkout;
 
 import android.app.Activity;
-import android.arch.lifecycle.LifecycleOwner;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,41 +14,30 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.io.choozo.ApiCaller;
 import com.io.choozo.Config;
 import com.io.choozo.R;
-import com.io.choozo.UrlLocator;
 import com.io.choozo.activity.ordersucessfull.OrderSucessfullyPlacedActivity;
-import com.io.choozo.adapter.ConfirmationAdapter;
-import com.io.choozo.adapter.ShopingBagAdapter;
+import com.io.choozo.adapter.BasicAdapter.ConfirmationAdapter;
 import com.io.choozo.localStorage.PreferenceManager;
 import com.io.choozo.model.ProductDetail;
 import com.io.choozo.model.ProductDetailData;
 import com.io.choozo.model.dummydataModel.ConfirmationModel;
-import com.io.choozo.model.dummydataModel.ShoppingBagModel;
 import com.io.choozo.model.responseModel.LoginResponseModel;
 import com.io.choozo.model.responseModel.PlaceOrderResponseModel;
 import com.io.choozo.util.ApiInterface;
 import com.io.choozo.util.ServiceGenerator;
-import com.koushikdutta.async.future.FutureCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;

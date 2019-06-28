@@ -1,4 +1,4 @@
-package com.io.choozo.adapter;
+package com.io.choozo.adapter.BasicAdapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.io.choozo.R;
 import com.io.choozo.model.dummydataModel.ConfirmationModel;
-import com.io.choozo.model.dummydataModel.ShoppingBagModel;
 
 import java.util.List;
 

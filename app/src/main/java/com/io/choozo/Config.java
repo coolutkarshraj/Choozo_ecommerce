@@ -60,13 +60,12 @@ public class Config {
         public final static String wishlistdata ="customer/add-product-to-wishlist";
         public final static String deleteproductfromWishList ="customer/wishlist-product-delete";
         public final static String getWishlistProduct ="customer/wishlist-product-list";
-
         public final static String getfeaturedProduct ="product-store/featureproduct-list?";
         public final static String getTodayDeals ="product-store/todayDeals-list?";
         public final static String getbrandsDetail ="manufacturers/manufacturerlist?";
         public final static String checkoutendPoint ="orders/customer-checkout";
-
         public final static String countryList ="list/country-list?limit=&offset=0&keyword=";
+        public final static String searchProduct ="list/productlist?limit=&offset=0&manufacturerId=&categoryId=&keyword=&price=1&priceFrom=&priceTo=";
 
 
 

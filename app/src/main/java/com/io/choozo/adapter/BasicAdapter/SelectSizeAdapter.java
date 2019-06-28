@@ -1,4 +1,4 @@
-package com.io.choozo.adapter;
+package com.io.choozo.adapter.BasicAdapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -9,19 +9,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.io.choozo.R;
-import com.io.choozo.model.dummydataModel.ChooseColorModel;
 import com.io.choozo.model.dummydataModel.SelectSizeDataMode;
 
 import java.util.List;
-
-import static com.io.choozo.R.drawable.design_size_product;
-import static com.io.choozo.adapter.SubCategoryAdapter.recyclerViewClickPostion;
 
 public class SelectSizeAdapter extends RecyclerView.Adapter<SelectSizeAdapter.ViewHolder> {
 

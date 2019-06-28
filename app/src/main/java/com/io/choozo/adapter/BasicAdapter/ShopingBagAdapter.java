@@ -1,13 +1,11 @@
-package com.io.choozo.adapter;
+package com.io.choozo.adapter.BasicAdapter;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
-import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,7 +18,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,8 +26,6 @@ import com.io.choozo.Config;
 import com.io.choozo.Fragment.MyCart.MyCartFragment;
 import com.io.choozo.R;
 import com.io.choozo.SqlDB.DbHelper;
-import com.io.choozo.activity.homeActivity.CategorySubCategory;
-import com.io.choozo.model.dataModel.CategoryDataModel;
 import com.io.choozo.model.dummydataModel.ShoppingBagModel;
 
 import org.json.JSONArray;
@@ -38,9 +33,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class ShopingBagAdapter extends RecyclerView.Adapter<ShopingBagAdapter.ViewHolder> {
 

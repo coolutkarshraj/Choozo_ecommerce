@@ -137,10 +137,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 loginStartWorking();
                 return;
 
-            case R.id.tv_skip :
+            /*case R.id.tv_skip :
                 Intent i = new Intent(activity,MainActivity.class);
                 startActivity(i);
-                return;
+                return;*/
 
             case R.id.tv_forgotpassword :
                 Intent intent = new Intent(activity,ForgotPasswodActivity.class);

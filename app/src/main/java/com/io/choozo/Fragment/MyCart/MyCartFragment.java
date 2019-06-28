@@ -13,9 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,9 +21,7 @@ import com.io.choozo.Config;
 import com.io.choozo.R;
 import com.io.choozo.SqlDB.DbHelper;
 import com.io.choozo.activity.checkout.CheckOutActivity;
-import com.io.choozo.adapter.ShopingBagAdapter;
-import com.io.choozo.adapter.ShopingCategoryAdapter;
-import com.io.choozo.model.dataModel.CategoryDataModel;
+import com.io.choozo.adapter.BasicAdapter.ShopingBagAdapter;
 import com.io.choozo.model.dummydataModel.ShoppingBagModel;
 import com.io.choozo.util.NewProgressBar;
 
@@ -34,7 +30,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class MyCartFragment extends Fragment implements View.OnClickListener {

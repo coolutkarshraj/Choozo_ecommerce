@@ -1,8 +1,9 @@
-package com.io.choozo.adapter.hotOfferAdapter;
+package com.io.choozo.adapter.BasicAdapter;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,7 +22,7 @@ import com.io.choozo.R;
 import com.io.choozo.UrlLocator;
 import com.io.choozo.activity.homeActivity.CartActivity;
 import com.io.choozo.localStorage.PreferenceManager;
-import com.io.choozo.model.dataModel.featuredProductModel.FeaturedProductDataModel;
+import com.io.choozo.model.dataModel.productListDataModel.ProductList;
 import com.io.choozo.model.responseModel.DeleteProductWishlistResponseModel;
 import com.io.choozo.model.responseModel.LoginResponseModel;
 import com.io.choozo.model.responseModel.WishlistResponseModel;
@@ -29,10 +30,10 @@ import com.koushikdutta.async.future.FutureCallback;
 
 import java.util.List;
 
-public class FeaturedProductRvAdapter extends RecyclerView.Adapter<FeaturedProductRvAdapter.ViewHolder> {
+public class ItemCategoryAdapter extends RecyclerView.Adapter<ItemCategoryAdapter.ViewHolder> {
 
     Context context;
-    List<FeaturedProductDataModel> item;
+    List<ProductList> item;
     int productId;
     String image,imagePath ,endPoint,strCutPrice,strPreferPrice;
     PreferenceManager preferenceManager;
@@ -40,16 +41,16 @@ public class FeaturedProductRvAdapter extends RecyclerView.Adapter<FeaturedProdu
     int wishlistid;
 
 
-    public FeaturedProductRvAdapter(Context context, List<FeaturedProductDataModel> item) {
+    public ItemCategoryAdapter(Context context, List<ProductList> item) {
         this.context = context;
         this.item = item;
     }
 
     @NonNull
     @Override
-    public FeaturedProductRvAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ItemCategoryAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-    View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.featured_product_card,viewGroup,false);
+    View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.shopingsubcat_cat_design,viewGroup,false);
     preferenceManager = new PreferenceManager(context);
     getDataFromLocalStorage();
     return new ViewHolder(view);
@@ -66,16 +67,27 @@ public class FeaturedProductRvAdapter extends RecyclerView.Adapter<FeaturedProdu
 
 
     @Override
-    public void onBindViewHolder(@NonNull FeaturedProductRvAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ItemCategoryAdapter.ViewHolder viewHolder, int i) {
 
-        FeaturedProductDataModel model = item.get(i);
+        ProductList model = item.get(i);
         viewHolder.productName.setText(model.getName());
         productId = model.getProductId();
         strCutPrice = model.getPrice();
-        viewHolder.productPrice.setText(model.getPrice());
+        strPreferPrice = model.getPricerefer();
+        if(strPreferPrice.equals("") ){
+            viewHolder.productPrice.setText(model.getPrice());
+            viewHolder.rlCutPrice.setVisibility(View.GONE);
+        }else {
+            viewHolder.rlCutPrice.setVisibility(View.VISIBLE);
+            viewHolder.productPrice.setText(model.getPricerefer());
+            viewHolder.productCutPrice.setText( "\u20B9" +model.getPrice());
+            viewHolder.productCutPrice.setPaintFlags( viewHolder.productCutPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }
+        viewHolder.productCutPrice.setText(model.getPrice());
         image = model.getImages().getImage();
         imagePath = model.getImages().getContainerName();
         imageResizeApi(image,imagePath);
+
         Glide.with(context).load(UrlLocator.getFinalUrl(endPoint)).into(viewHolder.productImage);
         viewHolder.Like.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,10 +103,7 @@ public class FeaturedProductRvAdapter extends RecyclerView.Adapter<FeaturedProdu
             }
         });
         viewHolder.data(item.get(i));
-
     }
-
-
 
     @Override
     public int getItemCount() {
@@ -103,44 +112,48 @@ public class FeaturedProductRvAdapter extends RecyclerView.Adapter<FeaturedProdu
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView productName,productPrice;
+        TextView productName,productPrice,productCutPrice;
         ImageView productImage ,Like,Dislike;
         TextView line;
-        RelativeLayout relativeLayout;
+        RelativeLayout relativeLayout,rlCutPrice;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             productName = (TextView)itemView.findViewById(R.id.tv_dress);
             productPrice = (TextView)itemView.findViewById(R.id.tv_mrp);
+            productCutPrice = (TextView)itemView.findViewById(R.id.tv_cutprice);
             productImage = (ImageView) itemView.findViewById(R.id.imageview);
             Like = (ImageView) itemView.findViewById(R.id.like);
             Dislike = (ImageView) itemView.findViewById(R.id.heart);
             relativeLayout = (RelativeLayout) itemView.findViewById(R.id.rl_click);
+            rlCutPrice = (RelativeLayout)itemView.findViewById(R.id.rl_cut);
 
         }
 
         /* ---------------------------------------------- Go to the Cart Activity ------------------------------------------------*/
-        public void data(FeaturedProductDataModel itemCatModel) {
-            final FeaturedProductDataModel model = itemCatModel;
+     public void data(ProductList itemCatModel) {
+            final ProductList model = itemCatModel;
 
             relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i =new Intent(context, CartActivity.class);
                     i.putExtra("productId",model.getProductId());
-                    i.putExtra("toolbarName","Featured Product");
+                    i.putExtra("toolbarName",Config.toolbarName);
                     context.startActivity(i);
                 }
             });
         }
     }
     /* ----------------------------------------------Image Resize Api-----------------------------------------------------------*/
+
     private void imageResizeApi(String image, String imagePath) {
      endPoint = Config.Url.imageResize +"width=260&height=360&name="+image+"&path="+imagePath+"";
     }
 
+
     /*---------------------------------------------------------  Add Wishlist Api ---------------------------------------------------*/
 
-    private void addToWishlist(int productId, FeaturedProductRvAdapter.ViewHolder viewHolder) {
+    private void addToWishlist(int productId, ViewHolder viewHolder) {
         ApiCaller.wishlistadd(context, Config.Url.wishlistdata, productId, token, new FutureCallback<WishlistResponseModel>() {
             @Override
             public void onCompleted(Exception e, WishlistResponseModel result) {
@@ -171,31 +184,27 @@ public class FeaturedProductRvAdapter extends RecyclerView.Adapter<FeaturedProdu
 
     /*------------------------------------------------ delete product from wishlist --------------------------------------------------*/
 
-    private void deleteProductfromWishList(FeaturedProductRvAdapter.ViewHolder viewHolder) {
+    private void deleteProductfromWishList(ViewHolder viewHolder) {
 
         apiurl();
         ApiCaller.wishlistDelete((Activity) context, endPointDeleteWishlist, token,
-                new FutureCallback<DeleteProductWishlistResponseModel>() {
-                    @Override
-                    public void onCompleted(Exception e, DeleteProductWishlistResponseModel result) {
-                        if(e!=null){
-                            return;
-                        }
-                        if(result.getStatus() == 1){
-                            Toast.makeText(context, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
-                            viewHolder.Dislike.setVisibility(View.VISIBLE);
-                            viewHolder.Like.setVisibility(View.GONE);
+                                            new FutureCallback<DeleteProductWishlistResponseModel>() {
+            @Override
+            public void onCompleted(Exception e, DeleteProductWishlistResponseModel result) {
+              if(e!=null){
+                  return;
+              }
+                if(result.getStatus() == 1){
+                    Toast.makeText(context, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+                    viewHolder.Dislike.setVisibility(View.VISIBLE);
+                    viewHolder.Like.setVisibility(View.GONE);
 
-                        }else {
-                            Toast.makeText(context, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                }else {
+                    Toast.makeText(context, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
-
-
-
-
 
 }

@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,7 @@ import com.io.choozo.ApiCaller;
 import com.io.choozo.Config;
 import com.io.choozo.R;
 import com.io.choozo.UrlLocator;
-import com.io.choozo.adapter.ShopingCategoryAdapter;
+import com.io.choozo.adapter.BasicAdapter.ShopingCategoryAdapter;
 import com.io.choozo.model.dataModel.CategoryDataModel;
 import com.io.choozo.model.dataModel.ChildDataModel;
 import com.io.choozo.model.dataModel.SubChildDataModel;
@@ -128,7 +127,6 @@ public class HomeFragment extends Fragment implements CategorySubCatChildCat {
     /* ------------------------------------------------------ Api url endPoints ------------------------------------------------------*/
 
     private void apiUrl() {
-
         endPoint = Config.Url.categoryList;
         endPointBanner = Config.Url.getBanner;
     }

@@ -14,27 +14,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.android.flexbox.AlignItems;
-import com.google.android.flexbox.FlexDirection;
-import com.google.android.flexbox.FlexWrap;
-import com.google.android.flexbox.FlexboxLayoutManager;
-import com.google.android.flexbox.JustifyContent;
 import com.io.choozo.ApiCaller;
 import com.io.choozo.Config;
 import com.io.choozo.R;
-import com.io.choozo.adapter.HotOfferRvAdapter;
 import com.io.choozo.adapter.hotOfferAdapter.FeaturedProductRvAdapter;
 import com.io.choozo.adapter.hotOfferAdapter.Our_Brand_RvAdapter;
 import com.io.choozo.adapter.hotOfferAdapter.TodayDealsRvAdapter;
-import com.io.choozo.model.dummydataModel.OfferDataModel;
 import com.io.choozo.model.responseModel.FeaturedProductResponseModel;
 import com.io.choozo.model.responseModel.OurBrandsResponseModel;
 import com.io.choozo.model.responseModel.TodayDealsResponseModel;
 import com.io.choozo.util.NewProgressBar;
 import com.koushikdutta.async.future.FutureCallback;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class HotOfferFragment extends Fragment {
 

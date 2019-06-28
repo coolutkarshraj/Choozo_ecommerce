@@ -16,7 +16,15 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             app:queryHint="Search here"
+            android:id="@+id/serachview"
             android:background="@color/greybackground"></android.support.v7.widget.SearchView>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:id="@+id/rv_search"
+            android:layout_below="@+id/serachview"></android.support.v7.widget.RecyclerView>
     </RelativeLayout>
 
 </LinearLayout>
