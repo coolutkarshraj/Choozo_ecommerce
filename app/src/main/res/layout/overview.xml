@@ -13,10 +13,23 @@
         android:fontFamily="@font/seguisb"
         android:textColor="@color/black"
         android:layout_marginStart="@dimen/startmargin"/>
+
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/startmargin"
+        android:text="Description"
+        android:textSize="@dimen/h1"
+        android:fontFamily="@font/seguisb"
+        android:textColor="@color/black"
+        android:layout_marginStart="@dimen/startmargin"/>
+
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/startmargin"
+        android:visibility="gone"
         android:layout_marginTop="@dimen/startmargin">
 
         <ImageView
@@ -40,6 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/startmargin"
+        android:visibility="gone"
         android:layout_marginTop="5dp">
 
         <ImageView

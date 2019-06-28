@@ -81,7 +81,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     Spinner spin;
     Button addToCart;
     TextView cartCount, tvProductName, tvActualPrice, tvCutPrice;
-    String strActualPrice, strCutPrice, strProductName;
+    String strActualPrice, strCutPrice, strProductName,strProductDetail;
     RelativeLayout rlCut;
     ViewPager viewPager;
     CheckoutAdapter checkoutAdapter;
@@ -233,6 +233,8 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
             tvProductName.setText(strProductName);
             strActualPrice = result.getData().get(0).getPrice();
             strCutPrice = result.getData().get(0).getPricerefer();
+            strProductDetail = result.getData().get(0).getDescription();
+            Config.productdescription = strProductDetail;
             if (strCutPrice.equals("")) {
                 rlCut.setVisibility(View.GONE);
                 tvActualPrice.setText(strActualPrice);
@@ -311,25 +313,26 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /* ---------------------------------------------------Add to cart work---------------------------------------------------------*/
+
     private void addToCartData() {
         if (spinnerData.equals("0")) {
-
+            Toast.makeText(activity, "Please select product quantity", Toast.LENGTH_SHORT).show();
         } else {
             if (ProductId.equals("")) {
                 boolean isInserted = dbHelper.insertData(strProductName, strImageUrl, spinnerData, price, String.valueOf(PID));
                 if (isInserted == true) {
-                    Toast.makeText(activity, "Data Inserted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, "Successfully add into cart", Toast.LENGTH_SHORT).show();
                     getSqliteData();
                 } else {
-                    Toast.makeText(activity, "DATA NOT SUPPORTED", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, "something went wrong", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 boolean isupdated = dbHelper.updateData(strProductName, strImageUrl, spinnerData, price, String.valueOf(PID));
                 if (isupdated == true) {
-                    Toast.makeText(activity, "Data updated", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, "product quantity modified", Toast.LENGTH_SHORT).show();
                     getSqliteData();
                 } else {
-                    Toast.makeText(activity, "data is not Updated", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, "something went wrong", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -407,11 +410,11 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setUpFragment(ViewPager viewPager) {
         CheckoutAdapter checkoutAdapter = new CheckoutAdapter(getSupportFragmentManager());
-        checkoutAdapter.addFragment(new OverView(), "Product Review");
+        checkoutAdapter.addFragment(new OverView(), "Product Description");
         checkoutAdapter.addFragment(new Review(), "Product Review");
         viewPager.setAdapter(checkoutAdapter);
     }
-
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.cart, menu);
@@ -424,7 +427,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         notifCount.setVisibility(View.VISIBLE);
         tvCount.setText(spinnerData);
         return super.onCreateOptionsMenu(menu);
-    }
+    }*/
 
     @Override
     public void onBackPressed() {

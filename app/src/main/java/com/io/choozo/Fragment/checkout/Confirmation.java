@@ -2,6 +2,7 @@ package com.io.choozo.Fragment.checkout;
 
 import android.app.Activity;
 import android.arch.lifecycle.LifecycleOwner;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +48,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import okhttp3.MediaType;
@@ -66,9 +69,12 @@ public class Confirmation extends Fragment implements View.OnClickListener {
     ProductDetail productDetail;
     PreferenceManager preferenceManager;
     ArrayList<ProductDetailData> list1;
-    JsonObject jsonObj;
+    JSONObject jsonObj;
+    TelephonyManager teleMgr;
+    String localeCountry;
 
     private static String strData;
+    String replace;
 
 
     public Confirmation() {
@@ -91,6 +97,7 @@ public class Confirmation extends Fragment implements View.OnClickListener {
     private void intializeView(View view) {
         activity = getActivity();
         preferenceManager = new PreferenceManager(activity);
+        teleMgr = (TelephonyManager)activity.getSystemService(Context.TELEPHONY_SERVICE);
         rv_Confirmation = (RecyclerView) view.findViewById(R.id.rv_items);
         orderNow = (RelativeLayout) view.findViewById(R.id.rl_ordernow);
         tvName = (TextView) view.findViewById(R.id.tv_name);
@@ -254,37 +261,39 @@ public class Confirmation extends Fragment implements View.OnClickListener {
     private  String toJSon(ProductDetail productDetail) {
         try {
 
-             jsonObj = new JsonObject();
+             jsonObj = new JSONObject();
             //jsonObj = new HashMap<>();
-            jsonObj.addProperty("shippingFirstName", productDetail.getShippingFirstName());
-            jsonObj.addProperty("shippingLastName", productDetail.getShippingLastName());
-            jsonObj.addProperty("shippingCompany", productDetail.getShippingCompany());
-            jsonObj.addProperty("shippingAddress_1", productDetail.getShippingAddress1());
-            jsonObj.addProperty("shippingAddress_2", productDetail.getShippingAddress2());
-            jsonObj.addProperty("shippingCity", productDetail.getShippingCity());
-            jsonObj.addProperty("shippingPostCode", productDetail.getShippingPostCode());
-            jsonObj.addProperty("shippingCountry", productDetail.getShippingCountry());
-            jsonObj.addProperty("shippingZone", productDetail.getShippingZone());
-            jsonObj.addProperty("phoneNumber", productDetail.getPhoneNumber());
-            jsonObj.addProperty("shippingAddressFormat", productDetail.getShippingAddressFormat());
-            jsonObj.addProperty("emailId", productDetail.getEmailId());
+            jsonObj.put("shippingFirstName", productDetail.getShippingFirstName());
+            jsonObj.put("shippingLastName", productDetail.getShippingLastName());
+            jsonObj.put("shippingCompany", productDetail.getShippingCompany());
+            jsonObj.put("shippingAddress_1", productDetail.getShippingAddress1());
+            jsonObj.put("shippingAddress_2", productDetail.getShippingAddress2());
+            jsonObj.put("shippingCity", productDetail.getShippingCity());
+            jsonObj.put("shippingPostCode", productDetail.getShippingPostCode());
+            getCountryCode(productDetail.getShippingCountry());
 
-            JsonArray jsonArr = new JsonArray();
+            jsonObj.put("shippingCountry", "12");
+            jsonObj.put("shippingZone", productDetail.getShippingZone());
+            jsonObj.put("phoneNumber", productDetail.getPhoneNumber());
+            jsonObj.put("shippingAddressFormat", productDetail.getShippingAddressFormat());
+            jsonObj.put("emailId", productDetail.getEmailId());
+
+            JSONArray jsonArr = new JSONArray();
 
             for (int i = 0; i < productDetail.getProductDetails().size(); i++) {
-               JsonObject pnObj = new JsonObject();
+               JSONObject pnObj = new JSONObject();
                // Map<String, String> pnObj = new HashMap<>();
-                pnObj.addProperty("productId", String.valueOf(productDetail.getProductDetails().get(i).getProductId()));
-                pnObj.addProperty("quantity", String.valueOf(productDetail.getProductDetails().get(i).getQuantity()));
-                pnObj.addProperty("price", productDetail.getProductDetails().get(i).getPrice());
-                pnObj.addProperty("model", "");
-                pnObj.addProperty("name", productDetail.getProductDetails().get(i).getName());
-                jsonArr.add(String.valueOf(pnObj));
+                pnObj.put("productId", String.valueOf(productDetail.getProductDetails().get(i).getProductId()));
+                pnObj.put("quantity", String.valueOf(productDetail.getProductDetails().get(i).getQuantity()));
+                pnObj.put("price", productDetail.getProductDetails().get(i).getPrice());
+                pnObj.put("model", "");
+                pnObj.put("name", productDetail.getProductDetails().get(i).getName());
+                jsonArr.put(pnObj);
             }
-            jsonObj.addProperty("productDetails", String.valueOf(jsonArr));
+            jsonObj.put("productDetails",jsonArr);
             strData = jsonObj.toString();
-
-            Log.e("result", jsonObj.toString());
+            replace = strData.replaceAll("\\\\","");
+            Log.e("result", replace);
 
             return jsonObj.toString();
 
@@ -313,7 +322,7 @@ public class Confirmation extends Fragment implements View.OnClickListener {
         ApiInterface jsonPostService = ServiceGenerator.createService(ApiInterface.class,"http://18.208.183.9:8000/api/");
 
 
-        RequestBody data = RequestBody.create(MediaType.parse("application/json"),strData);
+        RequestBody data = RequestBody.create(MediaType.parse("application/json"),replace);
         Call<PlaceOrderResponseModel> call1 =  jsonPostService.postSomething("Bearer "+ token,data);
 
         call1.enqueue(new Callback<PlaceOrderResponseModel>() {
@@ -322,7 +331,8 @@ public class Confirmation extends Fragment implements View.OnClickListener {
             public void onResponse(Call<PlaceOrderResponseModel> call, Response<PlaceOrderResponseModel> response) {
                 try{
                     Log.e("response-success", response.body().toString());
-                    Toast.makeText(activity, "done"+response.body().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, " done "+response.body().getMessage().toString(), Toast.LENGTH_SHORT).show();
+
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -334,6 +344,34 @@ public class Confirmation extends Fragment implements View.OnClickListener {
             }
         });
     }
+
+
+
+    public String getCountryCode(String countryName) {
+
+        // Get all country codes in a string array.
+        String[] isoCountryCodes = Locale.getISOCountries();
+        Map<String, String> countryMap = new HashMap<>();
+        Locale locale;
+        String name;
+
+        // Iterate through all country codes:
+        for (String code : isoCountryCodes) {
+            // Create a locale using each country code
+            locale = new Locale("", code);
+            // Get country name for each code.
+            name = locale.getDisplayCountry();
+            // Map all country names and codes in key - value pairs.
+            countryMap.put(name, code);
+        }
+
+        // Return the country code for the given country name using the map.
+        // Here you will need some validation or better yet
+        // a list of countries to give to user to choose from.
+        Log.e("countrycode",countryMap.get(countryName));
+        return countryMap.get(countryName); // "NL" for Netherlands.
+    }
+
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
