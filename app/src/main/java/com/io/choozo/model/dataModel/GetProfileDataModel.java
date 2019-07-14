@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 public class GetProfileDataModel {
 
     @SerializedName("address")
-    private Object mAddress;
+    private String mAddress;
     @SerializedName("avatar")
     private Object mAvatar;
     @SerializedName("avatarPath")
@@ -52,7 +52,7 @@ public class GetProfileDataModel {
     @SerializedName("password")
     private String mPassword;
     @SerializedName("pincode")
-    private Object mPincode;
+    private String mPincode;
     @SerializedName("safe")
     private Object mSafe;
     @SerializedName("username")
@@ -60,11 +60,11 @@ public class GetProfileDataModel {
     @SerializedName("zoneId")
     private Object mZoneId;
 
-    public Object getAddress() {
+    public String getAddress() {
         return mAddress;
     }
 
-    public void setAddress(Object address) {
+    public void setAddress(String address) {
         mAddress = address;
     }
 
@@ -236,11 +236,11 @@ public class GetProfileDataModel {
         mPassword = password;
     }
 
-    public Object getPincode() {
+    public String getPincode() {
         return mPincode;
     }
 
-    public void setPincode(Object pincode) {
+    public void setPincode(String pincode) {
         mPincode = pincode;
     }
 

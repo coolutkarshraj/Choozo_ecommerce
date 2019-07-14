@@ -16,7 +16,7 @@ public class User {
     @SerializedName("firstName")
     private String mFirstName;
     @SerializedName("id")
-    private Long mId;
+    private int mId;
 
     public Object getAvatar() {
         return mAvatar;
@@ -50,11 +50,11 @@ public class User {
         mFirstName = firstName;
     }
 
-    public Long getId() {
+    public int getId() {
         return mId;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         mId = id;
     }
 

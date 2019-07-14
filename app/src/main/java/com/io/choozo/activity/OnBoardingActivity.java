@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -14,9 +15,15 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 
+import com.io.choozo.ApiCaller;
+import com.io.choozo.Config;
 import com.io.choozo.R;
+import com.io.choozo.UrlLocator;
 import com.io.choozo.activity.homeActivity.MainActivity;
 import com.io.choozo.activity.loginRegistrationflow.LoginActivity;
+import com.io.choozo.localStorage.PreferenceManager;
+import com.io.choozo.model.responseModel.GetBannerListResponseModel;
+import com.koushikdutta.async.future.FutureCallback;
 import com.smarteist.autoimageslider.DefaultSliderView;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderLayout;
@@ -27,6 +34,8 @@ public class OnBoardingActivity extends AppCompatActivity implements View.OnClic
     Activity activity;
     SliderLayout sliderLayout;
     Button btn_start;
+    PreferenceManager preferenceManager;
+    String strImage,strImagePath,endPointBanner,endPointImageResize,strImageUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,66 +48,81 @@ public class OnBoardingActivity extends AppCompatActivity implements View.OnClic
         startWorking();
     }
 
-
+    /*------------------------------------- intialize all views that are used in this actvity ----------------------------------------*/
 
     private void intializeViews() {
         activity = OnBoardingActivity.this;
+        preferenceManager = new PreferenceManager(activity);
         btn_start =  findViewById(R.id.btn_start);
         sliderLayout = findViewById(R.id.image);
         sliderLayout.setIndicatorAnimation(IndicatorAnimations.FILL); //set indicator animation by using SliderLayout.Animations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
-       sliderLayout.setScrollTimeInSec(2); //set scroll delay in seconds :
-
-
+        sliderLayout.setScrollTimeInSec(2); //set scroll delay in seconds :
     }
+
+    /* -----------------------------------------  bind all Views that are used in this activity ------------------------------------*/
 
     private void bindListner() {
         btn_start.setOnClickListener(this);
     }
 
+    /* ---------------------------------------------------------- click Listner -------------------------------------------------------*/
+
     @Override
     public void onClick(View v) {
        switch (v.getId()){
            case R.id.btn_start :
+               preferenceManager.putString(PreferenceManager.isFirstLaunch,"1");
                Intent i =new Intent(activity, LoginActivity.class);
                startActivity(i);
        }
-
     }
 
+    /* -------------------------------------------------------- start Working --------------------------------------------------------*/
     private void startWorking() {
-        setSliderViews();
+        getBannerApi();
     }
 
-    private void setSliderViews() {
+    /* ------------------------------------------------------ Api url endPoints ------------------------------------------------------*/
 
-        for (int i = 0; i <= 2; i++) {
+    private void apiUrl() {
 
-            SliderView sliderView = new DefaultSliderView(this);
+        endPointBanner = Config.Url.getBanner;
+        endPointImageResize = Config.Url.imageResize;
+    }
 
-            switch (i) {
-                case 0:
-                   sliderView.setImageDrawable(R.drawable.shop1);
-                    break;
-                case 1:
-                    sliderView.setImageDrawable(R.drawable.shop2);
-                    break;
-                case 2:
-                    sliderView.setImageDrawable(R.drawable.shop3);
-                    break;
+    /*-------------------------------------------------- get Banner from Api ---------------------------------------------------------*/
 
-            }
+    private void getBannerApi() {
 
-            sliderView.setImageScaleType(ImageView.ScaleType.CENTER_CROP);
-            final int finalI = i;
-            sliderView.setOnSliderClickListener(new SliderView.OnSliderClickListener() {
-                @Override
-                public void onSliderClick(SliderView sliderView) {
-
+        apiUrl();
+        ApiCaller.getBanner(activity, endPointBanner, new FutureCallback<GetBannerListResponseModel>() {
+            @Override
+            public void onCompleted(Exception e, GetBannerListResponseModel result) {
+                if(e!=null){
+                    return;
                 }
-            });
-            sliderLayout.addSliderView(sliderView);
+                getBannerDataFromApi(result);
+            }
+        });
+    }
+
+    /* ---------------------------------------------------- banner data from api response -------------------------------------------*/
+
+    private void getBannerDataFromApi(GetBannerListResponseModel result) {
+        if(result.getStatus() == 1){
+            for (int i=0 ; i<result.getData().size();i++) {
+                strImage = result.getData().get(i).getImage();
+                strImagePath = result.getData().get(i).getImagePath();
+                strImageUrl = UrlLocator.getFinalUrl(endPointImageResize +"width=3840&height=2160&name="+strImage+"&path="+strImagePath+"");
+                SliderView sliderView = new DefaultSliderView(activity);
+                sliderView.setImageUrl(strImageUrl);
+                sliderView.setImageScaleType(ImageView.ScaleType.CENTER_CROP);
+                final int finalI = i;
+                sliderLayout.addSliderView(sliderView);
+            }
+        }else{
+            Toast.makeText(activity, "Something went Wrong", Toast.LENGTH_SHORT).show();
         }
     }
-
 
 }

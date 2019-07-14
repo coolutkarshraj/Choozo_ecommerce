@@ -7,20 +7,23 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.io.choozo.ApiCaller;
 import com.io.choozo.Config;
 import com.io.choozo.R;
-import com.io.choozo.adapter.ShopingCategoryAdapter;
+import com.io.choozo.UrlLocator;
+import com.io.choozo.adapter.BasicAdapter.ShopingCategoryAdapter;
 import com.io.choozo.model.dataModel.CategoryDataModel;
 import com.io.choozo.model.dataModel.ChildDataModel;
 import com.io.choozo.model.dataModel.SubChildDataModel;
 import com.io.choozo.model.responseModel.CategoryResponseModel;
+import com.io.choozo.model.responseModel.GetBannerListResponseModel;
 import com.io.choozo.util.CategorySubCatChildCat;
 import com.koushikdutta.async.future.FutureCallback;
 import com.smarteist.autoimageslider.DefaultSliderView;
@@ -34,8 +37,9 @@ import java.util.List;
 public class HomeFragment extends Fragment implements CategorySubCatChildCat {
     Activity activity;
     SliderLayout sliderLayout;
+    TextView tvSliderName;
     RecyclerView rv_Shop;
-    String endPoint;
+    String endPoint,endPointBanner,strImage,strImagePath,endPointImageResize;
     int i,subCategoryId = 0;
     int intCategoryId,intSubCategoryId;
     int intCategoryIdfori,intSubCategoryIdforj ;
@@ -55,9 +59,12 @@ public class HomeFragment extends Fragment implements CategorySubCatChildCat {
         return  view;
     }
 
+    /* ------------------------------------------- intialize all view that are used in this activity -----------------------------------*/
+
     private void initializeView(View view) {
         activity = getActivity();
         ad_interface = this;
+        tvSliderName = (TextView)view.findViewById(R.id.tv_slider_name);
         sliderLayout = view.findViewById(R.id.image);
         sliderLayout.setIndicatorAnimation(IndicatorAnimations.FILL); //set indicator animation by using SliderLayout.Animations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
         sliderLayout.setScrollTimeInSec(2);
@@ -66,51 +73,65 @@ public class HomeFragment extends Fragment implements CategorySubCatChildCat {
         rv_Shop.setLayoutManager(gaggeredGridLayoutManager);
     }
 
+     /* ------------------------------------------------------- start work ------------------------------------------------------------*/
 
     private void startWorking() {
-        setSliderViews();
+        getBannerApi();
         ApiCallData();
     }
 
+    /*-------------------------------------------------- get Banner from Api ---------------------------------------------------------*/
 
-
-    private void setSliderViews() {
-
-        for (int i = 0; i <= 2; i++) {
-
-            SliderView sliderView = new DefaultSliderView(activity);
-
-            switch (i) {
-                case 0:
-                    sliderView.setImageDrawable(R.drawable.shop1);
-                    break;
-                case 1:
-                    sliderView.setImageDrawable(R.drawable.shop2);
-                    break;
-                case 2:
-                    sliderView.setImageDrawable(R.drawable.shop3);
-                    break;
-
-            }
-
-            sliderView.setImageScaleType(ImageView.ScaleType.CENTER_CROP);
-            final int finalI = i;
-            sliderView.setOnSliderClickListener(new SliderView.OnSliderClickListener() {
-                @Override
-                public void onSliderClick(SliderView sliderView) {
-
+    private void getBannerApi() {
+        apiUrl();
+        ApiCaller.getBanner(activity, endPointBanner, new FutureCallback<GetBannerListResponseModel>() {
+            @Override
+            public void onCompleted(Exception e, GetBannerListResponseModel result) {
+                if(e!=null){
+                    return;
                 }
-            });
-            sliderLayout.addSliderView(sliderView);
+                getBannerDataFromApi(result);
+            }
+        });
+    }
+
+    /* ---------------------------------------------------- banner data from api response -------------------------------------------*/
+
+    private void getBannerDataFromApi(GetBannerListResponseModel result) {
+        if(result.getStatus() == 1){
+            for (int i=0 ; i<result.getData().size();i++) {
+                strImage = result.getData().get(i).getImage();
+                strImagePath = result.getData().get(i).getImagePath();
+                //tvSliderName.setText(result.getData().get(i).getTitle());
+                endPointImageResize = UrlLocator.getFinalUrl(Config.Url.imageResize +"width=3840&height=2160&name="+strImage+"&path="+strImagePath+"");
+                SliderView sliderView = new DefaultSliderView(activity);
+                sliderView.setImageUrl(endPointImageResize);
+                sliderView.setImageScaleType(ImageView.ScaleType.CENTER_CROP);
+                sliderView.setDescription(result.getData().get(i).getTitle());
+                ((DefaultSliderView) sliderView).setDescriptionTextSize(20);
+
+                final int finalI = i;
+                sliderView.setOnSliderClickListener(new SliderView.OnSliderClickListener() {
+                    @Override
+                    public void onSliderClick(SliderView sliderView) {
+
+                    }
+                });
+                sliderLayout.addSliderView(sliderView);
+            }
+        }else{
+            Toast.makeText(activity, "Something went Wrong", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void apiUrl() {
+    /* ------------------------------------------------------ Api url endPoints ------------------------------------------------------*/
 
+    private void apiUrl() {
         endPoint = Config.Url.categoryList;
+        endPointBanner = Config.Url.getBanner;
     }
 
-
+    /* -------------------------------------------------get all category list api----------------------------------------------------*/
 
     private void ApiCallData() {
         apiUrl();
@@ -129,7 +150,7 @@ public class HomeFragment extends Fragment implements CategorySubCatChildCat {
 
     }
 
-
+/* ----------------------------------- Api data pass or set into custom tabs(using recycler view)-------------------------------------*/
 
     private void setData(CategoryResponseModel result) {
         list.clear();
@@ -140,17 +161,18 @@ public class HomeFragment extends Fragment implements CategorySubCatChildCat {
             CategoryDataModel categoryDataModel = new CategoryDataModel();
             categoryDataModel.setName(result.getData().get(i).getName());
             categoryDataModel.setImage(result.getData().get(i).getImage());
+            categoryDataModel.setImagePath(result.getData().get(i).getImagePath());
             categoryDataModel.setCategoryId(result.getData().get(i).getCategoryId());
             list.add(categoryDataModel);
             if (intCategoryId == intCategoryIdfori) {
 
                 for (int j = 0; j < result.getData().get(i).getChildren().size(); j++) {
                     intSubCategoryId = result.getData().get(i).getChildren().get(j).getCategoryId();
-                    if(this.subCategoryId == 0){
+                  /*  if(this.subCategoryId == 0){
                         intSubCategoryIdforj = result.getData().get(i).getChildren().get(0).getCategoryId();
-                    }else {
+                    }else {*/
                         intSubCategoryIdforj = this.subCategoryId;
-                    }
+                  //  }
                     ChildDataModel childDataModel = new ChildDataModel();
                     childDataModel.setName(result.getData().get(i).getChildren().get(j).getName());
                     childDataModel.setCategoryId(result.getData().get(i).getChildren().get(j).getCategoryId());
@@ -161,6 +183,7 @@ public class HomeFragment extends Fragment implements CategorySubCatChildCat {
                             for (int k = 0; k < result.getData().get(i).getChildren().get(j).getChildren().size(); k++) {
                                 SubChildDataModel subChildDataModel = new SubChildDataModel();
                                 subChildDataModel.setName(result.getData().get(i).getChildren().get(j).getChildren().get(k).getName());
+                                subChildDataModel.setCategoryId(result.getData().get(i).getChildren().get(j).getChildren().get(k).getCategoryId());
                                 list2.add(subChildDataModel);
                             }}
                         } catch (Exception e) {
@@ -170,10 +193,10 @@ public class HomeFragment extends Fragment implements CategorySubCatChildCat {
                 }
             }
         }
-
         setAdapterTabs();
 
     }
+    /* ------------------------------------------------- data set into recycler view Adapter --------------------------------------------*/
 
     private void setAdapterTabs() {
         adapter = new ShopingCategoryAdapter(activity,ad_interface, list);
@@ -183,17 +206,22 @@ public class HomeFragment extends Fragment implements CategorySubCatChildCat {
         Config.subChildDataModels = list2;
     }
 
+    /*------------------------------------------------------------ category click --------------------------------------------------------*/
 
     @Override
     public void catId(int cateId) {
         intCategoryIdfori = cateId;
+      //  Config.categoryClickId = cateId;
         setData(Config.categoryResponseModel);
 
     }
 
+    /*--------------------------------------------------------- sub category click---------------------------------------------------------*/
+
     @Override
     public void subCategoryId(int subCategoryId) {
         this.subCategoryId = subCategoryId;
+        Config.productId = String.valueOf(subCategoryId);
         setData(Config.categoryResponseModel);
     }
 

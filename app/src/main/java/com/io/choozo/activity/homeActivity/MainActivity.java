@@ -1,20 +1,24 @@
 package com.io.choozo.activity.homeActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,21 +31,26 @@ import com.io.choozo.Fragment.Search.Search;
 import com.io.choozo.Fragment.hotOffer.HotOfferFragment;
 import com.io.choozo.Fragment.profile.ProfileFragment;
 import com.io.choozo.R;
+import com.io.choozo.SqlDB.DbHelper;
+import com.io.choozo.activity.About.AboutUsActivity;
+import com.io.choozo.activity.About.ContactUsActivity;
+import com.io.choozo.activity.loginRegistrationflow.LoginActivity;
 import com.io.choozo.localStorage.PreferenceManager;
+import com.io.choozo.model.dummydataModel.ShoppingBagModel;
 import com.io.choozo.model.responseModel.LoginResponseModel;
-import com.smarteist.autoimageslider.DefaultSliderView;
-import com.smarteist.autoimageslider.IndicatorAnimations;
-import com.smarteist.autoimageslider.SliderLayout;
-import com.smarteist.autoimageslider.SliderView;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         View.OnClickListener {
     ImageView iv_menu_icon;
     DrawerLayout drawer;
+    Dialog dialog;
+    Activity activity;
     ActionBarDrawerToggle toggle;
     NavigationView navigationView;
     LinearLayout ll_lome,ll_hotoffer,ll_my_cart,ll_search,ll_profile;
-    Fragment currFrag;
+    public static Fragment currFrag;
     HomeFragment homeFragment;
     HotOfferFragment hotOfferFragment;
     MyCartFragment myCartFragment;
@@ -49,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Search searchFragment;
     String localName,localEmail;
     private PreferenceManager preferenceManager;
+    DbHelper dbHelper;
+    List<ShoppingBagModel> item;
 
 
     @Override
@@ -63,7 +74,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /* ------------------------------------intialize all views that are used in this activity--------------------------------*/
 
     private void initView() {
+        activity = MainActivity.this;
         preferenceManager = new PreferenceManager(this);
+        dbHelper = new DbHelper(activity);
         iv_menu_icon =  findViewById(R.id.iv_menu_icon);
         ll_lome =  findViewById(R.id.ll_lome);
         ll_hotoffer =  findViewById(R.id.ll_hotoffer);
@@ -80,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         myCartFragment = new MyCartFragment();
         profileFragment = new ProfileFragment();
         searchFragment = new Search();
+
         getDataFromLocalStorage();
 
     }
@@ -168,6 +182,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /* ---------------------------------------------login data get from local storgae---------------------------------------*/
 
     private void getDataFromLocalStorage() {
+
         Gson gson = new Gson();
         String getJson = preferenceManager.getString(PreferenceManager.loginData);
         LoginResponseModel obj = gson.fromJson(getJson, LoginResponseModel.class);
@@ -214,11 +229,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.track_order) {
             Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.about) {
-            Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(activity, AboutUsActivity.class);
+            startActivity(i);
         }else if (id == R.id.logout) {
-            Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show();
+            logoutDialog();
         }else if (id == R.id.nav_share) {
             Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show();
+        }
+        else if (id == R.id.contactus) {
+            Intent i = new Intent(activity, ContactUsActivity.class);
+            startActivity(i);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -226,7 +246,59 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    /* -----------------------------------------------bottom navigation tabs work-----------------------------------------*/
+    /*---------------------------------------------------------- logout dialog-------------------------------------------------------*/
+
+    public void logoutDialog() {
+        dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
+        dialog.getWindow().setLayout((6 * width) / 7, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setContentView(R.layout.logout_dialog);
+        dialog.setTitle("");
+        final TextView tvLogout = (TextView) dialog.findViewById(R.id.tv_logout);
+        final TextView tvCancel = (TextView) dialog.findViewById(R.id.tv_cancel);
+        final ImageView Clear = (ImageView) dialog.findViewById(R.id.clear);
+
+        tvLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logout();
+                dialog.dismiss();
+            }
+        });
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        Clear.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
+    }
+
+    /* ------------------------------------------------------- Logout Action ---------------------------------------------------------*/
+    private void logout() {
+        preferenceManager.putString(PreferenceManager.loginData,"");
+        dbHelper.deleteAll();
+        Intent intent = new Intent(activity, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+
+    }
+
+    /* ----------------------------------------------- bottom navigation tabs work --------------------------------------------------*/
 
     private void changeFrag(Fragment fragment, boolean addToBack) {
         currFrag = fragment;
@@ -239,4 +311,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         m.commit();
     }
+
+
 }

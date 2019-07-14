@@ -24,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Skip"
+            android:visibility="gone"
             android:id="@+id/tv_skip"
             android:layout_alignParentRight="true"
             android:textSize="@dimen/h3"

@@ -93,10 +93,12 @@ public class Profile_Information extends Fragment implements View.OnClickListene
         switch (v.getId()){
             case R.id.rl_changepassword :
                 changePassword();
+                return;
 
             case R.id.edit_profile :
                 Intent i =new Intent(activity, EditProfileActivity.class);
                 startActivity(i);
+                return;
 
         }
 
