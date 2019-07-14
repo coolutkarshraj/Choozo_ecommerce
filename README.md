@@ -11,6 +11,11 @@
       All this feature are missing which i added i will published or share all this code within some days but
       android app is working fine .
       
-      # For Using this project go to spurtcommece and download backened code which is in node after that follow instruction and install and run server
+      # For Using this project go to spurtcommece and download backened code which is in node after that follow instruction and install and run server or download code from
+      https://github.com/coolutkarshraj/e-commerce-api.git this link
+      
+      Rest admin or user panel you  can download from spurtcommerce which is availiable
+      For admin or user panel code included above feature wait some time
+      i will published soon
       
       # then in android go to config file and edit base url with your ip and your app works
