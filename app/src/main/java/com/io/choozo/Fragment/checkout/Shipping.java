@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,11 +34,9 @@ import com.io.choozo.model.dummydataModel.SavedAdressDataModel;
 import com.io.choozo.model.responseModel.CountryListResponseModel;
 import com.io.choozo.model.responseModel.GetProfileResponseModel;
 import com.io.choozo.model.responseModel.LoginResponseModel;
-import com.io.choozo.util.commonDialog;
 import com.koushikdutta.async.future.FutureCallback;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Shipping extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
@@ -284,13 +281,13 @@ public class Shipping extends Fragment implements View.OnClickListener, AdapterV
     /* ---------------------------------------------- Api data pass into string-------------------------------------------------------*/
 
     private void getProfileData(GetProfileResponseModel result) {
-        if (result.getStatus() == 1) {
-            strFirstName = result.getData().getFirstName();
+        if (result.isStatus() == true) {
+ /*           strFirstName = result.getData().getFirstName();
             strLastName = result.getData().getLastName();
             strEmailId = result.getData().getEmail();
             strAddress = result.getData().getAddress();
             strMobileNumber = result.getData().getMobileNumber();
-            strPinCode = result.getData().getPincode();
+            strPinCode = result.getData().getPincode();*/
             datasetintoEditText();
         } else {
             Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();

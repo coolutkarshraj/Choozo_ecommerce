@@ -1,7 +1,6 @@
 package com.io.choozo.adapter.hotOfferAdapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,10 +14,8 @@ import com.bumptech.glide.Glide;
 import com.io.choozo.Config;
 import com.io.choozo.R;
 import com.io.choozo.UrlLocator;
-import com.io.choozo.activity.homeActivity.CartActivity;
 import com.io.choozo.localStorage.PreferenceManager;
 import com.io.choozo.model.dataModel.OurBrandsDataModel;
-import com.io.choozo.model.dataModel.todayDealsModel.TodayDealsProductListDataModel;
 
 import java.util.List;
 

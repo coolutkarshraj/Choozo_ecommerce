@@ -19,8 +19,8 @@ import com.io.choozo.R;
 import com.io.choozo.activity.homeActivity.MainActivity;
 import com.io.choozo.localStorage.PreferenceManager;
 import com.io.choozo.model.dataModel.CustomerRegisterResponseModel;
-import com.io.choozo.model.responseModel.EditProfileResponseModel;
 import com.io.choozo.model.responseModel.LoginResponseModel;
+import com.io.choozo.model.responseModel.editProfiel.EditProfileResponseModel;
 import com.io.choozo.util.NewProgressBar;
 import com.io.choozo.util.commonDialog;
 import com.io.choozo.util.userOnlineInfo;
@@ -337,7 +337,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 dialog.dismiss();
                                 return;
                             }
-                            if(result.getStatus()){
+                            if(result.isStatus()){
                                 dialog.dismiss();
                                 saveLoginData(loginResult);
                                 Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();

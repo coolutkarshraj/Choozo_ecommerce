@@ -1,17 +1,14 @@
-
 package com.io.choozo.model.responseModel;
 
+import java.util.List;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.io.choozo.model.dataModel.Category;
 import com.io.choozo.model.dataModel.Store;
-import com.io.choozo.model.dataModel.productListDataModel.ProductList;
+import com.io.choozo.model.responseModel.DeliveryAddressesItem;
 
-import java.util.List;
-
-@SuppressWarnings("unused")
-public class Data {
+public class Data{
 
     @SerializedName("createdDate")
     @Expose
@@ -530,6 +527,4 @@ public class Data {
     public void setIsWishlist(Boolean isWishlist) {
         this.isWishlist = isWishlist;
     }
-
-
 }

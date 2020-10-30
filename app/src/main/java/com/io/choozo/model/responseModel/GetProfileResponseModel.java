@@ -1,42 +1,28 @@
-
 package com.io.choozo.model.responseModel;
-
 
 import com.google.gson.annotations.SerializedName;
 import com.io.choozo.model.dataModel.GetProfileDataModel;
 
-@SuppressWarnings("unused")
-public class GetProfileResponseModel {
+public class GetProfileResponseModel{
 
-    @SerializedName("data")
-    private GetProfileDataModel mData;
-    @SerializedName("message")
-    private String mMessage;
-    @SerializedName("status")
-    private Long mStatus;
+	@SerializedName("data")
+	private GetProfileDataModel data;
 
-    public GetProfileDataModel getData() {
-        return mData;
-    }
+	@SerializedName("message")
+	private String message;
 
-    public void setData(GetProfileDataModel data) {
-        mData = data;
-    }
+	@SerializedName("status")
+	private boolean status;
 
-    public String getMessage() {
-        return mMessage;
-    }
+	public GetProfileDataModel getData(){
+		return data;
+	}
 
-    public void setMessage(String message) {
-        mMessage = message;
-    }
+	public String getMessage(){
+		return message;
+	}
 
-    public Long getStatus() {
-        return mStatus;
-    }
-
-    public void setStatus(Long status) {
-        mStatus = status;
-    }
-
+	public boolean isStatus(){
+		return status;
+	}
 }

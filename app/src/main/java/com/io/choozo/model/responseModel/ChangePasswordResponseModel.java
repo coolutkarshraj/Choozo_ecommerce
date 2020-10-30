@@ -1,30 +1,20 @@
-
 package com.io.choozo.model.responseModel;
 
 import com.google.gson.annotations.SerializedName;
 
-@SuppressWarnings("unused")
-public class ChangePasswordResponseModel {
+public class ChangePasswordResponseModel{
 
-    @SerializedName("message")
-    private String mMessage;
-    @SerializedName("status")
-    private Long mStatus;
+	@SerializedName("message")
+	private String message;
 
-    public String getMessage() {
-        return mMessage;
-    }
+	@SerializedName("status")
+	private boolean status;
 
-    public void setMessage(String message) {
-        mMessage = message;
-    }
+	public String getMessage(){
+		return message;
+	}
 
-    public Long getStatus() {
-        return mStatus;
-    }
-
-    public void setStatus(Long status) {
-        mStatus = status;
-    }
-
+	public boolean isStatus(){
+		return status;
+	}
 }

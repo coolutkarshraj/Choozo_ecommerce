@@ -4,13 +4,10 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -22,13 +19,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.io.choozo.ApiCaller;
 import com.io.choozo.Config;
 import com.io.choozo.R;
 import com.io.choozo.activity.Profile.EditProfileActivity;
+import com.io.choozo.custom.CircularImageView;
 import com.io.choozo.localStorage.PreferenceManager;
 import com.io.choozo.model.responseModel.ChangePasswordResponseModel;
 import com.io.choozo.model.responseModel.GetProfileResponseModel;
@@ -38,12 +36,12 @@ import com.io.choozo.util.commonDialog;
 import com.io.choozo.util.userOnlineInfo;
 import com.koushikdutta.async.future.FutureCallback;
 
-import static com.io.choozo.localStorage.PreferenceManager.loginData;
-
 public class Profile_Information extends Fragment implements View.OnClickListener {
     Dialog dialog;
     Activity activity;
+    int userId;
     ImageView imEditProfile;
+    CircularImageView civ_profile;
     TextView tvName,tvEmail,tvMobile;
     String token,strOldPassword,strNewPassword,endPoint,endPointProfile;
     RelativeLayout rl_changepassword;
@@ -73,6 +71,7 @@ public class Profile_Information extends Fragment implements View.OnClickListene
         user = new userOnlineInfo();
         preferenceManager = new PreferenceManager(activity);
         tvName = (TextView)v.findViewById(R.id.tv_name);
+        civ_profile = v.findViewById(R.id.civ_profile);
         imEditProfile = (ImageView) v.findViewById(R.id.edit_profile);
         tvEmail = (TextView)v.findViewById(R.id.tv_email);
         tvMobile = (TextView)v.findViewById(R.id.tv_mobile);
@@ -119,9 +118,14 @@ public class Profile_Information extends Fragment implements View.OnClickListene
                 @Override
                 public void onCompleted(Exception e, GetProfileResponseModel result) {
                     if(e!=null){
+                        ApiCaller.showAlertDialog(activity,Config.somethingWrong);
                         return;
                     }
-                      getProfileData(result);
+                    if(result!=null){
+                      getProfileData(result);}
+                    else {
+                        ApiCaller.showAlertDialog(activity,Config.somethingWrong);
+                    }
                 }
             });
 
@@ -135,11 +139,15 @@ public class Profile_Information extends Fragment implements View.OnClickListene
     /* --------------------------------------------- data set into text views---------------------------------------------*/
 
     private void getProfileData(GetProfileResponseModel result) {
-        if(result.getStatus()==1){
+        if(result.isStatus()==true){
 
-         tvName.setText(result.getData().getFirstName() +" "+result.getData().getLastName());
+         tvName.setText(result.getData().getName());
          tvEmail.setText(result.getData().getEmail());
-         tvMobile.setText(result.getData().getMobileNumber());
+         tvMobile.setText(result.getData().getPhone());
+
+         if(result.getData().getAvatarPath()!=null){
+             Glide.with(getContext()).load(Config.imageUrl+result.getData().getAvatarPath()).into(civ_profile);
+         }
          dataAddIntoLocalStorage(result);
 
         }else {
@@ -163,7 +171,7 @@ public class Profile_Information extends Fragment implements View.OnClickListene
         String getJson = preferenceManager.getString(PreferenceManager.loginData);
         LoginResponseModel obj = gson.fromJson(getJson, LoginResponseModel.class);
         token = obj.getData().getToken();
-
+        userId = obj.getData().getUser().getUserId();
     }
 
     /*------------------------------------------------- change password dialog---------------------------------------------*/
@@ -224,7 +232,7 @@ public class Profile_Information extends Fragment implements View.OnClickListene
 
     private void apiUrl(){
         endPoint = Config.Url.changePassword;
-        endPointProfile = Config.Url.getUserData;
+        endPointProfile = Config.Url.getUserData+userId;
     }
 
 
@@ -240,9 +248,18 @@ public class Profile_Information extends Fragment implements View.OnClickListene
                        @Override
                        public void onCompleted(Exception e, ChangePasswordResponseModel result) {
                            if(e!=null){
+                               dialogs.dismiss();
+                               ApiCaller.showAlertDialog(activity,Config.somethingWrong);
                                return;
+                           }if(result!=null){
+                               dialogs.dismiss();
+                               changePasswordData(result);
+                           }else{
+                               dialogs.dismiss();
+                               ApiCaller.showAlertDialog(activity,Config.somethingWrong);
+
                            }
-                           changePasswordData(result);
+
                        }
                    });
        }else {
@@ -254,7 +271,7 @@ public class Profile_Information extends Fragment implements View.OnClickListene
     /* ------------------------------------------------change password api data----------------------------------------*/
 
     private void changePasswordData(ChangePasswordResponseModel result) {
-        if(result.getStatus() == 1){
+        if(result.isStatus()==true){
             dialogs.dismiss();
             dialog.dismiss();
             Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();

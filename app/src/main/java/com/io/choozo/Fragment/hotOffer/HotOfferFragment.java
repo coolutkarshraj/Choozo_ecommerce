@@ -14,13 +14,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.io.choozo.ApiCaller;
 import com.io.choozo.Config;
 import com.io.choozo.R;
 import com.io.choozo.adapter.hotOfferAdapter.FeaturedProductRvAdapter;
 import com.io.choozo.adapter.hotOfferAdapter.Our_Brand_RvAdapter;
 import com.io.choozo.adapter.hotOfferAdapter.TodayDealsRvAdapter;
+import com.io.choozo.localStorage.PreferenceManager;
 import com.io.choozo.model.responseModel.FeaturedProductResponseModel;
+import com.io.choozo.model.responseModel.LoginResponseModel;
 import com.io.choozo.model.responseModel.OurBrandsResponseModel;
 import com.io.choozo.model.responseModel.TodayDealsResponseModel;
 import com.io.choozo.util.NewProgressBar;
@@ -33,11 +36,13 @@ public class HotOfferFragment extends Fragment {
     TodayDealsRvAdapter todayDealsAdapter;
     Our_Brand_RvAdapter brand_rvAdapter;
     Activity activity;
+    String token ="";
     NewProgressBar dialog;
     String endPoint, endPointTodayDeal, endPointBrands;
     private final Handler mHandler = new Handler(Looper.getMainLooper());
     final int duration = 10;
     final int pixelsToMove = 30;
+    PreferenceManager preferenceManager;
     LinearLayoutManager linearLayoutManager,LayoutManager;
     final Runnable SCROLLING_RUNNABLE = new Runnable() {
 
@@ -63,6 +68,7 @@ public class HotOfferFragment extends Fragment {
     private void intializeViews(View view) {
         activity = getActivity();
         dialog = new NewProgressBar(activity);
+        preferenceManager = new PreferenceManager(activity);
         rvFeaturedProduct = (RecyclerView) view.findViewById(R.id.rv_featured_product);
         rvFeaturedProduct.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
         rvTodayDeals = (RecyclerView) view.findViewById(R.id.rv_today_deals);
@@ -77,9 +83,17 @@ public class HotOfferFragment extends Fragment {
 
     /* ------------------------------------------------------------  working start ---------------------------------------------------------*/
     private void startWorking() {
+        getDataFromLocalStorage();
         featuredProductRv();
         todayDealsRv();
         ourBrandsRv();
+    }
+
+    private void getDataFromLocalStorage() {
+        Gson gson = new Gson();
+        String getJson = preferenceManager.getString(PreferenceManager.loginData);
+        LoginResponseModel obj = gson.fromJson(getJson, LoginResponseModel.class);
+        token = obj.getData().getToken();
     }
 
 
@@ -87,7 +101,7 @@ public class HotOfferFragment extends Fragment {
 
     private void apiUrl() {
         endPoint = Config.Url.getfeaturedProduct + "limit=0&offset=0&keyword=&sku=&count=false";
-        endPointTodayDeal = Config.Url.getTodayDeals + "limit=0&offset=0&keyword=&sku=";
+        endPointTodayDeal = Config.Url.getTodayDeals;
         endPointBrands = Config.Url.getbrandsDetail + "limit=10&offset=0&keyword=";
     }
 
@@ -100,9 +114,17 @@ public class HotOfferFragment extends Fragment {
             @Override
             public void onCompleted(Exception e, FeaturedProductResponseModel result) {
                 if (e != null) {
+                    dialog.dismiss();
                     return;
                 }
-                feturedProductData(result);
+                if(result !=null){
+                    dialog.dismiss();
+                    feturedProductData(result);
+                }else{
+                    dialog.dismiss();
+                    ApiCaller.showAlertDialog(activity,Config.somethingWrong);
+                }
+
             }
         });
     }
@@ -126,13 +148,19 @@ public class HotOfferFragment extends Fragment {
 
     private void todayDealsRv() {
         apiUrl();
-        ApiCaller.getTodayDeals(activity, endPointTodayDeal, new FutureCallback<TodayDealsResponseModel>() {
+        ApiCaller.getTodayDeals(activity, endPointTodayDeal,token, new FutureCallback<TodayDealsResponseModel>() {
             @Override
             public void onCompleted(Exception e, TodayDealsResponseModel result) {
                 if (e != null) {
+                    dialog.dismiss();
+                    ApiCaller.showAlertDialog(activity,Config.somethingWrong);
                     return;
                 }
-                todayDealsProductData(result);
+                if(result!=null) {
+                    todayDealsProductData(result);
+                }else{
+                    ApiCaller.showAlertDialog(activity,Config.somethingWrong);
+                }
             }
         });
     }
@@ -140,7 +168,7 @@ public class HotOfferFragment extends Fragment {
     /* ---------------------------------------------- today deals api data set into recycler view -------------------------------------*/
 
     private void todayDealsProductData(TodayDealsResponseModel result) {
-        if (result.getStatus() == 1) {
+        if (result.isStatus()) {
             todayDealsAdapter = new TodayDealsRvAdapter(activity, result.getData());
             rvTodayDeals.setAdapter(todayDealsAdapter);
             todayDealsAdapter.notifyDataSetChanged();

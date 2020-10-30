@@ -3,269 +3,172 @@ package com.io.choozo.model.dataModel;
 
 
 import com.google.gson.annotations.SerializedName;
+import com.io.choozo.model.responseModel.DeliveryAddressesItem;
+
+import java.util.List;
 
 @SuppressWarnings("unused")
 public class GetProfileDataModel {
 
+    @SerializedName("isBusinessRequest")
+    private int isBusinessRequest;
+
     @SerializedName("address")
-    private String mAddress;
-    @SerializedName("avatar")
-    private Object mAvatar;
+    private Object address;
+
+    @SerializedName("gender")
+    private String gender;
+
+    @SerializedName("deliveryAddresses")
+    private List<DeliveryAddressesItem> deliveryAddresses;
+
+    @SerializedName("stores")
+    private List<Object> stores;
+
     @SerializedName("avatarPath")
-    private Object mAvatarPath;
-    @SerializedName("city")
-    private Object mCity;
-    @SerializedName("countryId")
-    private Object mCountryId;
-    @SerializedName("createdBy")
-    private Object mCreatedBy;
-    @SerializedName("createdDate")
-    private String mCreatedDate;
-    @SerializedName("customerGroupId")
-    private Object mCustomerGroupId;
-    @SerializedName("deleteFlag")
-    private Long mDeleteFlag;
-    @SerializedName("email")
-    private String mEmail;
-    @SerializedName("firstName")
-    private String mFirstName;
-    @SerializedName("id")
-    private Long mId;
-    @SerializedName("ip")
-    private String mIp;
+    private String avatarPath;
+
+    @SerializedName("bio")
+    private String bio;
+
+    @SerializedName("dateOfBirth")
+    private String dateOfBirth;
+
+    @SerializedName("otp")
+    private Object otp;
+
+    @SerializedName("isOtpVerify")
+    private Object isOtpVerify;
+
     @SerializedName("isActive")
-    private Long mIsActive;
-    @SerializedName("lastLogin")
-    private String mLastLogin;
-    @SerializedName("lastName")
-    private String mLastName;
-    @SerializedName("mailStatus")
-    private Object mMailStatus;
-    @SerializedName("mobileNumber")
-    private String mMobileNumber;
-    @SerializedName("modifiedBy")
-    private Object mModifiedBy;
-    @SerializedName("modifiedDate")
-    private String mModifiedDate;
-    @SerializedName("newsletter")
-    private Object mNewsletter;
-    @SerializedName("password")
-    private String mPassword;
-    @SerializedName("pincode")
-    private String mPincode;
-    @SerializedName("safe")
-    private Object mSafe;
-    @SerializedName("username")
-    private String mUsername;
-    @SerializedName("zoneId")
-    private Object mZoneId;
+    private boolean isActive;
 
-    public String getAddress() {
-        return mAddress;
+    @SerializedName("userId")
+    private int userId;
+
+    @SerializedName("avatarName")
+    private String avatarName;
+
+    @SerializedName("registrationToken")
+    private String registrationToken;
+
+    @SerializedName("requestRejectReason")
+    private Object requestRejectReason;
+
+    @SerializedName("createdDate")
+    private String createdDate;
+
+    @SerializedName("phone")
+    private String phone;
+
+    @SerializedName("permissions")
+    private List<Integer> permissions;
+
+    @SerializedName("name")
+    private String name;
+
+    @SerializedName("lastLogged")
+    private String lastLogged;
+
+    @SerializedName("userAccountType")
+    private String userAccountType;
+
+    @SerializedName("auctionStores")
+    private List<Object> auctionStores;
+
+    @SerializedName("email")
+    private String email;
+
+    public int getIsBusinessRequest(){
+        return isBusinessRequest;
     }
 
-    public void setAddress(String address) {
-        mAddress = address;
+    public Object getAddress(){
+        return address;
     }
 
-    public Object getAvatar() {
-        return mAvatar;
+    public String getGender(){
+        return gender;
     }
 
-    public void setAvatar(Object avatar) {
-        mAvatar = avatar;
+    public List<DeliveryAddressesItem> getDeliveryAddresses(){
+        return deliveryAddresses;
     }
 
-    public Object getAvatarPath() {
-        return mAvatarPath;
+    public List<Object> getStores(){
+        return stores;
     }
 
-    public void setAvatarPath(Object avatarPath) {
-        mAvatarPath = avatarPath;
+    public String getAvatarPath(){
+        return avatarPath;
     }
 
-    public Object getCity() {
-        return mCity;
+    public String getBio(){
+        return bio;
     }
 
-    public void setCity(Object city) {
-        mCity = city;
+    public String getDateOfBirth(){
+        return dateOfBirth;
     }
 
-    public Object getCountryId() {
-        return mCountryId;
+    public Object getOtp(){
+        return otp;
     }
 
-    public void setCountryId(Object countryId) {
-        mCountryId = countryId;
+    public Object getIsOtpVerify(){
+        return isOtpVerify;
     }
 
-    public Object getCreatedBy() {
-        return mCreatedBy;
+    public boolean isIsActive(){
+        return isActive;
     }
 
-    public void setCreatedBy(Object createdBy) {
-        mCreatedBy = createdBy;
+    public int getUserId(){
+        return userId;
     }
 
-    public String getCreatedDate() {
-        return mCreatedDate;
+    public String getAvatarName(){
+        return avatarName;
     }
 
-    public void setCreatedDate(String createdDate) {
-        mCreatedDate = createdDate;
+    public String getRegistrationToken(){
+        return registrationToken;
     }
 
-    public Object getCustomerGroupId() {
-        return mCustomerGroupId;
+    public Object getRequestRejectReason(){
+        return requestRejectReason;
     }
 
-    public void setCustomerGroupId(Object customerGroupId) {
-        mCustomerGroupId = customerGroupId;
+    public String getCreatedDate(){
+        return createdDate;
     }
 
-    public Long getDeleteFlag() {
-        return mDeleteFlag;
+    public String getPhone(){
+        return phone;
     }
 
-    public void setDeleteFlag(Long deleteFlag) {
-        mDeleteFlag = deleteFlag;
+    public List<Integer> getPermissions(){
+        return permissions;
     }
 
-    public String getEmail() {
-        return mEmail;
+    public String getName(){
+        return name;
     }
 
-    public void setEmail(String email) {
-        mEmail = email;
+    public String getLastLogged(){
+        return lastLogged;
     }
 
-    public String getFirstName() {
-        return mFirstName;
+    public String getUserAccountType(){
+        return userAccountType;
     }
 
-    public void setFirstName(String firstName) {
-        mFirstName = firstName;
+    public List<Object> getAuctionStores(){
+        return auctionStores;
     }
 
-    public Long getId() {
-        return mId;
-    }
-
-    public void setId(Long id) {
-        mId = id;
-    }
-
-    public String getIp() {
-        return mIp;
-    }
-
-    public void setIp(String ip) {
-        mIp = ip;
-    }
-
-    public Long getIsActive() {
-        return mIsActive;
-    }
-
-    public void setIsActive(Long isActive) {
-        mIsActive = isActive;
-    }
-
-    public String getLastLogin() {
-        return mLastLogin;
-    }
-
-    public void setLastLogin(String lastLogin) {
-        mLastLogin = lastLogin;
-    }
-
-    public String getLastName() {
-        return mLastName;
-    }
-
-    public void setLastName(String lastName) {
-        mLastName = lastName;
-    }
-
-    public Object getMailStatus() {
-        return mMailStatus;
-    }
-
-    public void setMailStatus(Object mailStatus) {
-        mMailStatus = mailStatus;
-    }
-
-    public String getMobileNumber() {
-        return mMobileNumber;
-    }
-
-    public void setMobileNumber(String mobileNumber) {
-        mMobileNumber = mobileNumber;
-    }
-
-    public Object getModifiedBy() {
-        return mModifiedBy;
-    }
-
-    public void setModifiedBy(Object modifiedBy) {
-        mModifiedBy = modifiedBy;
-    }
-
-    public String getModifiedDate() {
-        return mModifiedDate;
-    }
-
-    public void setModifiedDate(String modifiedDate) {
-        mModifiedDate = modifiedDate;
-    }
-
-    public Object getNewsletter() {
-        return mNewsletter;
-    }
-
-    public void setNewsletter(Object newsletter) {
-        mNewsletter = newsletter;
-    }
-
-    public String getPassword() {
-        return mPassword;
-    }
-
-    public void setPassword(String password) {
-        mPassword = password;
-    }
-
-    public String getPincode() {
-        return mPincode;
-    }
-
-    public void setPincode(String pincode) {
-        mPincode = pincode;
-    }
-
-    public Object getSafe() {
-        return mSafe;
-    }
-
-    public void setSafe(Object safe) {
-        mSafe = safe;
-    }
-
-    public String getUsername() {
-        return mUsername;
-    }
-
-    public void setUsername(String username) {
-        mUsername = username;
-    }
-
-    public Object getZoneId() {
-        return mZoneId;
-    }
-
-    public void setZoneId(Object zoneId) {
-        mZoneId = zoneId;
+    public String getEmail(){
+        return email;
     }
 
 }

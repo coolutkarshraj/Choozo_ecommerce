@@ -1,14 +1,14 @@
 package com.io.choozo;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.io.choozo.adapter.hotOfferAdapter.Our_Brand_RvAdapter;
 import com.io.choozo.model.ProductDetail;
 import com.io.choozo.model.dataModel.CustomerRegisterResponseModel;
-import com.io.choozo.model.dataModel.ProductList;
 import com.io.choozo.model.responseModel.AddAddressResponseModel;
 import com.io.choozo.model.responseModel.CategoryResponseModel;
 import com.io.choozo.model.responseModel.ChangePasswordResponseModel;
@@ -16,7 +16,6 @@ import com.io.choozo.model.responseModel.ContactUsResponseModel;
 import com.io.choozo.model.responseModel.CountryListResponseModel;
 import com.io.choozo.model.responseModel.DeleteAddressResponseModel;
 import com.io.choozo.model.responseModel.DeleteProductWishlistResponseModel;
-import com.io.choozo.model.responseModel.EditProfileResponseModel;
 import com.io.choozo.model.responseModel.FeaturedProductResponseModel;
 import com.io.choozo.model.responseModel.ForgotPasswordResponseModel;
 import com.io.choozo.model.responseModel.GetAddressResponseModel;
@@ -33,11 +32,11 @@ import com.io.choozo.model.responseModel.SearchResponseModel;
 import com.io.choozo.model.responseModel.TodayDealsResponseModel;
 import com.io.choozo.model.responseModel.UpdateAddResponseModel;
 import com.io.choozo.model.responseModel.WishlistResponseModel;
+import com.io.choozo.model.responseModel.editProfiel.EditProfileResponseModel;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
 import java.io.File;
-import java.net.URL;
 
 public class ApiCaller {
 
@@ -135,7 +134,6 @@ public class ApiCaller {
         final Gson gson = new Gson();
         Ion.with(activity)
                 .load(UrlLocator.getFinalUrl(url))
-                .setHeader("Authorization", "Bearer " + token)
                 .noCache()
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
@@ -160,7 +158,7 @@ public class ApiCaller {
                 .setMultipartParameter("bio", bio)
                 .setMultipartParameter("gender", gender)
                 .setMultipartParameter("dateOfBirth", dateOfBirth)
-                .setMultipartParameter("phone", "9999999999")
+                .setMultipartParameter("phone", strPhone)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
@@ -478,6 +476,7 @@ public class ApiCaller {
         final Gson gson = new Gson();
         Ion.with(activity)
                 .load(UrlLocator.getFinalUrl(url))
+
                 .noCache()
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
@@ -491,13 +490,23 @@ public class ApiCaller {
 
     /* ------------------------------------------------------ Today Deals list get ------------------------------------------------------*/
 
-    public static void getTodayDeals(Activity activity, String url,
+    public static void getTodayDeals(Activity activity, String url,String token,
                                      final FutureCallback<TodayDealsResponseModel> apiCallBack) {
 
+String key;
+String value;
+        if(token==""){
+         key = "skipauth";
+         value = "true";
+        }else{
+            key = "Authorization";
+            value ="Bearer "+token;
+        }
 
         final Gson gson = new Gson();
         Ion.with(activity)
                 .load(UrlLocator.getFinalUrl(url))
+                .setHeader(key, value)
                 .noCache()
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
@@ -650,6 +659,20 @@ public class ApiCaller {
                         apiCallBack.onCompleted(e, searchResponseModel);
                     }
                 });
+    }
+
+    public static void showAlertDialog(Activity activity, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.setCancelable(false);
+        dialog.setTitle(message);
+        dialog.show();
     }
 
 

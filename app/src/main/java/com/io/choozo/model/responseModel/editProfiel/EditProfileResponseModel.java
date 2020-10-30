@@ -1,13 +1,11 @@
-package com.io.choozo.model.responseModel;
+package com.io.choozo.model.responseModel.editProfiel;
 
-import java.util.List;
 import com.google.gson.annotations.SerializedName;
-import com.io.choozo.model.dataModel.todayDealsModel.TodayDataModel;
 
-public class TodayDealsResponseModel{
+public class EditProfileResponseModel{
 
 	@SerializedName("data")
-	private List<TodayDataModel> data;
+	private Data data;
 
 	@SerializedName("message")
 	private String message;
@@ -15,9 +13,10 @@ public class TodayDealsResponseModel{
 	@SerializedName("status")
 	private boolean status;
 
-	public List<TodayDataModel> getData(){
+	public Data getData(){
 		return data;
 	}
+
 	public String getMessage(){
 		return message;
 	}

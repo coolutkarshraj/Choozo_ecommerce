@@ -12,6 +12,8 @@ import java.util.List;
 public class Config {
 
     public static String Base_url = "admin.dincharyamart.com";
+    public static String imageUrl = "https://admin.dincharyamart.com/api/media/render?path=";
+    public static String noImage = "https://sisterhoodofstyle.com/wp-content/uploads/2018/02/no-image-1.jpg";
     public static List<ChildDataModel> childDataModel;
     public static List<SubChildDataModel> subChildDataModels;
     public static String CartCount;
@@ -36,8 +38,8 @@ public class Config {
     public static float shipdeleveryCharge;
 
     public static String C_Name;
-
     public static String productdescription;
+    public static String somethingWrong ="Something went wrong";
 
     public static class Url{
         public final static String  categoryList = "StoreCategory/store-category-list/store/-1";
@@ -45,8 +47,8 @@ public class Config {
         public final static String registerCustomer ="user/signup";
         public final static String loginCustomer ="user/login";
         public final static String forgotPassword ="user/forgot-password";
-        public final static String changePassword ="customer/change-password";
-        public final static String getUserData ="customer/get-profile";
+        public final static String changePassword ="user/change-password";
+        public final static String getUserData ="user/detail/";
         public final static String editProfile ="user/update";
         public final static String getSetting ="settings/get-settings";
         public final static String getPageList ="pages/pagelist?limit=&offset=0&keyword=";
@@ -61,7 +63,7 @@ public class Config {
         public final static String deleteproductfromWishList ="customer/wishlist-product-delete";
         public final static String getWishlistProduct ="customer/wishlist-product-list";
         public final static String getfeaturedProduct ="product-store/featureproduct-list?";
-        public final static String getTodayDeals ="product-store/todayDeals-list?";
+        public final static String getTodayDeals ="product/todaydeal-product-list";
         public final static String getbrandsDetail ="manufacturers/manufacturerlist?";
         public final static String checkoutendPoint ="orders/customer-checkout";
         public final static String countryList ="list/country-list?limit=&offset=0&keyword=";
