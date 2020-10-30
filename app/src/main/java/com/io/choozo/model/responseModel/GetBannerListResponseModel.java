@@ -10,20 +10,28 @@ public class GetBannerListResponseModel {
 
     @SerializedName("status")
     @Expose
-    private Integer status;
-    @SerializedName("message")
-    @Expose
-    private String message;
+    private Boolean status;
     @SerializedName("data")
     @Expose
     private List<GetBannerListDataModel> data = null;
+    @SerializedName("message")
+    @Expose
+    private String message;
 
-    public Integer getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public List<GetBannerListDataModel> getData() {
+        return data;
+    }
+
+    public void setData(List<GetBannerListDataModel> data) {
+        this.data = data;
     }
 
     public String getMessage() {
@@ -34,12 +42,5 @@ public class GetBannerListResponseModel {
         this.message = message;
     }
 
-    public List<GetBannerListDataModel> getData() {
-        return data;
-    }
-
-    public void setData(List<GetBannerListDataModel> data) {
-        this.data = data;
-    }
 
 }

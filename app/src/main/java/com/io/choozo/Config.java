@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Config {
 
-    public static String Base_url = "18.208.183.9";
+    public static String Base_url = "admin.dincharyamart.com";
     public static List<ChildDataModel> childDataModel;
     public static List<SubChildDataModel> subChildDataModels;
     public static String CartCount;
@@ -40,21 +40,21 @@ public class Config {
     public static String productdescription;
 
     public static class Url{
-        public final static String  categoryList = "list/category-list?limit=&offset=0&keyword=&sortOrder=";
-        public final static String getBanner ="list/banner-list?limit=100&offset=0";
-        public final static String registerCustomer ="customer/register";
-        public final static String loginCustomer ="customer/login";
-        public final static String forgotPassword ="customer/forgot-password";
+        public final static String  categoryList = "StoreCategory/store-category-list/store/-1";
+        public final static String getBanner ="advert/list";
+        public final static String registerCustomer ="user/signup";
+        public final static String loginCustomer ="user/login";
+        public final static String forgotPassword ="user/forgot-password";
         public final static String changePassword ="customer/change-password";
         public final static String getUserData ="customer/get-profile";
-        public final static String editProfile ="customer/edit-profile";
+        public final static String editProfile ="user/update";
         public final static String getSetting ="settings/get-settings";
         public final static String getPageList ="pages/pagelist?limit=&offset=0&keyword=";
         public final static String addCustomerAddress ="address/add-address";
         public final static String getCustomerAddress ="address/addresslist";
         public final static String UpdateAddress ="address/update-address";
         public final static String deleteAddress ="address/delete-address";
-        public final static String productlist ="list/productlist?";
+        public final static String productlist ="product/list/store";
         public final static String imageResize ="media/image-resize?";
         public final static String productdetail ="product-store/productdetail/";
         public final static String wishlistdata ="customer/add-product-to-wishlist";

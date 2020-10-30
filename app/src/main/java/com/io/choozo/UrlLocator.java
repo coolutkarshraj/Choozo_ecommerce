@@ -13,7 +13,7 @@ public class UrlLocator {
 
     public static String getFinalUrl(String url) {
         String ip = getBaseIP();
-        return "http://" + ip + ":8000/api/" + url;
+        return "https://" + ip + "/api/" + url;
     }
 
 }

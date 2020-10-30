@@ -96,10 +96,17 @@ public class ForgotPasswodActivity extends AppCompatActivity implements View.OnC
                     FutureCallback<ForgotPasswordResponseModel>() {
                         @Override
                         public void onCompleted(Exception e, ForgotPasswordResponseModel result) {
+                          dialog.dismiss();
                             if(e!=null){
                                 return;
                             }
-                            apiData(result);
+                            if(result.getStatus()){
+                                apiData(result);
+
+                            }else {
+                                Toast.makeText(activity, result.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+
                         }
                     });
 
@@ -112,10 +119,12 @@ public class ForgotPasswodActivity extends AppCompatActivity implements View.OnC
     }
 
     private void apiData(ForgotPasswordResponseModel result) {
-        if(result.getStatus() == 1){
+        if(result.getStatus()){
             dialog.dismiss();
             Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
             Intent i =new Intent(activity, LoginActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                    Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
         }else {
             Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();

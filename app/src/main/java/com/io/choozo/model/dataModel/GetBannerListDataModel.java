@@ -4,83 +4,83 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class GetBannerListDataModel {
-
-    @SerializedName("bannerId")
+    @SerializedName("createdDate")
     @Expose
-    private Integer bannerId;
-    @SerializedName("title")
+    private String createdDate;
+    @SerializedName("addvertismentId")
     @Expose
-    private String title;
-    @SerializedName("link")
+    private Integer addvertismentId;
+    @SerializedName("tittle")
     @Expose
-    private String link;
-    @SerializedName("content")
+    private String tittle;
+    @SerializedName("body")
     @Expose
-    private String content;
-    @SerializedName("position")
+    private String body;
+    @SerializedName("url")
     @Expose
-    private Integer position;
-    @SerializedName("image")
+    private String url;
+    @SerializedName("avatarPath")
     @Expose
-    private String image;
-    @SerializedName("imagePath")
+    private String avatarPath;
+    @SerializedName("avatarName")
     @Expose
-    private String imagePath;
+    private String avatarName;
 
-    public Integer getBannerId() {
-        return bannerId;
+    public String getCreatedDate() {
+        return createdDate;
     }
 
-    public void setBannerId(Integer bannerId) {
-        this.bannerId = bannerId;
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
     }
 
-    public String getTitle() {
-        return title;
+    public Integer getAddvertismentId() {
+        return addvertismentId;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setAddvertismentId(Integer addvertismentId) {
+        this.addvertismentId = addvertismentId;
     }
 
-    public String getLink() {
-        return link;
+    public String getTittle() {
+        return tittle;
     }
 
-    public void setLink(String link) {
-        this.link = link;
+    public void setTittle(String tittle) {
+        this.tittle = tittle;
     }
 
-    public String getContent() {
-        return content;
+    public String getBody() {
+        return body;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setBody(String body) {
+        this.body = body;
     }
 
-    public Integer getPosition() {
-        return position;
+    public String getUrl() {
+        return url;
     }
 
-    public void setPosition(Integer position) {
-        this.position = position;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public String getImage() {
-        return image;
+    public String getAvatarPath() {
+        return avatarPath;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setAvatarPath(String avatarPath) {
+        this.avatarPath = avatarPath;
     }
 
-    public String getImagePath() {
-        return imagePath;
+    public String getAvatarName() {
+        return avatarName;
     }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public void setAvatarName(String avatarName) {
+        this.avatarName = avatarName;
     }
+
 
 }

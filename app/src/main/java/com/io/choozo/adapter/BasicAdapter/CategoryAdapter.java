@@ -18,6 +18,7 @@ import com.io.choozo.Config;
 import com.io.choozo.R;
 import com.io.choozo.activity.homeActivity.CategorySubCategory;
 import com.io.choozo.model.dataModel.ChildDataModel;
+import com.io.choozo.model.dataModel.StoreSubCategory;
 import com.io.choozo.model.responseModel.ProductListResponseModel;
 import com.io.choozo.util.CategorySubCatChildCat;
 import com.io.choozo.util.NewProgressBar;
@@ -31,7 +32,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     Context context;
     Activity activity;
-    List<ChildDataModel> item;
+    List<StoreSubCategory> item;
     public static  int recyclerviewPostion;
 
     public static int subCategoryId;
@@ -40,7 +41,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     String endPoint;
 
-    public CategoryAdapter(Context context,CategorySubCatChildCat ad_interface, List<ChildDataModel> item) {
+    public CategoryAdapter(Context context, CategorySubCatChildCat ad_interface, List<StoreSubCategory> item) {
         this.context = context;
         this.item = item;
         this.ad_interface = ad_interface;
@@ -60,18 +61,17 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.ViewHolder viewHolder, final int i) {
 
-        final ChildDataModel model = item.get(i);
-        viewHolder.name.setText(model.getName());
+        viewHolder.name.setText(item.get(i).getName());
 
         viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 recyclerviewPostion = i;
-                subCategoryId = model.getCategoryId();
+                subCategoryId = item.get(i).getCategoryId();
                 endPoint = Config.Url.productlist+"limit=10&offset=0&manufacturerId=&categoryId="+subCategoryId+"&keyword=&price=1&priceFrom=&priceT";
                 Log.e("endpointsubcategory",endPoint);
-                Config.categoryClickId = model.getCategoryId();
+                Config.categoryClickId = item.get(i).getStoreCategoryId();
                 ad_interface.subCategoryId(subCategoryId);
                 CategorySubCategory.categoryAdapter.notifyDataSetChanged();
                 CategorySubCategory.subCategoryAdapter.notifyDataSetChanged();
@@ -127,9 +127,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     /* -------------------------------------------------------Api Data Set Into Recycler View-------------------------------------------------------*/
 
     private void CategorySubCategoryDataSetToRv(ProductListResponseModel result) {
-        if (result.getStatus() == 1) {
+        if (result.getStatus() ) {
             dialog.dismiss();
-            if (result.getData().getProductList().isEmpty()) {
+            /*if (result.getData().getProductList().isEmpty()) {
                 CategorySubCategory.tvDataNotFound.setVisibility(View.VISIBLE);
                 CategorySubCategory.itemsRecyclerView.setVisibility(View.GONE);
             } else {
@@ -140,7 +140,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                 CategorySubCategory.itemCategoryAdapter.notifyDataSetChanged();
 
 
-            }
+            }*/
         }else{
             Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
             dialog.dismiss();

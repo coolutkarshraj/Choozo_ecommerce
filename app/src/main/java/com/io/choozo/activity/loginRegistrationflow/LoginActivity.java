@@ -5,16 +5,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.io.choozo.ApiCaller;
 import com.io.choozo.Config;
@@ -22,13 +19,12 @@ import com.io.choozo.R;
 import com.io.choozo.activity.homeActivity.MainActivity;
 import com.io.choozo.localStorage.PreferenceManager;
 import com.io.choozo.model.dataModel.CustomerRegisterResponseModel;
+import com.io.choozo.model.responseModel.EditProfileResponseModel;
 import com.io.choozo.model.responseModel.LoginResponseModel;
 import com.io.choozo.util.NewProgressBar;
 import com.io.choozo.util.commonDialog;
 import com.io.choozo.util.userOnlineInfo;
 import com.koushikdutta.async.future.FutureCallback;
-
-import java.util.regex.Pattern;
 
 import static com.io.choozo.localStorage.PreferenceManager.loginData;
 
@@ -53,6 +49,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Button btnLogin;
     EditText loginEmail,loginPassword;
     String strLoginEmail,strLoginPassword,endPointLogin,token,userr;
+    private String endPointEditProfile;
+    private String gender = "Not Defined";
+    private String bio = "Dincharya user";
+    private String dateOfBirth = "Not Defined";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,6 +181,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     {
         endpointRegistration = Config.Url.registerCustomer;
         endPointLogin = Config.Url.loginCustomer;
+        endPointEditProfile = Config.Url.editProfile;
     }
 
     /*----------------------------------------------- Registration Api------------------------------------------------------*/
@@ -195,9 +196,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                      @Override
                      public void onCompleted(Exception e, CustomerRegisterResponseModel result) {
                          if(e!=null){
+                             dialog.dismiss();
                              return;
                          }
-                         registrationApiData(result);
+                         if(result.getStatus()){
+                             dialog.dismiss();
+                             strLoginEmail = strEmail;
+                             strLoginPassword = strPassword;
+                             registrationApiData(result);
+                         }else {
+                             Toast.makeText(activity, result.getMessage(), Toast.LENGTH_SHORT).show();
+                             dialog.dismiss();
+                         }
+
                      }
                  });
         }else {
@@ -210,11 +221,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     /* --------------------------------------------registration data from api----------------------------------------------*/
 
     private void registrationApiData(CustomerRegisterResponseModel result) {
-      if(result.getStatus() == 1){
-          dialog.dismiss();
-          Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
-          Intent i =new Intent(activity, LoginActivity.class);
-          startActivity(i);
+      if(result.getStatus()){
+          loginApi(0);
       }else {
           Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
           dialog.dismiss();
@@ -239,12 +247,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             loginPassword.setError("Please Enter Password");
         }
         else {
-            loginApi();
+            loginApi(1);
         }
     }
 
     /* ------------------------------------------------------lOGIN Api-------------------------------------------------------*/
-    private void loginApi() {
+    private void loginApi(int i) {
         if (user.isOnline(activity)) {
             dialog = new NewProgressBar(activity);
             dialog.show();
@@ -254,9 +262,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         @Override
                         public void onCompleted(Exception e, LoginResponseModel result) {
                             if(e!=null){
+                                dialog.dismiss();
                                 return;
                             }
-                            loginData(result);
+                            if(result.getStatus()){
+                                dialog.dismiss();
+                                loginData(result,i);
+                            }else {
+                                Toast.makeText(activity, result.getMessage(), Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }
+
                         }
                     });
 
@@ -270,14 +286,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     /*-------------------------------------------------- Login data from api------------------------------------------------*/
 
-    private void loginData(LoginResponseModel result) {
+    private void loginData(LoginResponseModel result, int i) {
 
-        if(result.getStatus()==1){
+        if(result.getStatus()){
             dialog.dismiss();
-            saveLoginData(result);
-            Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(activity , MainActivity.class);
-            startActivity(i);
+            if(i == 1){
+                saveLoginData(result);
+                Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(activity , MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }else {
+                editprofileApi(result);
+            }
+
+
+
         }
         else {
             Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
@@ -296,5 +323,43 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     }
+
+    private void editprofileApi(LoginResponseModel loginResult) {
+        if(user.isOnline(activity)){
+            urlapi();
+            dialog = new NewProgressBar(activity);
+            dialog.show();
+            ApiCaller.editProfileSignup(activity, endPointEditProfile, strName, bio, gender,
+                    dateOfBirth,strPhone, loginResult.getData().getToken(), new FutureCallback<EditProfileResponseModel>() {
+                        @Override
+                        public void onCompleted(Exception e, EditProfileResponseModel result) {
+                            if(e!=null){
+                                dialog.dismiss();
+                                return;
+                            }
+                            if(result.getStatus()){
+                                dialog.dismiss();
+                                saveLoginData(loginResult);
+                                Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(activity , MainActivity.class);
+                                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(i);
+                                Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+
+                            }else {
+                                Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }
+                        }
+                    });
+
+        }else {
+            commonDialog commonDialog = new commonDialog();
+            commonDialog.dialogbox(activity);
+        }
+    }
+
 
 }

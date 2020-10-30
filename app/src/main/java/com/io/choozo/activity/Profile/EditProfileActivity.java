@@ -360,32 +360,32 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void editprofileApi() {
-        if(user.isOnline(activity)){
-           dialog = new NewProgressBar(activity);
-           dialog.show();
-            apiUrl();
-            ApiCaller.editProfile(activity, endPointEditProfile, strName, strLastName, strEmail, strAddress, strCountyId,
-                    strPinCode, strMobile, token,strImageFormet, new FutureCallback<EditProfileResponseModel>() {
-                        @Override
-                        public void onCompleted(Exception e, EditProfileResponseModel result) {
-                            if(e!=null){
-                                return;
-                            }
-                                if(result.getStatus()==1){
-                                    Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
-                                    dialog.dismiss();
-                                    getProfileDataApi();
-                                }else {
-                                    Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
-                                    dialog.dismiss();
-                                }
-                        }
-                    });
-
-        }else {
-            commonDialog commonDialog = new commonDialog();
-            commonDialog.dialogbox(activity);
-        }
+//        if(user.isOnline(activity)){
+//           dialog = new NewProgressBar(activity);
+//           dialog.show();
+//            apiUrl();
+//            ApiCaller.editProfile(activity, endPointEditProfile, strName, strLastName, strEmail, strAddress, strCountyId,
+//                    strPinCode, strMobile, token,strImageFormet, new FutureCallback<EditProfileResponseModel>() {
+//                        @Override
+//                        public void onCompleted(Exception e, EditProfileResponseModel result) {
+//                            if(e!=null){
+//                                return;
+//                            }
+//                                if(result.getStatus()==1){
+//                                    Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+//                                    dialog.dismiss();
+//                                    getProfileDataApi();
+//                                }else {
+//                                    Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+//                                    dialog.dismiss();
+//                                }
+//                        }
+//                    });
+//
+//        }else {
+//            commonDialog commonDialog = new commonDialog();
+//            commonDialog.dialogbox(activity);
+//        }
     }
 
 

@@ -2,41 +2,47 @@
 package com.io.choozo.model.responseModel;
 
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 
 @SuppressWarnings("unused")
 public class ProductListResponseModel {
-
-    @SerializedName("data")
-    private Data mData;
-    @SerializedName("message")
-    private String mMessage;
     @SerializedName("status")
-    private Long mStatus;
+    @Expose
+    private Boolean status;
+    @SerializedName("data")
+    @Expose
+    private List<Data> data = null;
+    @SerializedName("message")
+    @Expose
+    private String message;
 
-    public Data getData() {
-        return mData;
+    public Boolean getStatus() {
+        return status;
     }
 
-    public void setData(Data data) {
-        mData = data;
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public List<Data> getData() {
+        return data;
+    }
+
+    public void setData(List<Data> data) {
+        this.data = data;
     }
 
     public String getMessage() {
-        return mMessage;
+        return message;
     }
 
     public void setMessage(String message) {
-        mMessage = message;
+        this.message = message;
     }
 
-    public Long getStatus() {
-        return mStatus;
-    }
-
-    public void setStatus(Long status) {
-        mStatus = status;
-    }
 
 }

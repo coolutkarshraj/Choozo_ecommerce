@@ -1,40 +1,44 @@
 
 package com.io.choozo.model.dataModel;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.io.choozo.model.responseModel.CustomerRegistrationDataModel;
 
 public class CustomerRegisterResponseModel {
 
-    @SerializedName("data")
-    private CustomerRegistrationDataModel mData;
-    @SerializedName("message")
-    private String mMessage;
     @SerializedName("status")
-    private Long mStatus;
+    @Expose
+    private boolean status;
+    @SerializedName("message")
+    @Expose
+    private String message;
+    @SerializedName("data")
+    @Expose
+    private CustomerRegistrationDataModel data;
 
-    public CustomerRegistrationDataModel getData() {
-        return mData;
+    public boolean getStatus() {
+        return status;
     }
 
-    public void setData(CustomerRegistrationDataModel data) {
-        mData = data;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public String getMessage() {
-        return mMessage;
+        return message;
     }
 
     public void setMessage(String message) {
-        mMessage = message;
+        this.message = message;
     }
 
-    public Long getStatus() {
-        return mStatus;
+    public CustomerRegistrationDataModel getData() {
+        return data;
     }
 
-    public void setStatus(Long status) {
-        mStatus = status;
+    public void setData(CustomerRegistrationDataModel data) {
+        this.data = data;
     }
 
 }

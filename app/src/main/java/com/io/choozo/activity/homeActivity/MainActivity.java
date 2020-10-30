@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Gson gson = new Gson();
         String getJson = preferenceManager.getString(PreferenceManager.loginData);
         LoginResponseModel obj = gson.fromJson(getJson, LoginResponseModel.class);
-        localName = obj.getData().getUser().getFirstName();
+        localName = obj.getData().getUser().getName();
         localEmail = obj.getData().getUser().getEmail();
 
     }

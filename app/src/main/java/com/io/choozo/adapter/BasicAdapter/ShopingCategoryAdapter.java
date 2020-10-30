@@ -17,6 +17,7 @@ import com.io.choozo.R;
 import com.io.choozo.UrlLocator;
 import com.io.choozo.activity.homeActivity.CategorySubCategory;
 import com.io.choozo.model.dataModel.CategoryDataModel;
+import com.io.choozo.model.responseModel.CategoryResponseModel;
 import com.io.choozo.util.CategorySubCatChildCat;
 
 import java.util.List;
@@ -24,11 +25,11 @@ import java.util.List;
 public class ShopingCategoryAdapter extends RecyclerView.Adapter<ShopingCategoryAdapter.ViewHolder> {
 
     Context context;
-    List<CategoryDataModel> item;
+    CategoryResponseModel item;
     CategorySubCatChildCat ad_interface;
     public static Integer cateId;
     String image ,imagePath,endPoint,strname;
-    public ShopingCategoryAdapter(Context context, CategorySubCatChildCat ad_interface, List<CategoryDataModel> item) {
+    public ShopingCategoryAdapter(Context context, CategorySubCatChildCat ad_interface, CategoryResponseModel item) {
         this.context = context;
         this.item = item;
         this.ad_interface = ad_interface;
@@ -44,30 +45,22 @@ public class ShopingCategoryAdapter extends RecyclerView.Adapter<ShopingCategory
 
     @Override
     public void onBindViewHolder(@NonNull ShopingCategoryAdapter.ViewHolder viewHolder, int i) {
+         viewHolder.name.setText(item.getData().get(i).getName());
+         imagePath = item.getData().get(i).getAvatarPath();
+         String url = "https://admin.dincharyamart.com/api/media/render?path="+ imagePath;
+         Glide.with(context).load(url).into(viewHolder.imageView);
 
-        final CategoryDataModel model = item.get(i);
-        viewHolder.name.setText(model.getName());
-        strname = model.getName();
-        image = model.getImage();
 
-      /*  if(strname == model.getName() ){
-            Glide.with(context).load(R.drawable.boy).into(viewHolder.imageView);
-        }*/
-        imagePath = model.getImagePath();
-        imageResizeApi(image,imagePath);
-        Glide.with(context).load(UrlLocator.getFinalUrl(endPoint)).into(viewHolder.imageView);
 
         viewHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // Toast.makeText(context, ""+model.getCategoryId(), Toast.LENGTH_SHORT).show();
-
-                Intent i =new Intent(context, CategorySubCategory.class);
-                i.putExtra("name",model.getName());
-                i.putExtra("categoryId",model.getCategoryId());
-                context.startActivity(i);
-                cateId = model.getCategoryId();
-                ad_interface.catId(cateId);
+              Intent intent =new Intent(context, CategorySubCategory.class);
+                intent.putExtra("name",item.getData().get(i).getName());
+                intent.putExtra("categoryId",String.valueOf(item.getData().get(i).getStoreCategoryId()));
+                context.startActivity(intent);
+               // cateId = model.getCategoryId();
+               // ad_interface.catId(cateId);
                 notifyDataSetChanged();
             }
         });
@@ -76,7 +69,7 @@ public class ShopingCategoryAdapter extends RecyclerView.Adapter<ShopingCategory
 
     @Override
     public int getItemCount() {
-        return item.size();
+        return item.getData().size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

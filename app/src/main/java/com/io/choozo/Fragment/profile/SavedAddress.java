@@ -114,7 +114,7 @@ public class SavedAddress  extends Fragment implements View.OnClickListener {
         String getJson = preferenceManager.getString(PreferenceManager.loginData);
         LoginResponseModel obj = gson.fromJson(getJson, LoginResponseModel.class);
         token = obj.getData().getToken();
-        userId = obj.getData().getUser().getId();
+        userId = obj.getData().getUser().getUserId();
 
 
     }

@@ -3,6 +3,7 @@ package com.io.choozo.activity.homeActivity;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -31,6 +32,7 @@ import com.io.choozo.adapter.BasicAdapter.ItemCategoryAdapter;
 import com.io.choozo.adapter.BasicAdapter.SelectFilterSizeAdapter;
 import com.io.choozo.adapter.BasicAdapter.ShopingCategoryAdapter;
 import com.io.choozo.adapter.BasicAdapter.SubCategoryAdapter;
+import com.io.choozo.model.dataModel.StoreSubCategory;
 import com.io.choozo.model.dummydataModel.ChooseColorModel;
 import com.io.choozo.model.dummydataModel.ItemCatModel;
 import com.io.choozo.model.dummydataModel.SelectSizeDataMode;
@@ -43,7 +45,7 @@ import java.util.List;
 
 public class CategorySubCategory extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-    public static RecyclerView catRecyclerView, subcategoryrecyclerview, itemsRecyclerView;
+    public static RecyclerView catRecyclerView, itemsRecyclerView;
     Activity activity;
     ImageView back;
     RelativeLayout rlFilter;
@@ -56,9 +58,9 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
     public static TextView tvMin, tvMax, toolbarName, tvDataNotFound;
     String[] country = {"- Nothing Selected -", "Prada", "Gucci", "Louis Vuittion", "Hermes", "Tommy Hilfiger", "Nike", "Ralph Lauren", "Levi Strauss & Co.",
             "Burberry", "Adidas", "Versace", "Diesel", "Calvin Klein"};
-    String[] Category = {"- Nothing Selected -", "Mens Fashion", "Womens Fashion", "Electronics", "Laptops", "Provisional & Utensils", "Baby & Kids"};
-    String[] discount = {"- Nothing Selected -", "20 %", "30 % ", "40 %", "50%"};
-    Spinner spin, spinCategory, discountSpin;
+    ArrayList<String> Category;
+    ArrayList<String> subCategory ;
+    Spinner spin, spinner_cat_id, spinnersub_category_id;
     RecyclerView rv_color, rv_producrtsize;
     ChooseColorForFilterAdapter adapter;
     SelectFilterSizeAdapter selectSizeAdapter;
@@ -69,6 +71,10 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
     String child = "";
     String subchild = "";
     NewProgressBar dialog;
+    private List<StoreSubCategory> storeSubCategory;
+    private String storeSubCategoryId = "-1";
+    private String storecategoryId = "-1";
+    private String StoreId = "-1";
 
 
     @SuppressLint("ResourceAsColor")
@@ -79,6 +85,7 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
         intilaizeviews();
         bindListner();
         startWorking();
+        adapterSetToSpinnerforCategory();
 
     }
 
@@ -89,7 +96,6 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
         back = (ImageView) findViewById(R.id.back);
         dialog = new NewProgressBar(activity);
         catRecyclerView = (RecyclerView) findViewById(R.id.rv_category);
-        subcategoryrecyclerview = (RecyclerView) findViewById(R.id.rv_subcategory);
         itemsRecyclerView = (RecyclerView) findViewById(R.id.rv_items_catsub);
         filterbtn = (ImageView) findViewById(R.id.filterbtn);
         rlFilter = (RelativeLayout) findViewById(R.id.rl_filter);
@@ -98,8 +104,8 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
         tvMin = (TextView) findViewById(R.id.textMin1);
         tvMax = (TextView) findViewById(R.id.textMax1);
         spin = (Spinner) findViewById(R.id.spinner);
-        spinCategory = (Spinner) findViewById(R.id.spinner1);
-        discountSpin = (Spinner) findViewById(R.id.spinner2);
+        spinner_cat_id = (Spinner) findViewById(R.id.spinner_cat_id);
+        spinnersub_category_id = (Spinner) findViewById(R.id.spinnersub_category_id);
         rv_producrtsize = (RecyclerView) findViewById(R.id.rv_productsize);
         rv_color = (RecyclerView) findViewById(R.id.rv_choosecolor);
         toolbarName = (TextView) findViewById(R.id.tv_name);
@@ -112,9 +118,34 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
         Intent intent = getIntent();
         intentName = intent.getStringExtra("name");
         Config.toolbarName = intentName;
-        intentCategoryId = String.valueOf(ShopingCategoryAdapter.cateId);
+        intentCategoryId = intent.getStringExtra("categoryId");;
         Log.e("category", "" + intentCategoryId);
+        for ( int i = 0; i <  Config.categoryResponseModel.getData().size(); i++){
+            if(intentCategoryId.equals(String.valueOf(Config.categoryResponseModel.getData().get(i).getStoreCategoryId()))){
+                if( Config.categoryResponseModel.getData().get(i).getStore() == null){
+                    Toast.makeText(activity, "No Product Found in This Category", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+               else if( Config.categoryResponseModel.getData().get(i).getStore().size()!= 0){
+                   StoreId= String.valueOf(Config.categoryResponseModel.getData().get(i).getStore().get(0).getStoreId());
+                  if(Config.categoryResponseModel.getData().get(i).getStoreSubCategories().size() != 0){
+                      storeSubCategory = Config.categoryResponseModel.getData().get(i).getStoreSubCategories();
+                  }
+
+                   storecategoryId = String.valueOf(Config.categoryResponseModel.getData().get(i).getStore().get(0).getCategoryId());
+
+               }else {
+                    Toast.makeText(activity, "No Product Found in This Category", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                break;
+            }else {
+
+            }
+        }
         toolbarName.setText(intentName);
+        categoryRecyclerViewData();
+        ProductListApi();
     }
 
     private void bindListner() {
@@ -123,7 +154,7 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
         filterbtn.setOnClickListener(this);
         Cancel.setOnClickListener(this);
         spin.setOnItemSelectedListener(this);
-        spinCategory.setOnItemSelectedListener(this);
+       // spinCategory.setOnItemSelectedListener(this);
     }
 
 
@@ -145,8 +176,8 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
     /* -------------------------------------------------------- start working ----------------------------------------------------*/
 
     private void startWorking() {
-        categoryRecyclerViewData();
-        subCategoryRecyclerViewData();
+
+        /*subCategoryRecyclerViewData();
         ProductListApi();
         seekBarSet();
         adapterSetToSpinner();
@@ -154,31 +185,23 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
         rv_SetData();
         adapterSetToSpinnerforCategory();
         adapterSetToSpinnerfordiscount();
-    }
+*/    }
 
 
     /* -----------------------------------------------child data set into recyclerView-------------------------------------------*/
 
     private void categoryRecyclerViewData() {
         catRecyclerView.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
-        categoryAdapter = new CategoryAdapter(activity, HomeFragment.ad_interface, Config.childDataModel);
+        categoryAdapter = new CategoryAdapter(activity, HomeFragment.ad_interface, storeSubCategory);
         catRecyclerView.setAdapter(categoryAdapter);
         categoryAdapter.notifyDataSetChanged();
     }
 
     /*------------------------------------------------ Sub Child CustomerRegistrationDataModel into recyclerView-------------------------------------*/
 
-    private void subCategoryRecyclerViewData() {
-        subcategoryrecyclerview.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
-        subCategoryAdapter = new SubCategoryAdapter(activity, Config.subChildDataModels);
-        subcategoryrecyclerview.setAdapter(subCategoryAdapter);
-
-    }
-
-
     /* ----------------------------------------------------------- Api url of product List ----------------------------------------------------*/
     private void apiUrl() {
-        endPoint = Config.Url.productlist + "limit=10&offset=0&manufacturerId=&categoryId=" + intentCategoryId + "&keyword=&price=1&priceFrom=&priceT";
+        endPoint = Config.Url.productlist +"/"+StoreId+"/"+storecategoryId+"/"+intentCategoryId +"/"+"-1";
 
         // endPoint = Config.Url.productlist;
     }
@@ -192,6 +215,7 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
         ApiCaller.productList(activity, endPoint, new FutureCallback<ProductListResponseModel>() {
             @Override
             public void onCompleted(Exception e, ProductListResponseModel result) {
+              dialog.dismiss();
                 if (e != null) {
                     return;
                 }
@@ -205,16 +229,16 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
 
     private void CategorySubCategoryDataSetToRv(ProductListResponseModel result) {
 
-        if (result.getStatus() == 1) {
+        if (result.getStatus()) {
             dialog.dismiss();
-            if (result.getData().getProductList().isEmpty()) {
+            if (result.getData().isEmpty()) {
                 tvDataNotFound.setVisibility(View.VISIBLE);
                 itemsRecyclerView.setVisibility(View.GONE);
             } else {
                 tvDataNotFound.setVisibility(View.GONE);
                 itemsRecyclerView.setVisibility(View.VISIBLE);
                 itemsRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-                itemCategoryAdapter = new ItemCategoryAdapter(activity, result.getData().getProductList());
+                itemCategoryAdapter = new ItemCategoryAdapter(activity, result.getData());
                 itemsRecyclerView.setAdapter(itemCategoryAdapter);
                 itemCategoryAdapter.notifyDataSetChanged();
             }
@@ -256,21 +280,66 @@ public class CategorySubCategory extends AppCompatActivity implements View.OnCli
     /*--------------------------------------------------- list of brands--------------------------------------------------------------*/
 
     private void adapterSetToSpinnerforCategory() {
+        Category = new ArrayList<>();
+        subCategory = new ArrayList<String>();
+        Category.add("Select Category");
+        subCategory.add("Select Sub-Category");
+
+        for (int i = 0; i <Config.categoryResponseModel.getData().size();i++){
+            Category.add(Config.categoryResponseModel.getData().get(i).getName());
+        }
         ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Category);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinCategory.setAdapter(aa);
+        spinner_cat_id.setAdapter(aa);
+        spinner_cat_id.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+               /* subCategory = new ArrayList<String>();
+                subCategory.add("Select Sub-Category");*/
+               int CategoryId =0;
+                String categoryName = spinner_cat_id.getSelectedItem().toString();
+                for (int i = 0; i <Config.categoryResponseModel.getData().size();i++){
+                   if(categoryName.equals( Config.categoryResponseModel.getData().get(i).getName())){
+                     CategoryId =   Config.categoryResponseModel.getData().get(i).getStoreCategoryId();
+                     break;
+                   }
+                }
+
+                for (int i = 0; i <Config.categoryResponseModel.getData().size();i++){
+                    if(CategoryId == Config.categoryResponseModel.getData().get(i).getStoreCategoryId()){
+                        if(Config.categoryResponseModel.getData().get(i).getStoreSubCategories().size()!=0) {
+                            for (int j = 0; j < Config.categoryResponseModel.getData().get(i).getStoreSubCategories().size(); j++) {
+
+                                subCategory.add(Config.categoryResponseModel.getData().get(i).getStoreSubCategories().get(j).getName());
+                            }
+                        }else {
+                            subCategory = new ArrayList<>();
+                            subCategory.add("Select Sub-Category");
+                        }
+                       break;
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
+        adapterSetToSpinnerforSubCategory();
     }
     /*--------------------------------------------------- discount--------------------------------------------------------------*/
 
-    private void adapterSetToSpinnerfordiscount() {
-        ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, discount);
+    private void adapterSetToSpinnerforSubCategory() {
+        ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, subCategory);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        discountSpin.setAdapter(aa);
+        spinnersub_category_id.setAdapter(aa);
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        //  Toast.makeText(getApplicationContext(),country[position] , Toast.LENGTH_LONG).show();
+          Toast.makeText(getApplicationContext(),country[position] , Toast.LENGTH_LONG).show();
     }
 
     @Override

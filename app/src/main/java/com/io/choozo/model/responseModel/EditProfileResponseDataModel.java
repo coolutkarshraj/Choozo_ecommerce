@@ -1,15 +1,11 @@
-
-package com.io.choozo.model.dataModel;
+package com.io.choozo.model.responseModel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-
-@SuppressWarnings("unused")
-public class User {
-
+public class EditProfileResponseDataModel {
     @SerializedName("createdDate")
     @Expose
     private String createdDate;
@@ -18,10 +14,10 @@ public class User {
     private Integer userId;
     @SerializedName("avatarPath")
     @Expose
-    private Object avatarPath;
+    private String avatarPath;
     @SerializedName("avatarName")
     @Expose
-    private Object avatarName;
+    private String avatarName;
     @SerializedName("name")
     @Expose
     private String name;
@@ -70,12 +66,6 @@ public class User {
     @SerializedName("registrationToken")
     @Expose
     private String registrationToken;
-    @SerializedName("stores")
-    @Expose
-    private List<Object> stores = null;
-    @SerializedName("auctionStores")
-    @Expose
-    private List<Object> auctionStores = null;
 
     public String getCreatedDate() {
         return createdDate;
@@ -93,19 +83,19 @@ public class User {
         this.userId = userId;
     }
 
-    public Object getAvatarPath() {
+    public String getAvatarPath() {
         return avatarPath;
     }
 
-    public void setAvatarPath(Object avatarPath) {
+    public void setAvatarPath(String avatarPath) {
         this.avatarPath = avatarPath;
     }
 
-    public Object getAvatarName() {
+    public String getAvatarName() {
         return avatarName;
     }
 
-    public void setAvatarName(Object avatarName) {
+    public void setAvatarName(String avatarName) {
         this.avatarName = avatarName;
     }
 
@@ -237,19 +227,4 @@ public class User {
         this.registrationToken = registrationToken;
     }
 
-    public List<Object> getStores() {
-        return stores;
-    }
-
-    public void setStores(List<Object> stores) {
-        this.stores = stores;
-    }
-
-    public List<Object> getAuctionStores() {
-        return auctionStores;
-    }
-
-    public void setAuctionStores(List<Object> auctionStores) {
-        this.auctionStores = auctionStores;
-    }
 }

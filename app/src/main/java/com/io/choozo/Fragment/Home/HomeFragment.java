@@ -34,15 +34,12 @@ import com.smarteist.autoimageslider.SliderView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment implements CategorySubCatChildCat {
+public class HomeFragment extends Fragment {
     Activity activity;
     SliderLayout sliderLayout;
     TextView tvSliderName;
     RecyclerView rv_Shop;
-    String endPoint,endPointBanner,strImage,strImagePath,endPointImageResize;
-    int i,subCategoryId = 0;
-    int intCategoryId,intSubCategoryId;
-    int intCategoryIdfori,intSubCategoryIdforj ;
+    String endPoint,endPointBanner,strImagePath,endPointImageResize;
     ShopingCategoryAdapter adapter;
     List<CategoryDataModel> list = new ArrayList<>();
     List<ChildDataModel> list1 = new ArrayList<>();
@@ -63,7 +60,6 @@ public class HomeFragment extends Fragment implements CategorySubCatChildCat {
 
     private void initializeView(View view) {
         activity = getActivity();
-        ad_interface = this;
         tvSliderName = (TextView)view.findViewById(R.id.tv_slider_name);
         sliderLayout = view.findViewById(R.id.image);
         sliderLayout.setIndicatorAnimation(IndicatorAnimations.FILL); //set indicator animation by using SliderLayout.Animations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
@@ -98,16 +94,15 @@ public class HomeFragment extends Fragment implements CategorySubCatChildCat {
     /* ---------------------------------------------------- banner data from api response -------------------------------------------*/
 
     private void getBannerDataFromApi(GetBannerListResponseModel result) {
-        if(result.getStatus() == 1){
+        if(result.getStatus()){
             for (int i=0 ; i<result.getData().size();i++) {
-                strImage = result.getData().get(i).getImage();
-                strImagePath = result.getData().get(i).getImagePath();
+                strImagePath = result.getData().get(i).getAvatarPath();
                 //tvSliderName.setText(result.getData().get(i).getTitle());
-                endPointImageResize = UrlLocator.getFinalUrl(Config.Url.imageResize +"width=3840&height=2160&name="+strImage+"&path="+strImagePath+"");
+                endPointImageResize = "https://admin.dincharyamart.com/api/media/render?path="+strImagePath;
                 SliderView sliderView = new DefaultSliderView(activity);
                 sliderView.setImageUrl(endPointImageResize);
                 sliderView.setImageScaleType(ImageView.ScaleType.CENTER_CROP);
-                sliderView.setDescription(result.getData().get(i).getTitle());
+                sliderView.setDescription(result.getData().get(i).getTittle());
                 ((DefaultSliderView) sliderView).setDescriptionTextSize(20);
 
                 final int finalI = i;
@@ -142,7 +137,7 @@ public class HomeFragment extends Fragment implements CategorySubCatChildCat {
                         if(e!=null){
                             return;
                         }
-                        setData(result);
+                        setAdapterTabs(result);
                         Config.categoryResponseModel = result;
 
                     }
@@ -150,80 +145,14 @@ public class HomeFragment extends Fragment implements CategorySubCatChildCat {
 
     }
 
-/* ----------------------------------- Api data pass or set into custom tabs(using recycler view)-------------------------------------*/
-
-    private void setData(CategoryResponseModel result) {
-        list.clear();
-        list1.clear();
-        list2.clear();
-        for ( i = 0 ;i < result.getData().size();i++) {
-            intCategoryId = result.getData().get(i).getCategoryId();
-            CategoryDataModel categoryDataModel = new CategoryDataModel();
-            categoryDataModel.setName(result.getData().get(i).getName());
-            categoryDataModel.setImage(result.getData().get(i).getImage());
-            categoryDataModel.setImagePath(result.getData().get(i).getImagePath());
-            categoryDataModel.setCategoryId(result.getData().get(i).getCategoryId());
-            list.add(categoryDataModel);
-            if (intCategoryId == intCategoryIdfori) {
-
-                for (int j = 0; j < result.getData().get(i).getChildren().size(); j++) {
-                    intSubCategoryId = result.getData().get(i).getChildren().get(j).getCategoryId();
-                  /*  if(this.subCategoryId == 0){
-                        intSubCategoryIdforj = result.getData().get(i).getChildren().get(0).getCategoryId();
-                    }else {*/
-                        intSubCategoryIdforj = this.subCategoryId;
-                  //  }
-                    ChildDataModel childDataModel = new ChildDataModel();
-                    childDataModel.setName(result.getData().get(i).getChildren().get(j).getName());
-                    childDataModel.setCategoryId(result.getData().get(i).getChildren().get(j).getCategoryId());
-                    list1.add(childDataModel);
-                        try {
-
-                            if (intSubCategoryId == intSubCategoryIdforj) {
-                            for (int k = 0; k < result.getData().get(i).getChildren().get(j).getChildren().size(); k++) {
-                                SubChildDataModel subChildDataModel = new SubChildDataModel();
-                                subChildDataModel.setName(result.getData().get(i).getChildren().get(j).getChildren().get(k).getName());
-                                subChildDataModel.setCategoryId(result.getData().get(i).getChildren().get(j).getChildren().get(k).getCategoryId());
-                                list2.add(subChildDataModel);
-                            }}
-                        } catch (Exception e) {
-                            System.out.println(e);
-                        }
-
-                }
-            }
-        }
-        setAdapterTabs();
-
-    }
     /* ------------------------------------------------- data set into recycler view Adapter --------------------------------------------*/
 
-    private void setAdapterTabs() {
-        adapter = new ShopingCategoryAdapter(activity,ad_interface, list);
+    private void setAdapterTabs(CategoryResponseModel result) {
+        adapter = new ShopingCategoryAdapter(activity,ad_interface, result);
         rv_Shop.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         Config.childDataModel = list1;
         Config.subChildDataModels = list2;
     }
-
-    /*------------------------------------------------------------ category click --------------------------------------------------------*/
-
-    @Override
-    public void catId(int cateId) {
-        intCategoryIdfori = cateId;
-      //  Config.categoryClickId = cateId;
-        setData(Config.categoryResponseModel);
-
-    }
-
-    /*--------------------------------------------------------- sub category click---------------------------------------------------------*/
-
-    @Override
-    public void subCategoryId(int subCategoryId) {
-        this.subCategoryId = subCategoryId;
-        Config.productId = String.valueOf(subCategoryId);
-        setData(Config.categoryResponseModel);
-    }
-
 
 }

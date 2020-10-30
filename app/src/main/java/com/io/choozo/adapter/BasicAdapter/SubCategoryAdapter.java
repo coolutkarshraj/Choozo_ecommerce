@@ -122,15 +122,15 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
     /* -------------------------------------------------------Api Data Set Into Recycler View-------------------------------------------------------*/
 
     private void CategorySubCategoryDataSetToRv(ProductListResponseModel result) {
-        if (result.getStatus() == 1) {
+        if (result.getStatus()) {
             dialog.dismiss();
-            if (result.getData().getProductList().isEmpty()) {
+            if (result.getData().isEmpty()) {
                 CategorySubCategory.tvDataNotFound.setVisibility(View.VISIBLE);
                 CategorySubCategory.itemsRecyclerView.setVisibility(View.GONE);
             } else {
                 CategorySubCategory.tvDataNotFound.setVisibility(View.GONE);
                 CategorySubCategory.itemsRecyclerView.setVisibility(View.VISIBLE);
-                CategorySubCategory.itemCategoryAdapter = new ItemCategoryAdapter(activity, result.getData().getProductList());
+                CategorySubCategory.itemCategoryAdapter = new ItemCategoryAdapter(activity, result.getData());
                 CategorySubCategory.itemsRecyclerView.setAdapter(itemCategoryAdapter);
                 CategorySubCategory.itemCategoryAdapter.notifyDataSetChanged();
 

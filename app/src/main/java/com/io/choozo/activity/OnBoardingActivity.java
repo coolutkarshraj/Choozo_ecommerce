@@ -29,6 +29,8 @@ import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderLayout;
 import com.smarteist.autoimageslider.SliderView;
 
+import java.util.ArrayList;
+
 public class OnBoardingActivity extends AppCompatActivity implements View.OnClickListener {
 
     Activity activity;
@@ -36,6 +38,7 @@ public class OnBoardingActivity extends AppCompatActivity implements View.OnClic
     Button btn_start;
     PreferenceManager preferenceManager;
     String strImage,strImagePath,endPointBanner,endPointImageResize,strImageUrl;
+    ArrayList<String> imageUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,50 +82,24 @@ public class OnBoardingActivity extends AppCompatActivity implements View.OnClic
 
     /* -------------------------------------------------------- start Working --------------------------------------------------------*/
     private void startWorking() {
-        getBannerApi();
+        getBannerDataFromApi();
     }
 
-    /* ------------------------------------------------------ Api url endPoints ------------------------------------------------------*/
-
-    private void apiUrl() {
-
-        endPointBanner = Config.Url.getBanner;
-        endPointImageResize = Config.Url.imageResize;
-    }
-
-    /*-------------------------------------------------- get Banner from Api ---------------------------------------------------------*/
-
-    private void getBannerApi() {
-
-        apiUrl();
-        ApiCaller.getBanner(activity, endPointBanner, new FutureCallback<GetBannerListResponseModel>() {
-            @Override
-            public void onCompleted(Exception e, GetBannerListResponseModel result) {
-                if(e!=null){
-                    return;
-                }
-                getBannerDataFromApi(result);
-            }
-        });
-    }
-
-    /* ---------------------------------------------------- banner data from api response -------------------------------------------*/
-
-    private void getBannerDataFromApi(GetBannerListResponseModel result) {
-        if(result.getStatus() == 1){
-            for (int i=0 ; i<result.getData().size();i++) {
-                strImage = result.getData().get(i).getImage();
-                strImagePath = result.getData().get(i).getImagePath();
-                strImageUrl = UrlLocator.getFinalUrl(endPointImageResize +"width=3840&height=2160&name="+strImage+"&path="+strImagePath+"");
+    private void getBannerDataFromApi() {
+        imageUrl = new ArrayList<>();
+        imageUrl.add("https://i.ibb.co/0tgnfLX/intro1.png");
+        imageUrl.add("https://i.ibb.co/k48Xr7j/intro2.jpg");
+        imageUrl.add("https://i.ibb.co/64cbzFY/intro3.jpg");
+        imageUrl.add("https://i.ibb.co/zsbr68C/intro4.png");
+        imageUrl.add("https://i.ibb.co/3TQRfBg/intro5.jpg");
+            for (int i=0 ; i< imageUrl.size();i++) {
+                strImageUrl = imageUrl.get(i);
                 SliderView sliderView = new DefaultSliderView(activity);
                 sliderView.setImageUrl(strImageUrl);
                 sliderView.setImageScaleType(ImageView.ScaleType.CENTER_CROP);
-                final int finalI = i;
                 sliderLayout.addSliderView(sliderView);
             }
-        }else{
-            Toast.makeText(activity, "Something went Wrong", Toast.LENGTH_SHORT).show();
-        }
+
     }
 
 }

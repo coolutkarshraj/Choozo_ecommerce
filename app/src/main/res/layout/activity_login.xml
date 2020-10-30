@@ -4,111 +4,112 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:windowSoftInputMode="adjustResize"
     android:background="@drawable/shopbackground11"
+    android:windowSoftInputMode="adjustResize"
 
     tools:context=".activity.loginRegistrationflow.LoginActivity">
 
     <RelativeLayout
+        android:id="@+id/firstlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/firstlayout"
         android:layout_marginTop="25dp">
 
         <ImageView
             android:layout_width="150dp"
             android:layout_height="40dp"
             android:layout_marginLeft="20dp"
-            android:background="@drawable/logowithouttext"/>
+            android:background="@drawable/logowithouttext" />
+
         <TextView
+            android:id="@+id/tv_skip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Skip"
-            android:visibility="gone"
-            android:id="@+id/tv_skip"
             android:layout_alignParentRight="true"
-            android:textSize="@dimen/h3"
             android:layout_centerVertical="true"
-            android:textColor="@color/black"
+            android:layout_marginRight="@dimen/endmargin"
             android:fontFamily="@font/segoeui"
-            android:layout_marginRight="@dimen/endmargin"/>
+            android:text="Skip"
+            android:textColor="@color/black"
+            android:textSize="@dimen/h3"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/secondlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/firstlayout"
         android:layout_marginTop="20dp"
-        android:id="@+id/secondlayout"
         android:gravity="center"
-        android:orientation="vertical"
-        android:layout_below="@+id/firstlayout">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_signin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/secondlayout"
+            android:fontFamily="@font/segoeui"
             android:lineSpacingExtra="6dp"
             android:text="Sign In"
             android:textColor="@color/black"
-            android:textSize="25dp"
-            android:fontFamily="@font/segoeui"/>
+            android:textSize="25dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_signin"
-            android:gravity="center"
-            android:layout_marginTop="2dp">
+            android:layout_marginTop="2dp"
+            android:gravity="center">
+
+            <RelativeLayout
+                android:id="@+id/image_login"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+
+                android:layout_centerVertical="true"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp">
+
 
                 <RelativeLayout
+                    android:id="@+id/tab"
                     android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:paddingTop="20dp"
-
-                    android:paddingBottom="20dp"
-                    android:layout_centerVertical="true"
-                    android:id="@+id/image_login">
-
-
-                            <RelativeLayout
-                                android:layout_width="50dp"
-                                android:layout_height="5dp"
-                                android:background="@color/red"
-                                android:id="@+id/tab">
-
-                            </RelativeLayout>
+                    android:layout_height="5dp"
+                    android:background="@color/red">
 
                 </RelativeLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/image_signup"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/image_login"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp">
+
                 <RelativeLayout
+                    android:id="@+id/tab1"
                     android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="20dp"
-                    android:paddingTop="20dp"
-                    android:paddingBottom="20dp"
-                    android:layout_centerVertical="true"
-                    android:id="@+id/image_signup"
-                    android:layout_toRightOf="@+id/image_login"
-                 >
-                            <RelativeLayout
-                                android:layout_width="50dp"
-                                android:layout_height="5dp"
-                                android:background="@color/black"
-                                android:id="@+id/tab1">
-                            </RelativeLayout>
-                </RelativeLayout>
+                    android:layout_height="5dp"
+                    android:background="@color/black"></RelativeLayout>
+            </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/loginlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="10dp"
-        android:id="@+id/loginlayout"
-        android:layout_marginEnd="10dp"
+        android:layout_below="@+id/secondlayout"
         android:layout_centerInParent="true"
-        android:layout_below="@+id/secondlayout">
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -119,111 +120,128 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/emaillayout"
-
-            android:layout_marginStart="@dimen/startmargin"
-            android:layout_marginEnd="@dimen/endmargin">
-
-            <ImageView
-                android:id="@+id/iv_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/ic_email_black_24dp"
-                android:backgroundTint="@color/red" />
-
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/text_input_layout"
-                android:layout_width="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@+id/iv_email"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/et_login_email"
+                <RelativeLayout
+                    android:id="@+id/emaillayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/grey"
-                    android:hint="Email"
-                    android:textSize="@dimen/h2"
-                    android:fontFamily="@font/segoeui"/>
-            </android.support.design.widget.TextInputLayout>
 
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:id="@+id/passwordlayout"
-            android:layout_below="@+id/emaillayout"
-            android:layout_marginStart="@dimen/startmargin"
-            android:layout_marginEnd="@dimen/endmargin">
+                    android:layout_marginStart="@dimen/startmargin"
+                    android:layout_marginEnd="@dimen/endmargin">
 
-            <ImageView
-                android:id="@+id/iv_password"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginBottom="18dp"
-                android:background="@drawable/ic_lock_outline_black_24dp"
-                android:backgroundTint="@color/red" />
+                    <ImageView
+                        android:id="@+id/iv_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/ic_email_black_24dp"
+                        android:backgroundTint="@color/red" />
 
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/text_input_layout1"
-                android:layout_width="match_parent"
-                android:layout_marginLeft="20dp"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/iv_password"
-                android:layout_height="wrap_content">
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/text_input_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@+id/iv_email">
 
-                <EditText
-                    android:id="@+id/et_login_password"
+                        <EditText
+                            android:id="@+id/et_login_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/segoeui"
+                            android:hint="Email"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/h2" />
+                    </android.support.design.widget.TextInputLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/passwordlayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:textColor="@color/grey"
-                    android:hint="Password"
-                    android:textSize="@dimen/h2"
-                    android:fontFamily="@font/segoeui"/>
-            </android.support.design.widget.TextInputLayout>
+                    android:layout_below="@+id/emaillayout"
+                    android:layout_marginStart="@dimen/startmargin"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="@dimen/endmargin">
+
+                    <ImageView
+                        android:id="@+id/iv_password"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginBottom="18dp"
+                        android:background="@drawable/ic_lock_outline_black_24dp"
+                        android:backgroundTint="@color/red" />
 
 
-        </RelativeLayout>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Forgot Password?"
-           android:layout_below="@+id/passwordlayout"
-            android:layout_marginTop="10dp"
-           android:layout_gravity="right"
-            android:textSize="@dimen/h3"
-            android:layout_centerVertical="true"
-            android:textColor="#9C9B9B"
-            android:id="@+id/tv_forgotpassword"
-            android:layout_marginRight="@dimen/endmargin"
-            android:fontFamily="@font/segoeui"/>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_forgotpassword"
-            android:layout_marginTop="50dp"
-            android:text="Login"
-            android:id="@+id/btnlogin"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textSize="@dimen/h1"
-            android:fontFamily="@font/seguisb"
-            android:layout_marginStart="@dimen/startmargin"
-            android:layout_marginEnd="@dimen/endmargin"
-            android:background="@drawable/button_shape_red"
-            android:layout_marginBottom="10dp"/>
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/text_input_layout1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@+id/iv_password">
+
+                        <EditText
+                            android:id="@+id/et_login_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/segoeui"
+                            android:hint="Password"
+                            android:inputType="textPassword"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/h2" />
+                    </android.support.design.widget.TextInputLayout>
+
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_forgotpassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/passwordlayout"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="@dimen/endmargin"
+                    android:fontFamily="@font/segoeui"
+                    android:text="Forgot Password?"
+                    android:textColor="#9C9B9B"
+                    android:textSize="@dimen/h3" />
+
+                <Button
+                    android:id="@+id/btnlogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_forgotpassword"
+                    android:layout_marginStart="@dimen/startmargin"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="@dimen/endmargin"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/button_shape_red"
+                    android:fontFamily="@font/seguisb"
+                    android:text="Login"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/h1"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_guest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/passwordlayout"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/segoeui"
+                    android:text="Login As Guest"
+                    android:textStyle="bold"
+                    android:textColor="#9C9B9B"
+                    android:textSize="@dimen/h3" />
             </LinearLayout>
 
 
@@ -231,15 +249,15 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/register_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-       android:visibility="gone"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:id="@+id/register_layout"
+        android:layout_below="@+id/secondlayout"
         android:layout_centerInParent="true"
-        android:layout_below="@+id/secondlayout">
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:visibility="gone">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -251,9 +269,9 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
+                    android:id="@+id/usernamelayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/usernamelayout"
 
                     android:layout_marginStart="@dimen/startmargin"
                     android:layout_marginEnd="@dimen/endmargin">
@@ -262,7 +280,7 @@
                         android:id="@+id/iv_username"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                       android:layout_centerVertical="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginBottom="5dp"
                         android:background="@drawable/ic_person_outline_black_24dp"
                         android:backgroundTint="@color/red" />
@@ -271,30 +289,31 @@
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/usertext"
                         android:layout_width="match_parent"
-                        android:layout_marginLeft="20dp"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/iv_username"
-                        android:layout_height="wrap_content">
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@+id/iv_username">
 
                         <EditText
                             android:id="@+id/et_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/grey"
+                            android:fontFamily="@font/segoeui"
                             android:hint="Name"
-                            android:textSize="@dimen/h2"
-                            android:fontFamily="@font/segoeui"/>
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/h2" />
                     </android.support.design.widget.TextInputLayout>
 
                 </RelativeLayout>
+
                 <RelativeLayout
+                    android:id="@+id/register_email_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:id="@+id/register_email_layout"
                     android:layout_below="@+id/emaillayout"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/startmargin"
+                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="@dimen/endmargin">
 
                     <ImageView
@@ -310,31 +329,32 @@
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/email_register"
                         android:layout_width="match_parent"
-                        android:layout_marginLeft="20dp"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/iv_email_register"
-                        android:layout_height="wrap_content">
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@+id/iv_email_register">
 
                         <EditText
                             android:id="@+id/et_email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/grey"
+                            android:fontFamily="@font/segoeui"
                             android:hint="Email"
-                            android:textSize="@dimen/h2"
-                            android:fontFamily="@font/segoeui"/>
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/h2" />
                     </android.support.design.widget.TextInputLayout>
 
 
                 </RelativeLayout>
+
                 <RelativeLayout
+                    android:id="@+id/register_phone_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_centerVertical="true"
-                    android:id="@+id/register_phone_layout"
                     android:layout_below="@+id/emaillayout"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/startmargin"
+                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="@dimen/endmargin">
 
                     <ImageView
@@ -350,31 +370,32 @@
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/phone_register"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
-                        android:layout_toRightOf="@+id/iv_phone"
-                        android:layout_height="wrap_content">
+                        android:layout_toRightOf="@+id/iv_phone">
 
                         <EditText
                             android:id="@+id/et_phone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/grey"
+                            android:fontFamily="@font/segoeui"
+                            android:hint="Phone"
                             android:inputType="number"
                             android:maxLength="10"
-                            android:hint="Phone"
-                            android:textSize="@dimen/h2"
-                            android:fontFamily="@font/segoeui"/>
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/h2" />
                     </android.support.design.widget.TextInputLayout>
 
 
                 </RelativeLayout>
+
                 <RelativeLayout
+                    android:id="@+id/password_layout_register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:id="@+id/password_layout_register"
                     android:layout_below="@+id/emaillayout"
                     android:layout_marginStart="@dimen/startmargin"
+                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="@dimen/endmargin">
 
                     <ImageView
@@ -390,72 +411,41 @@
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/password"
                         android:layout_width="match_parent"
-                        android:layout_marginLeft="20dp"
+                        android:layout_height="wrap_content"
 
-                        android:layout_toRightOf="@+id/iv_password_register"
-                        android:layout_height="wrap_content">
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@+id/iv_password_register">
 
                         <EditText
                             android:id="@+id/et_password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/grey"
-                            android:inputType="textPassword"
+                            android:fontFamily="@font/segoeui"
                             android:hint="Password"
-                            android:textSize="@dimen/h2"
-                            android:fontFamily="@font/segoeui"/>
+                            android:inputType="textPassword"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/h2" />
                     </android.support.design.widget.TextInputLayout>
 
 
                 </RelativeLayout>
 
                 <Button
+                    android:id="@+id/btn_register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_forgotpassword"
-                    android:layout_marginTop="20dp"
-                    android:text="Register"
-                    android:id="@+id/btn_register"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:textSize="16dp"
                     android:layout_marginStart="@dimen/startmargin"
-                    android:layout_marginEnd="@dimen/endmargin"
-                    android:fontFamily="@font/seguisb"
-                    android:background="@drawable/button_shape_red"
-                    android:layout_marginBottom="10dp"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="---------- or Sign Up with ----------"
-                    android:textColor="@color/black"
-                    android:gravity="center"
-                    android:layout_marginTop="20dp"/>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
                     android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:orientation="horizontal"
-                    android:layout_gravity="center">
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/facebook"/>
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:visibility="gone"
-                        android:layout_marginLeft="20dp"
-                        android:background="@drawable/twitter"/>
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginLeft="20dp"
-                        android:background="@drawable/googleplus"/>
-                </LinearLayout>
+                    android:layout_marginEnd="@dimen/endmargin"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/button_shape_red"
+                    android:fontFamily="@font/seguisb"
+                    android:text="Register"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
             </LinearLayout>
 
 

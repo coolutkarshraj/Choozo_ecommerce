@@ -8,308 +8,299 @@
     tools:context=".activity.homeActivity.CategorySubCategory">
 
 
+    <RelativeLayout
+        android:id="@+id/first"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@color/white"
+        android:elevation="5dp">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/back_arrow"
+            android:backgroundTint="@color/black" />
+
+        <com.io.choozo.custom.BoldTextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/seguisb"
+            android:text="Mens Fashion"
+            android:textColor="@color/black"
+            android:textSize="@dimen/h1"
+
+            />
+
+        <ImageView
+            android:id="@+id/filterbtn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/filtericon"
+            android:backgroundTint="@color/black" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/first"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="2dp">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_category"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"></android.support.v7.widget.RecyclerView>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="2dp">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_items_catsub"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+        </android.support.v7.widget.CardView>
+
+
+        <TextView
+            android:id="@+id/tv_data_notFound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp"
+            android:fontFamily="@font/seguisb"
+            android:gravity="center"
+            android:text="No Result Found"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:elevation="5dp"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/btn"
+                android:background="@color/white"
+                android:orientation="vertical">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:id="@+id/first"
-                    android:background="@color/white"
-                    android:elevation="5dp">
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:id="@+id/back"
-                        android:background="@drawable/back_arrow"
-                        android:backgroundTint="@color/black"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"/>
+                    android:layout_height="60dp">
 
-                    <com.io.choozo.custom.BoldTextView
-                        android:id="@+id/tv_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Mens Fashion"
-                        android:textSize="@dimen/h1"
-                        android:fontFamily="@font/seguisb"
-                        android:textColor="@color/black"
-                        android:layout_centerInParent="true"
-
-                        />
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:id="@+id/filterbtn"
-                        android:background="@drawable/filtericon"
-                        android:backgroundTint="@color/black"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="10dp"
-                        />
-                </RelativeLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@+id/first"
-                    android:orientation="vertical">
-                                        <android.support.v7.widget.CardView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            app:cardElevation="2dp">
-                                                            <android.support.v7.widget.RecyclerView
-                                                                android:layout_width="match_parent"
-                                                                android:layout_height="wrap_content"
-                                                                android:id="@+id/rv_category"
-                                                                android:layout_marginTop="5dp">
-                                                            </android.support.v7.widget.RecyclerView>
-                                            </android.support.v7.widget.CardView>
-
-                                            <android.support.v7.widget.CardView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            app:cardElevation="2dp">
-                                                            <android.support.v7.widget.RecyclerView
-                                                                android:layout_width="match_parent"
-                                                                android:layout_height="wrap_content"
-                                                                android:id="@+id/rv_subcategory">
-                                                            </android.support.v7.widget.RecyclerView>
-                                        </android.support.v7.widget.CardView>
-
-                                        <android.support.v7.widget.RecyclerView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:id="@+id/rv_items_catsub">
-                                        </android.support.v7.widget.RecyclerView>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="No Result Found"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="10dp"
+                        android:fontFamily="@font/seguisb"
+                        android:text="Filter by"
                         android:textAllCaps="true"
-                        android:visibility="gone"
-                       android:layout_gravity="center"
-                        android:layout_marginTop="100dp"
-                        android:id="@+id/tv_data_notFound"
                         android:textColor="@color/black"
-                        android:fontFamily="@font/seguisb"/>
-                </LinearLayout>
+                        android:textSize="20dp" />
 
-                <RelativeLayout
+                    <ImageView
+                        android:id="@+id/im_cancel"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/multiply" />
+                </RelativeLayout>
+
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:elevation="5dp"
-                    android:visibility="gone"
-                    android:layout_alignParentBottom="true"
-                    android:id="@+id/rl_filter"
-                   >
+                    android:layout_height="1dp"
+                    android:background="@color/grey"></View>
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:background="@color/white"
-                        android:layout_above="@+id/btn">
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.3"
+                        android:background="@color/greybackground">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Filter by"
-                            android:textSize="20dp"
-                            android:layout_centerVertical="true"
-                            android:layout_margin="10dp"
-                            android:textAllCaps="true"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/seguisb"/>
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:id="@+id/im_cancel"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:background="@drawable/multiply"
-                            android:layout_margin="10dp"/>
-                    </RelativeLayout>
-
-                        <View
+                        <ScrollView
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/grey"></View>
+                            android:layout_height="match_parent">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            android:weightSum="2">
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@color/greybackground"
-                                android:layout_weight="1.3">
-                                <ScrollView
+                                android:orientation="vertical">
+
+                                <TextView
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent">
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:orientation="vertical">
-                                        <TextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="50dp"
-                                            android:elevation="5dp"
+                                    android:layout_height="50dp"
+                                    android:elevation="5dp"
 
-                                            android:text="Price"
-                                            android:textSize="16dp"
-                                            android:gravity="center"
-                                            android:textColor="@color/grey"
-                                            android:fontFamily="@font/seguisb"/>
-                                        <View
-                                            android:layout_width="match_parent"
-                                            android:layout_height="1dp"
-                                            android:background="@color/grey"></View>
-                                        <TextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="50dp"
-                                            android:elevation="5dp"
-                                            android:text="Brand"
-                                            android:textSize="16dp"
-                                            android:gravity="center"
-                                            android:textColor="@color/grey"
-                                            android:fontFamily="@font/seguisb"/>
-                                        <View
-                                            android:layout_width="match_parent"
-                                            android:layout_height="1dp"
-                                            android:background="@color/grey"></View>
-                                        <TextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="50dp"
-                                            android:elevation="5dp"
-                                            android:text="Size"
-                                            android:textSize="16dp"
-                                            android:gravity="center"
-                                            android:textColor="@color/grey"
-                                            android:fontFamily="@font/seguisb"/>
-                                        <View
-                                            android:layout_width="match_parent"
-                                            android:layout_height="1dp"
-                                            android:background="@color/grey"></View>
-                                        <TextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="50dp"
-                                            android:elevation="5dp"
-                                            android:text="Color"
-                                            android:textSize="16dp"
-                                            android:gravity="center"
-                                            android:textColor="@color/grey"
-                                            android:fontFamily="@font/seguisb"/>
-                                        <View
-                                            android:layout_width="match_parent"
-                                            android:layout_height="1dp"
-                                            android:background="@color/grey"></View>
-                                        <TextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="50dp"
-                                            android:elevation="5dp"
-                                            android:text="Discount"
-                                            android:textSize="16dp"
-                                            android:gravity="center"
-                                            android:textColor="@color/grey"
-                                            android:fontFamily="@font/seguisb"/>
-                                        <View
-                                            android:layout_width="match_parent"
-                                            android:layout_height="1dp"
-                                            android:background="@color/grey"></View>
-                                        <TextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="50dp"
-                                            android:elevation="5dp"
+                                    android:fontFamily="@font/seguisb"
+                                    android:gravity="center"
+                                    android:text="Price"
+                                    android:textColor="@color/grey"
+                                    android:textSize="14dp" />
 
-                                            android:text="Category"
-                                            android:textSize="16dp"
-                                            android:gravity="center"
-                                            android:textColor="@color/grey"
-                                            android:fontFamily="@font/seguisb"/>
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="@color/grey"></View>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:elevation="5dp"
+                                    android:fontFamily="@font/seguisb"
+                                    android:gravity="center"
+                                    android:text="Brand"
+                                    android:textColor="@color/grey"
+                                    android:textSize="14dp" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="@color/grey"></View>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:elevation="5dp"
+                                    android:fontFamily="@font/seguisb"
+                                    android:gravity="center"
+                                    android:text="Category"
+                                    android:textColor="@color/grey"
+                                    android:textSize="14dp" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="@color/grey"></View>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:elevation="5dp"
+                                    android:fontFamily="@font/seguisb"
+                                    android:gravity="center"
+                                    android:text="Sub-Category"
+                                    android:textColor="@color/grey"
+                                    android:textSize="14dp" />
 
 
-                                    </LinearLayout>
-                                </ScrollView>
+
+
                             </LinearLayout>
+                        </ScrollView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".7"
+                        android:orientation="vertical">
+
+                        <ScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                android:layout_weight=".7">
-                                <ScrollView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent">
+                                android:orientation="vertical">
 
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:orientation="vertical">
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="50dp"
                                     android:orientation="vertical">
 
-                                <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_marginRight="10dp"
-                                    android:layout_marginTop="2dp"
-                                    android:layout_centerVertical="true"
-                                    android:elevation="50dp"
-                                    app:corner_radius="10"
-                                    app:min_value="500"
-                                    app:max_value="100000"
-                                    android:id="@+id/rangeSeekbar1"
-                                    app:bar_color="@color/greybackground"
-                                    app:bar_highlight_color="@color/red"
-                                    app:left_thumb_color="@color/lighred"
-                                    app:right_thumb_color="@color/lighred"
-                                    app:left_thumb_color_pressed="@color/red"
-                                    app:right_thumb_color_pressed="@color/red"
-                                    app:data_type="_integer"/>
+                                    <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
+                                        android:id="@+id/rangeSeekbar1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_marginTop="2dp"
+                                        android:layout_marginRight="10dp"
+                                        android:elevation="50dp"
+                                        app:bar_color="@color/greybackground"
+                                        app:bar_highlight_color="@color/red"
+                                        app:corner_radius="10"
+                                        app:data_type="_integer"
+                                        app:left_thumb_color="@color/lighred"
+                                        app:left_thumb_color_pressed="@color/red"
+                                        app:max_value="100000"
+                                        app:min_value="500"
+                                        app:right_thumb_color="@color/lighred"
+                                        app:right_thumb_color_pressed="@color/red" />
 
 
-                                <RelativeLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="10dp"
-                                    android:layout_marginEnd="10dp">
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:elevation="5dp"
-                                    android:text="Category"
-                                    android:textSize="12dp"
-                                    android:gravity="left"
-                                    android:id="@+id/textMin1"
-                                    android:fontFamily="@font/seguisb"/>
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:elevation="5dp"
-                                    android:text="Category"
-                                    android:textSize="12dp"
-                                    android:layout_alignParentRight="true"
-                                    android:id="@+id/textMax1"
-                                    android:fontFamily="@font/seguisb"/>
-                                </RelativeLayout>
+                                    <RelativeLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_marginEnd="10dp">
+
+                                        <TextView
+                                            android:id="@+id/textMin1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:elevation="5dp"
+                                            android:fontFamily="@font/seguisb"
+                                            android:gravity="left"
+                                            android:text="Min"
+                                            android:textSize="12dp" />
+
+                                        <TextView
+                                            android:id="@+id/textMax1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_alignParentRight="true"
+                                            android:elevation="5dp"
+                                            android:fontFamily="@font/seguisb"
+                                            android:text="Max"
+                                            android:textSize="12dp" />
+                                    </RelativeLayout>
                                 </LinearLayout>
 
                                 <View
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
                                     android:background="@color/grey"></View>
+
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="50dp"
@@ -320,155 +311,120 @@
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="35dp"
-                                        android:gravity="center"
                                         android:layout_marginStart="10dp"
                                         android:layout_marginEnd="10dp"
-                                        android:background="@drawable/grey_outline_round_narrow">
+                                        android:background="@drawable/grey_outline_round_narrow"
+                                        android:gravity="center">
+
+                                        <Spinner
+                                            android:id="@+id/spinner"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"></Spinner>
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="@color/grey"></View>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="35dp"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:background="@drawable/grey_outline_round_narrow"
+                                    android:gravity="center">
+
                                     <Spinner
+                                        android:id="@+id/spinner_cat_id"
                                         android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:id="@+id/spinner"
-                                        ></Spinner>
-                                    </LinearLayout>
-
+                                        android:layout_height="match_parent"></Spinner>
                                 </LinearLayout>
+
                                 <View
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
                                     android:background="@color/grey"></View>
+
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:orientation="vertical">
+                                    android:layout_height="35dp"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:background="@drawable/grey_outline_round_narrow"
+                                    android:gravity="center">
 
-                                    <android.support.v7.widget.RecyclerView
+                                    <Spinner
+                                        android:id="@+id/spinnersub_category_id"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:id="@+id/rv_productsize">
-                                    </android.support.v7.widget.RecyclerView>
-
+                                        android:layout_height="match_parent"></Spinner>
                                 </LinearLayout>
+
                                 <View
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
                                     android:background="@color/grey"></View>
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:orientation="vertical">
-
-                                    <android.support.v7.widget.RecyclerView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:id="@+id/rv_choosecolor">
-                                    </android.support.v7.widget.RecyclerView>
-
-                                </LinearLayout>
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="1dp"
-                                    android:background="@color/grey"></View>
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="50dp"
-                                            android:gravity="center"
-                                            android:orientation="vertical">
-                                            <LinearLayout
-                                                android:layout_width="match_parent"
-                                                android:layout_height="35dp"
-                                                android:gravity="center"
-                                                android:layout_marginStart="10dp"
-                                                android:layout_marginEnd="10dp"
-                                                android:background="@drawable/grey_outline_round_narrow">
-
-                                            <Spinner
-                                                android:layout_width="match_parent"
-                                                android:layout_height="match_parent"
-                                                android:id="@+id/spinner2"></Spinner>
-                                            </LinearLayout>
-
-                                        </LinearLayout>
-                                        <View
-                                            android:layout_width="match_parent"
-                                            android:layout_height="1dp"
-                                            android:background="@color/grey"></View>
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="50dp"
-                                            android:gravity="center"
-                                            android:orientation="vertical">
-
-
-                                            <LinearLayout
-                                                android:layout_width="match_parent"
-                                                android:layout_height="35dp"
-                                                android:gravity="center"
-                                                android:layout_marginStart="10dp"
-                                                android:layout_marginEnd="10dp"
-                                                android:background="@drawable/grey_outline_round_narrow">
-                                                <Spinner
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="match_parent"
-                                                    android:id="@+id/spinner1"></Spinner>
-                                            </LinearLayout>
-
-                                        </LinearLayout>
-                                        <View
-                                            android:layout_width="match_parent"
-                                            android:layout_height="1dp"
-                                            android:background="@color/grey"></View>
-                                    </LinearLayout>
 
 
 
 
-                                </ScrollView>
-                            </LinearLayout>
-                        </LinearLayout>
+                             </LinearLayout>
+
+
+                        </ScrollView>
                     </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:weightSum="2">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1.3"
+                    android:background="@color/grey">
+
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:id="@+id/btn"
-                        android:weightSum="2">
-                        <RelativeLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="50dp"
-                                    android:layout_weight="1.3"
-                                    android:background="@color/grey">
+                        android:layout_centerInParent="true"
+                        android:fontFamily="@font/segoeuisl"
+                        android:text="clear all"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        android:textSize="16dp" />
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="clear all"
-                                        android:textSize="16dp"
-                                        android:layout_centerInParent="true"
-                                        android:textAllCaps="true"
-                                        android:textColor="@color/white"
-                                        android:fontFamily="@font/segoeuisl"/>
-
-                        </RelativeLayout>
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:layout_weight=".7"
-                            android:background="@color/red">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Apply Filter"
-                            android:textSize="16dp"
-                            android:layout_centerInParent="true"
-                            android:textAllCaps="true"
-                            android:textColor="@color/white"
-                            android:fontFamily="@font/seguisb"/>
-                        </RelativeLayout>
-                    </LinearLayout>
-                    </RelativeLayout>
                 </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight=".7"
+                    android:background="@color/red">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="@font/seguisb"
+                        android:text="Apply Filter"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        android:textSize="16dp" />
+                </RelativeLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -2,30 +2,45 @@
 package com.io.choozo.model.responseModel;
 
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @SuppressWarnings("unused")
 public class ForgotPasswordResponseModel {
 
-    @SerializedName("message")
-    private String mMessage;
     @SerializedName("status")
-    private Long mStatus;
+    @Expose
+    private boolean status;
+    @SerializedName("message")
+    @Expose
+    private String message;
+    @SerializedName("data")
+    @Expose
+    private String data;
+
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 
     public String getMessage() {
-        return mMessage;
+        return message;
     }
 
     public void setMessage(String message) {
-        mMessage = message;
+        this.message = message;
     }
 
-    public Long getStatus() {
-        return mStatus;
+    public String getData() {
+        return data;
     }
 
-    public void setStatus(Long status) {
-        mStatus = status;
+    public void setData(String data) {
+        this.data = data;
     }
+
 
 }

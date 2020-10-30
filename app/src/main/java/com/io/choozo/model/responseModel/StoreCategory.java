@@ -1,16 +1,9 @@
-package com.io.choozo.model.dataModel;
-
-import android.app.Activity;
+package com.io.choozo.model.responseModel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
-public class CategoryDataModel {
-
-
-
+public class StoreCategory {
     @SerializedName("createdDate")
     @Expose
     private String createdDate;
@@ -32,15 +25,6 @@ public class CategoryDataModel {
     @SerializedName("categoryId")
     @Expose
     private Integer categoryId;
-    @SerializedName("store")
-    @Expose
-    private List<Store> store = null;
-    @SerializedName("category")
-    @Expose
-    private Category category;
-    @SerializedName("storeSubCategories")
-    @Expose
-    private List<StoreSubCategory> storeSubCategories = null;
 
     public String getCreatedDate() {
         return createdDate;
@@ -96,29 +80,5 @@ public class CategoryDataModel {
 
     public void setCategoryId(Integer categoryId) {
         this.categoryId = categoryId;
-    }
-
-    public List<Store> getStore() {
-        return store;
-    }
-
-    public void setStore(List<Store> store) {
-        this.store = store;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public List<StoreSubCategory> getStoreSubCategories() {
-        return storeSubCategories;
-    }
-
-    public void setStoreSubCategories(List<StoreSubCategory> storeSubCategories) {
-        this.storeSubCategories = storeSubCategories;
     }
 }

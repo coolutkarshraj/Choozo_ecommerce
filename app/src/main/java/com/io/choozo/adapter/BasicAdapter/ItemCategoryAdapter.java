@@ -23,6 +23,7 @@ import com.io.choozo.UrlLocator;
 import com.io.choozo.activity.homeActivity.CartActivity;
 import com.io.choozo.localStorage.PreferenceManager;
 import com.io.choozo.model.dataModel.productListDataModel.ProductList;
+import com.io.choozo.model.responseModel.Data;
 import com.io.choozo.model.responseModel.DeleteProductWishlistResponseModel;
 import com.io.choozo.model.responseModel.LoginResponseModel;
 import com.io.choozo.model.responseModel.WishlistResponseModel;
@@ -33,15 +34,16 @@ import java.util.List;
 public class ItemCategoryAdapter extends RecyclerView.Adapter<ItemCategoryAdapter.ViewHolder> {
 
     Context context;
-    List<ProductList> item;
+    List<Data> item;
     int productId;
     String image,imagePath ,endPoint,strCutPrice,strPreferPrice;
     PreferenceManager preferenceManager;
     String token,endPointDeleteWishlist;
     int wishlistid;
+    private int k =0;
 
 
-    public ItemCategoryAdapter(Context context, List<ProductList> item) {
+    public ItemCategoryAdapter(Context context, List<Data> item) {
         this.context = context;
         this.item = item;
     }
@@ -69,26 +71,28 @@ public class ItemCategoryAdapter extends RecyclerView.Adapter<ItemCategoryAdapte
     @Override
     public void onBindViewHolder(@NonNull ItemCategoryAdapter.ViewHolder viewHolder, int i) {
 
-        ProductList model = item.get(i);
-        viewHolder.productName.setText(model.getName());
-        productId = model.getProductId();
-        strCutPrice = model.getPrice();
-        strPreferPrice = model.getPricerefer();
-        if(strPreferPrice.equals("") ){
-            viewHolder.productPrice.setText(model.getPrice());
+        viewHolder.productName.setText(item.get(i).getName());
+        productId = item.get(i).getProductId();
+        strCutPrice = item.get(i).getPrice();
+        if(strCutPrice.equals("") ){
+            viewHolder.productPrice.setText(item.get(i).getPrice());
             viewHolder.rlCutPrice.setVisibility(View.GONE);
         }else {
             viewHolder.rlCutPrice.setVisibility(View.VISIBLE);
-            viewHolder.productPrice.setText(model.getPricerefer());
-            viewHolder.productCutPrice.setText( "\u20B9" +model.getPrice());
+            viewHolder.productPrice.setText(item.get(i).getOfferPercentage());
+            viewHolder.productCutPrice.setText( "\u20B9" +item.get(i).getPrice());
             viewHolder.productCutPrice.setPaintFlags( viewHolder.productCutPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         }
-        viewHolder.productCutPrice.setText(model.getPrice());
-        image = model.getImages().getImage();
-        imagePath = model.getImages().getContainerName();
-        imageResizeApi(image,imagePath);
+        viewHolder.productCutPrice.setText(item.get(i).getPrice());
 
-        Glide.with(context).load(UrlLocator.getFinalUrl(endPoint)).into(viewHolder.productImage);
+        for (int j = 0 ; j <item.get(i).getPosters().size();j++){
+            imagePath =  item.get(i).getPosters().get(j).getAvatarPath();
+            k = j;
+            break;
+        }
+        String url = "https://admin.dincharyamart.com/api/media/render?path="+ imagePath;
+
+        Glide.with(context).load(url).into(viewHolder.productImage);
         viewHolder.Like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,10 +103,18 @@ public class ItemCategoryAdapter extends RecyclerView.Adapter<ItemCategoryAdapte
         viewHolder.Dislike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addToWishlist(model.getProductId(),viewHolder);
+                addToWishlist(item.get(i).getProductId(),viewHolder);
             }
         });
-        viewHolder.data(item.get(i));
+       // viewHolder.data(item.get(i));
+    }
+
+    private void putLoopOnImages(List<Data> item, int i) {
+        for (int j = 0 ; j <item.get(i).getPosters().size();j++){
+            imagePath =  item.get(i).getPosters().get(j).getAvatarPath();
+            k = j;
+            break;
+        }
     }
 
     @Override

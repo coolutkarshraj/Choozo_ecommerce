@@ -76,7 +76,7 @@ public class SavedAdressRvAdapter extends RecyclerView.Adapter<SavedAdressRvAdap
         String getJson = preferenceManager.getString(PreferenceManager.loginData);
         LoginResponseModel obj = gson.fromJson(getJson, LoginResponseModel.class);
         token = obj.getData().getToken();
-        userId = obj.getData().getUser().getId();
+        userId = obj.getData().getUser().getUserId();
 
 
 

@@ -1,6 +1,8 @@
 
 package com.io.choozo.model.responseModel;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import com.io.choozo.model.dataModel.CategoryDataModel;
 
 import java.util.List;
@@ -10,24 +12,22 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class CategoryResponseModel {
 
-    private Integer status;
-    private String message;
+    @SerializedName("status")
+    @Expose
+    private boolean status;
+    @SerializedName("data")
+    @Expose
     private List<CategoryDataModel> data = null;
+    @SerializedName("message")
+    @Expose
+    private String message;
 
-    public Integer getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(boolean status) {
         this.status = status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public List<CategoryDataModel> getData() {
@@ -36,5 +36,13 @@ public class CategoryResponseModel {
 
     public void setData(List<CategoryDataModel> data) {
         this.data = data;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
