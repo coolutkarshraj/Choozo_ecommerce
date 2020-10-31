@@ -78,13 +78,33 @@ public class ItemCategoryAdapter extends RecyclerView.Adapter<ItemCategoryAdapte
             viewHolder.productPrice.setText(item.get(i).getPrice());
             viewHolder.rlCutPrice.setVisibility(View.GONE);
         }else {
-            viewHolder.rlCutPrice.setVisibility(View.VISIBLE);
-            viewHolder.productPrice.setText(item.get(i).getOfferPercentage());
-            viewHolder.productCutPrice.setText( "\u20B9" +item.get(i).getPrice());
-            viewHolder.productCutPrice.setPaintFlags( viewHolder.productCutPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        }
-        viewHolder.productCutPrice.setText(item.get(i).getPrice());
+            if(strCutPrice.equals("") ){
+                if (item.get(i).getAttributes() != null || item.get(i).getAttributes().size() != 0) {
+                    viewHolder.productPrice.setText(item.get(i).getAttributes().get(0).getPrice());
+                }
+                viewHolder.rlCutPrice.setVisibility(View.GONE);
+            }else {
+                viewHolder.rlCutPrice.setVisibility(View.VISIBLE);
+                if(item.get(i).getOfferPercentage() != null && item.get(i).getOfferPercentage().equals("0")) {
+                    if (item.get(i).getAttributes() != null && item.get(i).getAttributes().size() != 0) {
+                        String price = item.get(i).getAttributes().get(0).getPrice();
+                        float productPrice = Float.valueOf(price);
+                        String percent = "0";
+                        percent = item.get(i).getOfferPercentage();
+                        float offerPrice = (productPrice * Integer.valueOf(percent)) / 100;
+                        if(item.get(i).getOfferPercentage().equals("0")){
+                            viewHolder.productPrice.setText(String.valueOf(productPrice));
+                        }else {
+                            float productPriceOriginal =  productPrice = offerPrice;
+                            viewHolder.productPrice.setText(String.valueOf(productPriceOriginal));
+                        }
+                        viewHolder.productCutPrice.setText( "\u20B9" +String.valueOf(productPrice));
+                        viewHolder.productCutPrice.setPaintFlags( viewHolder.productCutPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
+                    }
+                }
+            }
+          }
         for (int j = 0 ; j <item.get(i).getPosters().size();j++){
             imagePath =  item.get(i).getPosters().get(j).getAvatarPath();
             k = j;

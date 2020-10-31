@@ -1,56 +1,87 @@
 package com.io.choozo.model.dataModel.todayDealsModel;
 
 import java.util.List;
+
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Size{
 
-	@SerializedName("sizeId")
-	private int sizeId;
-
-	@SerializedName("storeType")
-	private int storeType;
-
 	@SerializedName("createdDate")
+	@Expose
 	private String createdDate;
-
-	@SerializedName("storeCategoryId")
-	private List<Integer> storeCategoryId;
-
+	@SerializedName("sizeId")
+	@Expose
+	private Integer sizeId;
 	@SerializedName("name")
+	@Expose
 	private String name;
-
-	@SerializedName("description")
-	private String description;
-
 	@SerializedName("categoryId")
-	private int categoryId;
+	@Expose
+	private Integer categoryId;
+	@SerializedName("storeType")
+	@Expose
+	private Integer storeType;
+	@SerializedName("description")
+	@Expose
+	private String description;
+	@SerializedName("storeCategoryId")
+	@Expose
+	private List<Integer> storeCategoryId = null;
 
-	public int getSizeId(){
-		return sizeId;
-	}
-
-	public int getStoreType(){
-		return storeType;
-	}
-
-	public String getCreatedDate(){
+	public String getCreatedDate() {
 		return createdDate;
 	}
 
-	public List<Integer> getStoreCategoryId(){
-		return storeCategoryId;
+	public void setCreatedDate(String createdDate) {
+		this.createdDate = createdDate;
 	}
 
-	public String getName(){
+	public Integer getSizeId() {
+		return sizeId;
+	}
+
+	public void setSizeId(Integer sizeId) {
+		this.sizeId = sizeId;
+	}
+
+	public String getName() {
 		return name;
 	}
 
-	public String getDescription(){
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Integer getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(Integer categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public Integer getStoreType() {
+		return storeType;
+	}
+
+	public void setStoreType(Integer storeType) {
+		this.storeType = storeType;
+	}
+
+	public String getDescription() {
 		return description;
 	}
 
-	public int getCategoryId(){
-		return categoryId;
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public List<Integer> getStoreCategoryId() {
+		return storeCategoryId;
+	}
+
+	public void setStoreCategoryId(List<Integer> storeCategoryId) {
+		this.storeCategoryId = storeCategoryId;
 	}
 }

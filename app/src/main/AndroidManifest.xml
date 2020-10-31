@@ -41,7 +41,7 @@
             android:name=".activity.loginRegistrationflow.LoginActivity"
             android:screenOrientation="portrait" />
 
-        <provider
+      <!--  <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
@@ -50,7 +50,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-
+-->
         <activity
             android:name=".activity.splashActivity.SplashActivity"
             android:screenOrientation="portrait">

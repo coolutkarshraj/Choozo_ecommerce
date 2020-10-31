@@ -147,7 +147,7 @@ public class Data{
     private List<Object> sizes = null;
     @SerializedName("attributes")
     @Expose
-    private List<Object> attributes = null;
+    private List<PrizeSizeModel> attributes = null;
     @SerializedName("isWishlist")
     @Expose
     private Boolean isWishlist;
@@ -512,11 +512,11 @@ public class Data{
         this.sizes = sizes;
     }
 
-    public List<Object> getAttributes() {
+    public List<PrizeSizeModel> getAttributes() {
         return attributes;
     }
 
-    public void setAttributes(List<Object> attributes) {
+    public void setAttributes(List<PrizeSizeModel> attributes) {
         this.attributes = attributes;
     }
 
