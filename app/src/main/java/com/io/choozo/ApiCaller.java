@@ -34,9 +34,13 @@ import com.io.choozo.model.responseModel.UpdateAddResponseModel;
 import com.io.choozo.model.responseModel.WishlistResponseModel;
 import com.io.choozo.model.responseModel.editProfiel.EditProfileResponseModel;
 import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.async.http.body.FilePart;
+import com.koushikdutta.async.http.body.Part;
 import com.koushikdutta.ion.Ion;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ApiCaller {
 
@@ -151,22 +155,45 @@ public class ApiCaller {
                                    String strPhone, String token,  File file,
                                    final FutureCallback<EditProfileResponseModel> apiCallBack) {
         final Gson gson = new Gson();
-        Ion.with(activity)
-                .load(UrlLocator.getFinalUrl("user/update"))
-                .setHeader("Authorization", "Bearer " + token)
-                .setMultipartParameter("name", Name)
-                .setMultipartParameter("bio", bio)
-                .setMultipartParameter("gender", gender)
-                .setMultipartParameter("dateOfBirth", dateOfBirth)
-                .setMultipartParameter("phone", strPhone)
-                .asJsonObject()
-                .setCallback(new FutureCallback<JsonObject>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonObject result) {
-                        EditProfileResponseModel editProfileDataModel = gson.fromJson(result, EditProfileResponseModel.class);
-                        apiCallBack.onCompleted(e, editProfileDataModel);
-                    }
-                });
+        List<Part> files = new ArrayList();
+        files.add(new FilePart("avatar", file));
+        if(file.length()==0||file==null){
+            Ion.with(activity)
+                    .load(UrlLocator.getFinalUrl("user/update"))
+                    .setHeader("Authorization", "Bearer " + token)
+                    .setMultipartParameter("name", Name)
+                    .setMultipartParameter("bio", bio)
+                    .setMultipartParameter("gender", gender)
+                    .setMultipartParameter("dateOfBirth", dateOfBirth)
+                    .setMultipartParameter("phone", strPhone)
+                    .asJsonObject()
+                    .setCallback(new FutureCallback<JsonObject>() {
+                        @Override
+                        public void onCompleted(Exception e, JsonObject result) {
+                            EditProfileResponseModel editProfileDataModel = gson.fromJson(result, EditProfileResponseModel.class);
+                            apiCallBack.onCompleted(e, editProfileDataModel);
+                        }
+                    });
+        }else {
+
+            Ion.with(activity)
+                    .load(UrlLocator.getFinalUrl("user/update"))
+                    .setHeader("Authorization", "Bearer " + token)
+                    .setMultipartParameter("name", Name)
+                    .addMultipartParts(files)
+                    .setMultipartParameter("bio", bio)
+                    .setMultipartParameter("gender", gender)
+                    .setMultipartParameter("dateOfBirth", dateOfBirth)
+                    .setMultipartParameter("phone", strPhone)
+                    .asJsonObject()
+                    .setCallback(new FutureCallback<JsonObject>() {
+                        @Override
+                        public void onCompleted(Exception e, JsonObject result) {
+                            EditProfileResponseModel editProfileDataModel = gson.fromJson(result, EditProfileResponseModel.class);
+                            apiCallBack.onCompleted(e, editProfileDataModel);
+                        }
+                    });
+        }
 
     }
  public static void editProfileSignup(Activity activity, String url, String Name, String bio, String gender, String dateOfBirth,

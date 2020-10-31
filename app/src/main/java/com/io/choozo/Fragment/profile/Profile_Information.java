@@ -41,7 +41,7 @@ public class Profile_Information extends Fragment implements View.OnClickListene
     Activity activity;
     int userId;
     ImageView imEditProfile;
-    CircularImageView civ_profile;
+   public static CircularImageView civ_profile;
     TextView tvName,tvEmail,tvMobile;
     String token,strOldPassword,strNewPassword,endPoint,endPointProfile;
     RelativeLayout rl_changepassword;

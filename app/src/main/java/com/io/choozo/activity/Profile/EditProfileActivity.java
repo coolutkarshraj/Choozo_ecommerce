@@ -37,6 +37,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.io.choozo.ApiCaller;
 import com.io.choozo.Config;
+import com.io.choozo.Fragment.profile.Profile_Information;
 import com.io.choozo.R;
 import com.io.choozo.custom.CircularImageView;
 import com.io.choozo.localStorage.PreferenceManager;
@@ -92,7 +93,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     RadioButton radioMale, radioFemale;
     final Calendar myCalendar = Calendar.getInstance();
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-    File imagefile;
+
     private File imgFile;
     private String licenseFile = "";
     private ImageUtility imageUtility;
@@ -279,10 +280,12 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         if (imageType.equals("camera")) {
             licenseFile = imageUtility.compressImage(destination.getPath());
             Log.e("camerapic", licenseFile);
-            imagefile = new File(licenseFile);
-            if (imagefile.exists()) {
-                Bitmap myBitmap = BitmapFactory.decodeFile(imagefile.getAbsolutePath());
+            imgFile = new File(licenseFile);
+            if (imgFile.exists()) {
+                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                 image.setImageBitmap(myBitmap);
+                dialog1.dismiss();
+                editprofileApi();
             }
 
         } else {
@@ -294,6 +297,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             if (imgFile.exists()) {
                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                 image.setImageBitmap(myBitmap);
+                dialog1.dismiss();
+                editprofileApi();
             }
         }
     }
@@ -373,6 +378,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             }
             if (result.getData().getAvatarPath() != null) {
                 Glide.with(activity).load(Config.imageUrl + result.getData().getAvatarPath()).into(image);
+                Glide.with(activity).load(Config.imageUrl + result.getData().getAvatarPath()).into(Profile_Information.civ_profile);
+
             }
             dataSetIntoViews();
 
