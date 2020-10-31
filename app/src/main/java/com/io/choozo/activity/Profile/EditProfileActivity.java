@@ -39,6 +39,7 @@ import com.io.choozo.ApiCaller;
 import com.io.choozo.Config;
 import com.io.choozo.Fragment.profile.Profile_Information;
 import com.io.choozo.R;
+import com.io.choozo.activity.homeActivity.MainActivity;
 import com.io.choozo.custom.CircularImageView;
 import com.io.choozo.localStorage.PreferenceManager;
 import com.io.choozo.model.responseModel.GetProfileResponseModel;
@@ -369,9 +370,11 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             strAddress = (String) result.getData().getAddress();
             strdob = String.valueOf(result.getData().getDateOfBirth());
             strbio = (String) result.getData().getBio();
-            if (result.getData().getGender() == "Male") {
+            Log.e("gender",""+result.getData().getGender());
+            if (result.getData().getGender().trim().equals("Male")) {
                 radioMale.setChecked(true);
                 gender = result.getData().getGender();
+
             } else {
                 radioFemale.setChecked(true);
                 gender = result.getData().getGender();
@@ -379,8 +382,9 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             if (result.getData().getAvatarPath() != null) {
                 Glide.with(activity).load(Config.imageUrl + result.getData().getAvatarPath()).into(image);
                 Glide.with(activity).load(Config.imageUrl + result.getData().getAvatarPath()).into(Profile_Information.civ_profile);
-
+                Glide.with(activity).load(Config.imageUrl + result.getData().getAvatarPath()).into(MainActivity.nav_image);
             }
+
             dataSetIntoViews();
 
         }else {
@@ -392,9 +396,12 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
     private void dataSetIntoViews() {
         etName.setText(strName);
+        Profile_Information.tvName.setText(strName);
+        MainActivity.nav_name.setText(strName);
 //        etLastName.setText(strLastName);
         // etEmail.setText(strEmail);
         etMobile.setText(strMobile);
+        Profile_Information.tvMobile.setText(strMobile);
         // etAddress.setText(strAddress);
         etdob.setText(strdob);
         etbio.setText(strbio);
@@ -424,6 +431,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             dialog = new NewProgressBar(activity);
             dialog.show();
             apiUrl();
+            if(imgFile==null){
+            }
             ApiCaller.editProfile(activity, endPointEditProfile, strName, strbio, gender, strdob,
                     strMobile, token, imgFile, new FutureCallback<EditProfileResponseModel>() {
                         @Override
@@ -435,6 +444,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                                 Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
                                 getProfileDataApi();
+                                onBackPressed();
                             } else {
                                 Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();

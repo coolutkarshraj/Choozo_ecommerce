@@ -18,7 +18,7 @@ public class User {
     private Integer userId;
     @SerializedName("avatarPath")
     @Expose
-    private Object avatarPath;
+    private String avatarPath;
     @SerializedName("avatarName")
     @Expose
     private Object avatarName;
@@ -93,11 +93,11 @@ public class User {
         this.userId = userId;
     }
 
-    public Object getAvatarPath() {
+    public String getAvatarPath() {
         return avatarPath;
     }
 
-    public void setAvatarPath(Object avatarPath) {
+    public void setAvatarPath(String avatarPath) {
         this.avatarPath = avatarPath;
     }
 

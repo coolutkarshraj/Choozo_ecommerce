@@ -42,7 +42,7 @@ public class Profile_Information extends Fragment implements View.OnClickListene
     int userId;
     ImageView imEditProfile;
    public static CircularImageView civ_profile;
-    TextView tvName,tvEmail,tvMobile;
+  public static   TextView tvName,tvEmail,tvMobile;
     String token,strOldPassword,strNewPassword,endPoint,endPointProfile;
     RelativeLayout rl_changepassword;
     userOnlineInfo user;

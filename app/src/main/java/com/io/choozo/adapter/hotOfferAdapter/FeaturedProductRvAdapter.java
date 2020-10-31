@@ -25,6 +25,9 @@ import com.io.choozo.model.dataModel.featuredProductModel.FeaturedProductDataMod
 import com.io.choozo.model.responseModel.DeleteProductWishlistResponseModel;
 import com.io.choozo.model.responseModel.LoginResponseModel;
 import com.io.choozo.model.responseModel.WishlistResponseModel;
+import com.io.choozo.model.responseModel.featured.ProductsItem;
+import com.io.choozo.model.responseModel.wishlist.WishListAddRemoveResponseModel;
+import com.io.choozo.util.OnClick;
 import com.koushikdutta.async.future.FutureCallback;
 
 import java.util.List;
@@ -32,17 +35,19 @@ import java.util.List;
 public class FeaturedProductRvAdapter extends RecyclerView.Adapter<FeaturedProductRvAdapter.ViewHolder> {
 
     Context context;
-    List<FeaturedProductDataModel> item;
+    List<ProductsItem> item;
     int productId;
     String image,imagePath ,endPoint,strCutPrice,strPreferPrice;
     PreferenceManager preferenceManager;
     String token,endPointDeleteWishlist;
+    OnClick onClick;
     int wishlistid;
 
 
-    public FeaturedProductRvAdapter(Context context, List<FeaturedProductDataModel> item) {
+    public FeaturedProductRvAdapter(Context context, List<ProductsItem> item, OnClick onclick) {
         this.context = context;
         this.item = item;
+        this.onClick = onclick;
     }
 
     @NonNull
@@ -68,29 +73,54 @@ public class FeaturedProductRvAdapter extends RecyclerView.Adapter<FeaturedProdu
     @Override
     public void onBindViewHolder(@NonNull FeaturedProductRvAdapter.ViewHolder viewHolder, int i) {
 
-        FeaturedProductDataModel model = item.get(i);
+        ProductsItem model = item.get(i);
         viewHolder.productName.setText(model.getName());
         productId = model.getProductId();
-        strCutPrice = model.getPrice();
-        viewHolder.productPrice.setText(model.getPrice());
-        image = model.getImages().getImage();
-        imagePath = model.getImages().getContainerName();
-        imageResizeApi(image,imagePath);
-        Glide.with(context).load(UrlLocator.getFinalUrl(endPoint)).into(viewHolder.productImage);
+        if (model.getAttributes().get(0).getPrice() == null) {
+            strCutPrice = "0";
+        } else {
+            strCutPrice = model.getAttributes().get(0).getPrice();
+        }
+
+        viewHolder.productPrice.setText(strCutPrice);
+        image = Config.imageUrl + model.getPosters().get(0).getAvatarPath();
+        if (image == null) {
+            Glide.with(context).load(Config.noImage).into(viewHolder.productImage);
+        } else {
+            Glide.with(context).load(image).into(viewHolder.productImage);
+        }
+        if(model.isIsWishlist()){
+            viewHolder.Like.setVisibility(View.VISIBLE);
+            viewHolder.Dislike.setVisibility(View.GONE);
+
+        }else{
+            viewHolder.Dislike.setVisibility(View.VISIBLE);
+            viewHolder.Like.setVisibility(View.GONE);
+        }
+
         viewHolder.Like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteProductfromWishList(viewHolder);
+                if (token==null||token.isEmpty()){
+                    Toast.makeText(context, "Please Login", Toast.LENGTH_SHORT).show();
+                }else {
+                    onClick.catId(model.getProductId());
+                }
 
             }
         });
         viewHolder.Dislike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addToWishlist(model.getProductId(),viewHolder);
+                if (token==null||token.isEmpty()){
+                    Toast.makeText(context, "Please Login", Toast.LENGTH_SHORT).show();
+                }else {
+                    onClick.catId(model.getProductId());
+                }
             }
         });
-        viewHolder.data(item.get(i));
+
+       // viewHolder.data(item.get(i));
 
     }
 
@@ -141,27 +171,7 @@ public class FeaturedProductRvAdapter extends RecyclerView.Adapter<FeaturedProdu
     /*---------------------------------------------------------  Add Wishlist Api ---------------------------------------------------*/
 
     private void addToWishlist(int productId, FeaturedProductRvAdapter.ViewHolder viewHolder) {
-        ApiCaller.wishlistadd(context, Config.Url.wishlistdata, productId, token, new FutureCallback<WishlistResponseModel>() {
-            @Override
-            public void onCompleted(Exception e, WishlistResponseModel result) {
-                if(e!=null){
-                    return;
-                }
-                if(result.getStatus() == 1){
-                    if(result.getMessage().equals("Thank you product added to the wishlist successfully.")) {
-                        Toast.makeText(context, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
-                        wishlistid = result.getData().getWishlistProductId();
-                        viewHolder.Dislike.setVisibility(View.GONE);
-                        viewHolder.Like.setVisibility(View.VISIBLE);
-                    }else {
-                        Toast.makeText(context, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-                else {
-                    Toast.makeText(context, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+
     }
 
 

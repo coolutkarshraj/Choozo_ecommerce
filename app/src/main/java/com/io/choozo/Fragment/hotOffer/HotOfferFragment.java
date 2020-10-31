@@ -22,14 +22,17 @@ import com.io.choozo.adapter.hotOfferAdapter.FeaturedProductRvAdapter;
 import com.io.choozo.adapter.hotOfferAdapter.Our_Brand_RvAdapter;
 import com.io.choozo.adapter.hotOfferAdapter.TodayDealsRvAdapter;
 import com.io.choozo.localStorage.PreferenceManager;
-import com.io.choozo.model.responseModel.FeaturedProductResponseModel;
 import com.io.choozo.model.responseModel.LoginResponseModel;
 import com.io.choozo.model.responseModel.OurBrandsResponseModel;
 import com.io.choozo.model.responseModel.TodayDealsResponseModel;
+import com.io.choozo.model.responseModel.WishlistResponseModel;
+import com.io.choozo.model.responseModel.featured.FeaturedProductResponseModel;
+import com.io.choozo.model.responseModel.wishlist.WishListAddRemoveResponseModel;
 import com.io.choozo.util.NewProgressBar;
+import com.io.choozo.util.OnClick;
 import com.koushikdutta.async.future.FutureCallback;
 
-public class HotOfferFragment extends Fragment {
+public class HotOfferFragment extends Fragment implements OnClick {
 
     RecyclerView rvFeaturedProduct, rvTodayDeals, rvOurBrands;
     FeaturedProductRvAdapter adapter;
@@ -42,6 +45,7 @@ public class HotOfferFragment extends Fragment {
     private final Handler mHandler = new Handler(Looper.getMainLooper());
     final int duration = 10;
     final int pixelsToMove = 30;
+    OnClick onClick;
     PreferenceManager preferenceManager;
     LinearLayoutManager linearLayoutManager,LayoutManager;
     final Runnable SCROLLING_RUNNABLE = new Runnable() {
@@ -67,6 +71,7 @@ public class HotOfferFragment extends Fragment {
 
     private void intializeViews(View view) {
         activity = getActivity();
+        onClick =this;
         dialog = new NewProgressBar(activity);
         preferenceManager = new PreferenceManager(activity);
         rvFeaturedProduct = (RecyclerView) view.findViewById(R.id.rv_featured_product);
@@ -100,7 +105,7 @@ public class HotOfferFragment extends Fragment {
     /* ----------------------------------------------------------api endPoint------------------------------------------------------------*/
 
     private void apiUrl() {
-        endPoint = Config.Url.getfeaturedProduct + "limit=0&offset=0&keyword=&sku=&count=false";
+        endPoint = Config.Url.getfeaturedProduct;
         endPointTodayDeal = Config.Url.getTodayDeals;
         endPointBrands = Config.Url.getbrandsDetail + "limit=10&offset=0&keyword=";
     }
@@ -132,9 +137,9 @@ public class HotOfferFragment extends Fragment {
     /*------------------------------------------ Featured recycler view data set from api ---------------------------------------------*/
 
     private void feturedProductData(FeaturedProductResponseModel result) {
-        if (result.getStatus() == 1) {
+        if (result.isStatus()==true) {
             dialog.dismiss();
-            adapter = new FeaturedProductRvAdapter(activity, result.getData());
+            adapter = new FeaturedProductRvAdapter(activity, result.getData().get(0).getProducts(),onClick);
             rvFeaturedProduct.setAdapter(adapter);
             adapter.notifyDataSetChanged();
 
@@ -169,7 +174,7 @@ public class HotOfferFragment extends Fragment {
 
     private void todayDealsProductData(TodayDealsResponseModel result) {
         if (result.isStatus()) {
-            todayDealsAdapter = new TodayDealsRvAdapter(activity, result.getData());
+            todayDealsAdapter = new TodayDealsRvAdapter(activity, result.getData(),onClick);
             rvTodayDeals.setAdapter(todayDealsAdapter);
             todayDealsAdapter.notifyDataSetChanged();
           //  autoScroll();
@@ -237,4 +242,23 @@ public class HotOfferFragment extends Fragment {
     }
 
 
+    @Override
+    public void catId(int postion) {
+
+        ApiCaller.wishlistadd(activity, Config.Url.wishlistdata, postion, token, new FutureCallback<WishListAddRemoveResponseModel>() {
+            @Override
+            public void onCompleted(Exception e, WishListAddRemoveResponseModel result) {
+                if (e != null) {
+                    return;
+                }
+                if (result.isStatus()) {
+                    todayDealsRv();
+                    featuredProductRv();
+                    Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
 }

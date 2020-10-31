@@ -56,15 +56,16 @@ public class ProfileFragment extends Fragment {
 
     private void setUpFragment(ViewPager viewPager) {
         ProfileFragmentAdapter profileFragmentAdapter = new ProfileFragmentAdapter(((FragmentActivity) activity).getSupportFragmentManager());
-        if(token==""){
-
-        }else{
-            profileFragmentAdapter.addFragment(new Profile_Information(),"Profile");
+        if (token != "" || token != null) {
+            profileFragmentAdapter.addFragment(new Profile_Information(), "Profile");
         }
 
-        profileFragmentAdapter.addFragment(new MyOrder(),"My order");
-        profileFragmentAdapter.addFragment(new Wishlist(),"Wishlist");
-        profileFragmentAdapter.addFragment(new SavedAddress(),"Saved Address");
+        profileFragmentAdapter.addFragment(new MyOrder(), "My order");
+        profileFragmentAdapter.addFragment(new Wishlist(), "Wishlist");
+        if (token != "" || token != null) {
+            profileFragmentAdapter.addFragment(new SavedAddress(), "Saved Address");
+        }
+
         viewPager.setAdapter(profileFragmentAdapter);
     }
 }

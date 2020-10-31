@@ -186,7 +186,7 @@ public class ItemCategoryAdapter extends RecyclerView.Adapter<ItemCategoryAdapte
     /*---------------------------------------------------------  Add Wishlist Api ---------------------------------------------------*/
 
     private void addToWishlist(int productId, ViewHolder viewHolder) {
-        ApiCaller.wishlistadd(context, Config.Url.wishlistdata, productId, token, new FutureCallback<WishlistResponseModel>() {
+       /* ApiCaller.wishlistadd(context, Config.Url.wishlistdata, productId, token, new FutureCallback<WishlistResponseModel>() {
             @Override
             public void onCompleted(Exception e, WishlistResponseModel result) {
                 if(e!=null){
@@ -206,7 +206,7 @@ public class ItemCategoryAdapter extends RecyclerView.Adapter<ItemCategoryAdapte
                     Toast.makeText(context, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
-        });
+        });*/
     }
 
 

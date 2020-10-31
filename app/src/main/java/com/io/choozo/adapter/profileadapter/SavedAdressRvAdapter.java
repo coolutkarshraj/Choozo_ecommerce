@@ -27,13 +27,14 @@ import com.io.choozo.Fragment.profile.SavedAddress;
 import com.io.choozo.R;
 import com.io.choozo.localStorage.PreferenceManager;
 import com.io.choozo.model.dataModel.GetAddressDataModel;
-import com.io.choozo.model.responseModel.AddAddressResponseModel;
 import com.io.choozo.model.responseModel.DeleteAddressResponseModel;
+import com.io.choozo.model.responseModel.DeliveryAddressesItem;
 import com.io.choozo.model.responseModel.GetAddressResponseModel;
 import com.io.choozo.model.responseModel.LoginResponseModel;
 import com.io.choozo.model.responseModel.UpdateAddResponseModel;
+import com.io.choozo.model.responseModel.address.DeleteAddressResponseModels;
 import com.io.choozo.util.NewProgressBar;
-import com.io.choozo.util.commonDialog;
+import com.io.choozo.util.OnClick;
 import com.io.choozo.util.userOnlineInfo;
 import com.koushikdutta.async.future.FutureCallback;
 
@@ -42,7 +43,7 @@ import java.util.List;
 public class SavedAdressRvAdapter extends RecyclerView.Adapter<SavedAdressRvAdapter.ViewHolder> {
 
     Context context;
-    List<GetAddressDataModel> item;
+    List<DeliveryAddressesItem> item;
     Dialog dialog,dialog1;
     String addressType = "0";
     private PreferenceManager preferenceManager;
@@ -50,11 +51,14 @@ public class SavedAdressRvAdapter extends RecyclerView.Adapter<SavedAdressRvAdap
     int userId;
     NewProgressBar dialogs;
     userOnlineInfo user;
+    OnClick onClick;
     String strAddress1,strAddress2,strCity,strState,strPincode,token,endPointDelete,endPointGetAddress;
 
-    public SavedAdressRvAdapter(Context context, List<GetAddressDataModel> item) {
+    public SavedAdressRvAdapter(Context context, List<DeliveryAddressesItem> item, OnClick onClick) {
         this.context = context;
         this.item = item;
+        this.onClick = onClick;
+
     }
 
     @NonNull
@@ -77,22 +81,23 @@ public class SavedAdressRvAdapter extends RecyclerView.Adapter<SavedAdressRvAdap
         LoginResponseModel obj = gson.fromJson(getJson, LoginResponseModel.class);
         token = obj.getData().getToken();
         userId = obj.getData().getUser().getUserId();
-
-
-
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SavedAdressRvAdapter.ViewHolder viewHolder, final int i) {
+    public void onBindViewHolder(@NonNull SavedAdressRvAdapter.ViewHolder viewHolder, int i) {
 
-        final GetAddressDataModel model = item.get(i);
-        viewHolder.name.setText(model.getFirstName());
-        viewHolder.address.setText(model.getAddress1() +" "+model.getAddress2() +", "+model.getCity() +" - "+model.getPostcode()
-                            +", "+ model.getState() +" "+model.getPhoneNo());
+        final DeliveryAddressesItem model = item.get(i);
+        viewHolder.name.setText(model.getName());
+        viewHolder.address.setText(model.getAddress() +", "+model.getCity() +", "+model.getDistrict() +" - "+model.getZipcode()
+                            +", "+model.getPhoneNum());
         viewHolder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            updateData(model,i);
+           // updateData(model,i);
+                onClick.catId(i);
+
+
+
             }
         });
         viewHolder.delete.setOnClickListener(new View.OnClickListener() {
@@ -235,7 +240,7 @@ public class SavedAdressRvAdapter extends RecyclerView.Adapter<SavedAdressRvAdap
 
 
     private void apiUrl(){
-        endPointofUpdateAddress = Config.Url.UpdateAddress+"/"+addressId;
+       // endPointofUpdateAddress = Config.Url.UpdateAddress+"/"+addressId;
 
     }
 
@@ -262,7 +267,6 @@ public class SavedAdressRvAdapter extends RecyclerView.Adapter<SavedAdressRvAdap
         if(result.getStatus() == 1){
             dialogs.dismiss();
             dialog.dismiss();
-            getAddressListApi();
             Toast.makeText(context, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
         }else {
             dialogs.dismiss();
@@ -275,9 +279,9 @@ public class SavedAdressRvAdapter extends RecyclerView.Adapter<SavedAdressRvAdap
 
     /*---------------------------------------------- Delete address start working-----------------------------------------------*/
 
-    private void deleteAddress(GetAddressDataModel model, int i) {
+    private void deleteAddress(DeliveryAddressesItem model, int i) {
         int addressIdForDelete = model.getAddressId();
-        endPointDelete =Config.Url.deleteAddress +"/"+addressIdForDelete;
+        endPointDelete =Config.Url.deleteAddress+addressIdForDelete;
         deleteAddressDialog(endPointDelete,i);
 
     }
@@ -312,14 +316,14 @@ public class SavedAdressRvAdapter extends RecyclerView.Adapter<SavedAdressRvAdap
             @SuppressLint("ResourceAsColor")
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                dialog1.dismiss();
             }
         });
         Clear.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("ResourceAsColor")
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                dialog1.dismiss();
             }
         });
         dialog1.show();
@@ -330,13 +334,14 @@ public class SavedAdressRvAdapter extends RecyclerView.Adapter<SavedAdressRvAdap
     /* ----------------------------------------------Delete address api------------------------------------------------------*/
     private void deleteApiCall(String endPointDelete, final int i) {
         dialogs.show();
-        ApiCaller.deleteAddress(context, endPointDelete, token, new FutureCallback<DeleteAddressResponseModel>() {
+        ApiCaller.deleteAddress(context, endPointDelete, token, new FutureCallback<DeleteAddressResponseModels>() {
             @Override
-            public void onCompleted(Exception e, DeleteAddressResponseModel result) {
+            public void onCompleted(Exception e, DeleteAddressResponseModels result) {
                 if ((e != null)) {
+                    dialogs.dismiss();
                     return;
                 }
-                if(result.getStatus() ==1){
+                if(result.isStatus()){
                     item.remove(i);
                     notifyItemRemoved(i);
                     notifyItemRangeRemoved(i,item.size());
@@ -355,39 +360,6 @@ public class SavedAdressRvAdapter extends RecyclerView.Adapter<SavedAdressRvAdap
 
 
 
-    /*--------------------------------------------------- Api for get Address list----------------------------------------------*/
-
-    private void getAddressListApi(){
-
-        endPointGetAddress = Config.Url.getCustomerAddress;
-            ApiCaller.getCustomerAddress((Activity) context, endPointGetAddress, token, new FutureCallback<GetAddressResponseModel>() {
-                @Override
-                public void onCompleted(Exception e, GetAddressResponseModel result) {
-                    if(e!=null){
-                        return;
-                    }
-                    getAllAddressData(result);
-
-                }
-            });
-
-    }
-
-
-    /* ----------------------------------------------get All address data from response--------------------------------------------*/
-
-    private void getAllAddressData(GetAddressResponseModel result) {
-        if(result.getStatus() == 1){
-
-            SavedAddress.rvSavedAdress.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
-            SavedAddress.adapter = new SavedAdressRvAdapter(context,result.getData());
-            SavedAddress.rvSavedAdress.setAdapter(SavedAddress.adapter);
-        }
-        else {
-            Toast.makeText(context, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
-
-        }
-    }
 
 
 }

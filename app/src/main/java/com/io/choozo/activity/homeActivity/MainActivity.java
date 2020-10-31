@@ -15,6 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.io.choozo.Config;
 import com.io.choozo.Fragment.Home.HomeFragment;
 import com.io.choozo.Fragment.MyCart.MyCartFragment;
 import com.io.choozo.Fragment.Search.Search;
@@ -38,6 +41,7 @@ import com.io.choozo.activity.loginRegistrationflow.LoginActivity;
 import com.io.choozo.localStorage.PreferenceManager;
 import com.io.choozo.model.dummydataModel.ShoppingBagModel;
 import com.io.choozo.model.responseModel.LoginResponseModel;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.List;
 
@@ -56,11 +60,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     MyCartFragment myCartFragment;
     ProfileFragment profileFragment;
     Search searchFragment;
-    String localName,localEmail;
+    String localName,localEmail,localiImage;
     private PreferenceManager preferenceManager;
     DbHelper dbHelper;
     List<ShoppingBagModel> item;
-
+public static TextView nav_name;
+public static TextView nav_email;
+public static CircularImageView nav_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,6 +194,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         LoginResponseModel obj = gson.fromJson(getJson, LoginResponseModel.class);
         localName = obj.getData().getUser().getName();
         localEmail = obj.getData().getUser().getEmail();
+        localiImage = obj.getData().getUser().getAvatarPath();
 
     }
 
@@ -195,10 +202,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void navigationHeader() {
         View hView =  navigationView.getHeaderView(0);
-        TextView nav_user = (TextView)hView.findViewById(R.id.tv_name);
-        TextView nav_Email = (TextView)hView.findViewById(R.id.tv_email);
-        nav_user.setText(localName);
-        nav_Email.setText(localEmail);
+         nav_name = (TextView)hView.findViewById(R.id.tv_name);
+         nav_email = (TextView)hView.findViewById(R.id.tv_email);
+        nav_image = (CircularImageView)hView.findViewById(R.id.nav_image);
+        nav_name.setText(localName);
+        nav_email.setText(localEmail);
+        if(localiImage!=null) {
+          //  Log.e("imges",Config.imageUrl + localiImage);
+           Glide.with(activity).load(Config.imageUrl + localiImage).into(nav_image);
+        }
     }
 
 

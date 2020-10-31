@@ -148,7 +148,7 @@ public class SearchProductRvAdapter extends RecyclerView.Adapter<SearchProductRv
     /*---------------------------------------------------------  Add Wishlist Api ---------------------------------------------------*/
 
     private void addToWishlist(int productId, SearchProductRvAdapter.ViewHolder viewHolder) {
-        ApiCaller.wishlistadd(context, Config.Url.wishlistdata, productId, token, new FutureCallback<WishlistResponseModel>() {
+        /*ApiCaller.wishlistadd(context, Config.Url.wishlistdata, productId, token, new FutureCallback<WishlistResponseModel>() {
             @Override
             public void onCompleted(Exception e, WishlistResponseModel result) {
                 if(e!=null){
@@ -169,7 +169,7 @@ public class SearchProductRvAdapter extends RecyclerView.Adapter<SearchProductRv
                 }
             }
         });
-    }
+*/    }
 
 
     private void apiurl(){

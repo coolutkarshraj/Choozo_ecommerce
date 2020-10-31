@@ -67,6 +67,7 @@
                 android:textSize="@dimen/h2"
                 android:fontFamily="@font/segoeui"/>
 
+
             <ImageView
                 android:id="@+id/heart"
                 android:layout_width="20dp"

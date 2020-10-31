@@ -16,7 +16,6 @@ import com.io.choozo.model.responseModel.ContactUsResponseModel;
 import com.io.choozo.model.responseModel.CountryListResponseModel;
 import com.io.choozo.model.responseModel.DeleteAddressResponseModel;
 import com.io.choozo.model.responseModel.DeleteProductWishlistResponseModel;
-import com.io.choozo.model.responseModel.FeaturedProductResponseModel;
 import com.io.choozo.model.responseModel.ForgotPasswordResponseModel;
 import com.io.choozo.model.responseModel.GetAddressResponseModel;
 import com.io.choozo.model.responseModel.GetBannerListResponseModel;
@@ -32,7 +31,13 @@ import com.io.choozo.model.responseModel.SearchResponseModel;
 import com.io.choozo.model.responseModel.TodayDealsResponseModel;
 import com.io.choozo.model.responseModel.UpdateAddResponseModel;
 import com.io.choozo.model.responseModel.WishlistResponseModel;
+import com.io.choozo.model.responseModel.address.AdressResponseModel;
+import com.io.choozo.model.responseModel.address.DeleteAddressResponseModels;
+import com.io.choozo.model.responseModel.address.EditAddressResponseModel;
+import com.io.choozo.model.responseModel.district.GetDistrictResponseModel;
 import com.io.choozo.model.responseModel.editProfiel.EditProfileResponseModel;
+import com.io.choozo.model.responseModel.featured.FeaturedProductResponseModel;
+import com.io.choozo.model.responseModel.wishlist.WishListAddRemoveResponseModel;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.async.http.body.FilePart;
 import com.koushikdutta.async.http.body.Part;
@@ -156,8 +161,8 @@ public class ApiCaller {
                                    final FutureCallback<EditProfileResponseModel> apiCallBack) {
         final Gson gson = new Gson();
         List<Part> files = new ArrayList();
-        files.add(new FilePart("avatar", file));
-        if(file.length()==0||file==null){
+        if(file==null){
+
             Ion.with(activity)
                     .load(UrlLocator.getFinalUrl("user/update"))
                     .setHeader("Authorization", "Bearer " + token)
@@ -176,6 +181,7 @@ public class ApiCaller {
                     });
         }else {
 
+            files.add(new FilePart("avatar", file));
             Ion.with(activity)
                     .load(UrlLocator.getFinalUrl("user/update"))
                     .setHeader("Authorization", "Bearer " + token)
@@ -207,7 +213,7 @@ public class ApiCaller {
                 .setMultipartParameter("bio", bio)
                 .setMultipartParameter("gender", gender)
                 .setMultipartParameter("dateOfBirth", dateOfBirth)
-                .setMultipartParameter("phone", "9999999999")
+                .setMultipartParameter("phone", strPhone)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
@@ -280,27 +286,76 @@ public class ApiCaller {
     /* ------------------------------------------------------Add address api-------------------------------------------------------*/
 
 
-    public static void addAddress(Activity activity, String url, int customerId, String address1, String address2, String city, String state,
-                                  String pincode, String addressType, String token, final FutureCallback<AddAddressResponseModel> apiCallBack) {
+    public static void addAddress(Activity activity, String url, String name,String address,String city,String area,
+                                  String pincode,String mobile, String addressType, int defalutAddress,
+                                  String token, final FutureCallback<AdressResponseModel> apiCallBack) {
 
         final JsonObject json = new JsonObject();
-        json.addProperty("customerId", customerId);
-        json.addProperty("address1", address1);
-        json.addProperty("address2", address2);
+        json.addProperty("name", name);
+        json.addProperty("address", address);
+        json.addProperty("addresstype", addressType);
+        json.addProperty("phonenum", mobile);
+        json.addProperty("code", " ");
+        json.addProperty("locality", " ");
         json.addProperty("city", city);
-        json.addProperty("state", state);
-        json.addProperty("postcode", pincode);
-        json.addProperty("addressType", addressType);
+        json.addProperty("district", area);
+        json.addProperty("state", " ");
+        json.addProperty("country", " ");
+        json.addProperty("landmark", " ");
+        json.addProperty("zipcode", pincode);
+        json.addProperty("streetOne", " ");
+        json.addProperty("streetTwo", " ");
+        json.addProperty("isDefault", defalutAddress);
+
         final Gson gson = new Gson();
         Ion.with(activity)
                 .load(UrlLocator.getFinalUrl(url))
                 .setHeader("Authorization", "Bearer " + token)
+                .setHeader("Content-Type", "application/json")
                 .noCache().setJsonObjectBody(json)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
-                        AddAddressResponseModel addAddressResponseModel = gson.fromJson(result, AddAddressResponseModel.class);
+                        AdressResponseModel addAddressResponseModel = gson.fromJson(result, AdressResponseModel.class);
+                        apiCallBack.onCompleted(e, addAddressResponseModel);
+                    }
+                });
+    }
+
+    public static void editAddress(Activity activity, String url,int addressId, String name,String address,String city,String area,
+                                  String pincode,String mobile, String addressType, int defalutAddress,
+                                  String token, final FutureCallback<EditAddressResponseModel> apiCallBack) {
+
+        final JsonObject json = new JsonObject();
+        json.addProperty("name", name);
+        json.addProperty("addressId", addressId);
+        json.addProperty("address", address);
+        json.addProperty("addresstype", addressType);
+        json.addProperty("phonenum", Long.valueOf(mobile));
+        json.addProperty("code", " ");
+        json.addProperty("locality", " ");
+        json.addProperty("city", city);
+        json.addProperty("district", area);
+        json.addProperty("state", " ");
+        json.addProperty("country", " ");
+        json.addProperty("landmark", " ");
+        json.addProperty("zipcode", pincode);
+        json.addProperty("streetOne", " ");
+        json.addProperty("streetTwo", " ");
+        json.addProperty("isDefault", defalutAddress);
+
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization", "Bearer " + token)
+                .setHeader("Content-Type", "application/json")
+                .noCache().setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        EditAddressResponseModel addAddressResponseModel = gson.fromJson(result, EditAddressResponseModel.class);
                         apiCallBack.onCompleted(e, addAddressResponseModel);
                     }
                 });
@@ -357,19 +412,19 @@ public class ApiCaller {
     /* ---------------------------------------------Delete address api--------------------------------------------------------------*/
 
     public static void deleteAddress(Context activity, String url,
-                                     String token, final FutureCallback<DeleteAddressResponseModel> apiCallBack) {
+                                     String token, final FutureCallback<DeleteAddressResponseModels> apiCallBack) {
 
 
         final Gson gson = new Gson();
         Ion.with(activity)
-                .load("DELETE ", UrlLocator.getFinalUrl(url))
+                .load( UrlLocator.getFinalUrl(url))
                 .setHeader("Authorization", "Bearer " + token)
                 .noCache()
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
-                        DeleteAddressResponseModel updateAddResponseModel = gson.fromJson(result, DeleteAddressResponseModel.class);
+                        DeleteAddressResponseModels updateAddResponseModel = gson.fromJson(result, DeleteAddressResponseModels.class);
                         apiCallBack.onCompleted(e, updateAddResponseModel);
                     }
                 });
@@ -436,21 +491,20 @@ public class ApiCaller {
     /*----------------------------------------------------- wishlist Api -------------------------------------------------------------*/
 
     public static void wishlistadd(Context activity, String url, int productid, String token,
-                                   final FutureCallback<WishlistResponseModel> apiCallBack) {
+                                   final FutureCallback<WishListAddRemoveResponseModel> apiCallBack) {
 
-        final JsonObject json = new JsonObject();
-        json.addProperty("productId", productid);
+
 
         final Gson gson = new Gson();
         Ion.with(activity)
-                .load("POST", UrlLocator.getFinalUrl(url))
+                .load("POST", UrlLocator.getFinalUrl(url)+productid)
                 .setHeader("Authorization", "Bearer " + token)
-                .noCache().setJsonObjectBody(json)
+                .noCache()
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
-                        WishlistResponseModel wishlistResponseModel = gson.fromJson(result, WishlistResponseModel.class);
+                        WishListAddRemoveResponseModel wishlistResponseModel = gson.fromJson(result, WishListAddRemoveResponseModel.class);
                         apiCallBack.onCompleted(e, wishlistResponseModel);
                     }
                 });
@@ -499,7 +553,7 @@ public class ApiCaller {
     /*------------------------------------------------------ featured product list get -------------------------------------------------*/
 
     public static void getFeaturedProduct(Activity activity, String url,
-                                          final FutureCallback<FeaturedProductResponseModel> apiCallback) {
+                                          final FutureCallback<com.io.choozo.model.responseModel.featured.FeaturedProductResponseModel> apiCallback) {
         final Gson gson = new Gson();
         Ion.with(activity)
                 .load(UrlLocator.getFinalUrl(url))
@@ -509,7 +563,7 @@ public class ApiCaller {
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
-                        FeaturedProductResponseModel featuredProductResponseModel = gson.fromJson(result, FeaturedProductResponseModel.class);
+                        com.io.choozo.model.responseModel.featured.FeaturedProductResponseModel featuredProductResponseModel = gson.fromJson(result, FeaturedProductResponseModel.class);
                         apiCallback.onCompleted(e, featuredProductResponseModel);
                     }
                 });
@@ -686,6 +740,24 @@ String value;
                         apiCallBack.onCompleted(e, searchResponseModel);
                     }
                 });
+    }
+
+
+    public static void getdistic(Activity activity, String url,
+                                 final FutureCallback<GetDistrictResponseModel> apiCallBack) {
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        GetDistrictResponseModel dilveryAddressDataModel = gson.fromJson(result, GetDistrictResponseModel.class);
+                        apiCallBack.onCompleted(e, dilveryAddressDataModel);
+                    }
+                });
+
     }
 
     public static void showAlertDialog(Activity activity, String message) {

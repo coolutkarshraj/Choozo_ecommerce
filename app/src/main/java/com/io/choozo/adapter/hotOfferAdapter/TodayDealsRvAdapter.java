@@ -22,6 +22,7 @@ import com.io.choozo.model.dataModel.todayDealsModel.TodayDataModel;
 import com.io.choozo.model.responseModel.DeleteProductWishlistResponseModel;
 import com.io.choozo.model.responseModel.LoginResponseModel;
 import com.io.choozo.model.responseModel.WishlistResponseModel;
+import com.io.choozo.util.OnClick;
 import com.koushikdutta.async.future.FutureCallback;
 
 import java.util.List;
@@ -34,11 +35,13 @@ public class TodayDealsRvAdapter extends RecyclerView.Adapter<TodayDealsRvAdapte
     String image, imagePath, endPoint, strCutPrice, strPreferPrice;
     PreferenceManager preferenceManager;
     String token, endPointDeleteWishlist;
+    OnClick onClick;
     int wishlistid;
 
-    public TodayDealsRvAdapter(Context context, List<TodayDataModel> item) {
+    public TodayDealsRvAdapter(Context context, List<TodayDataModel> item, OnClick onClick) {
         this.context = context;
         this.item = item;
+        this.onClick = onClick;
     }
 
     @NonNull
@@ -80,20 +83,37 @@ public class TodayDealsRvAdapter extends RecyclerView.Adapter<TodayDealsRvAdapte
             Glide.with(context).load(image).into(viewHolder.productImage);
         }
 
-        /*viewHolder.Like.setOnClickListener(new View.OnClickListener() {
+        if(model.isIsWishlist()){
+            viewHolder.Like.setVisibility(View.VISIBLE);
+            viewHolder.Dislike.setVisibility(View.GONE);
+
+        }else{
+            viewHolder.Dislike.setVisibility(View.VISIBLE);
+            viewHolder.Like.setVisibility(View.GONE);
+        }
+
+        viewHolder.Like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteProductfromWishList(viewHolder);
+                if (token==null||token.isEmpty()){
+                    Toast.makeText(context, "Please Login", Toast.LENGTH_SHORT).show();
+                }else {
+                    onClick.catId(model.getProductId());
+                }
 
             }
         });
         viewHolder.Dislike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addToWishlist(model.getProductId(),viewHolder);
+                if (token==null||token.isEmpty()){
+                    Toast.makeText(context, "Please Login", Toast.LENGTH_SHORT).show();
+                }else {
+                    onClick.catId(model.getProductId());
+                }
             }
         });
-        viewHolder.data(item.get(i));*/
+       // viewHolder.data(item.get(i));
     }
 
     @Override
@@ -146,26 +166,7 @@ public class TodayDealsRvAdapter extends RecyclerView.Adapter<TodayDealsRvAdapte
         /*---------------------------------------------------------  Add Wishlist Api ---------------------------------------------------*/
 
         private void addToWishlist(int productId, TodayDealsRvAdapter.ViewHolder viewHolder) {
-            ApiCaller.wishlistadd(context, Config.Url.wishlistdata, productId, token, new FutureCallback<WishlistResponseModel>() {
-                @Override
-                public void onCompleted(Exception e, WishlistResponseModel result) {
-                    if (e != null) {
-                        return;
-                    }
-                    if (result.getStatus() == 1) {
-                        if (result.getMessage().equals("Thank you product added to the wishlist successfully.")) {
-                            Toast.makeText(context, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
-                            wishlistid = result.getData().getWishlistProductId();
-                            viewHolder.Dislike.setVisibility(View.GONE);
-                            viewHolder.Like.setVisibility(View.VISIBLE);
-                        } else {
-                            Toast.makeText(context, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(context, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+
         }
 
 
