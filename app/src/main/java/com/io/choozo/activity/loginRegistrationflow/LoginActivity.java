@@ -319,9 +319,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Gson gson = new Gson();
         String json = gson.toJson(result);
         preferenceManager.putString(loginData,json);
-
-
-
     }
 
     private void editprofileApi(LoginResponseModel loginResult) {
